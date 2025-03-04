@@ -60,11 +60,7 @@ class MantenimientoMonitoreoView(viewsets.ModelViewSet):
                 queryset = queryset.filter(idPlantacion__id=plantacion_id)
             return queryset
         return MantenimientoMonitoreo.objects.none()
-<<<<<<< HEAD
     #print(MantenimientoMonitoreo.objects.filter(idPlantacion__id=3).values())
-=======
-    print(MantenimientoMonitoreo.objects.filter(idPlantacion__id=3).values())
->>>>>>> b4347e1de8487fb47b221dd6fe939056af9c2ad7
 
     def create(self, request, *args, **kwargs):
         """
