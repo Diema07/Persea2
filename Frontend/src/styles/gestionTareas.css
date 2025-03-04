@@ -1,0 +1,42 @@
+.contenedor3 {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  li:last-child {
+    border-bottom: none; 
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    color: #007bff; 
+  }
+  
+  .estado {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red; 
+    transition: background-color 0.3s ease;
+  }
+  

@@ -1,0 +1,251 @@
+<!-- apps/informes/templates/informes/informe_completo.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Informe Completo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1, h2 {
+      color: #006400; /* Verde oscuro */
+      margin-bottom: 8px;
+    }
+    .section {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .section h2 {
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      font-size: 14px;
+    }
+    table th {
+      background-color: #f2f2f2;
+    }
+    .info {
+      margin-bottom: 20px;
+    }
+    .info p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Título principal -->
+  <h1>Informe Completo de la Plantación</h1>
+
+  <!-- Información de la plantación -->
+  <div class="info">
+    <p><strong>ID Plantación:</strong> {{ plantacion.id }}</p>
+    <p><strong>Nombre Parcela:</strong> {{ plantacion.nombreParcela }}</p>
+  </div>
+
+  <!-- Preparaciones -->
+  <div class="section">
+    <h2>Preparaciones</h2>
+    {% if preparaciones %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Limpieza Terreno</th>
+            <th>Análisis Suelo</th>
+            <th>Corrección Suelo</th>
+            <th>Labranza</th>
+            <th>Delimitación Parcela</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in preparaciones %}
+          <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.limpiezaTerreno }}</td>
+            <td>{{ p.analisisSuelo }}</td>
+            <td>{{ p.correcionSuelo }}</td>
+            <td>{{ p.labranza }}</td>
+            <td>{{ p.delimitacionParcela }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay preparaciones registradas.</p>
+    {% endif %}
+  </div>
+
+  <!-- Selecciones -->
+  <div class="section">
+    <h2>Selección de Árboles</h2>
+    {% if selecciones %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Variedades</th>
+            <th>Preparación Colinos</th>
+            <th>Excavación Hoyos</th>
+            <th>Plantación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in selecciones %}
+          <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.seleccionVariedades }}</td>
+            <td>{{ s.preparacionColinos }}</td>
+            <td>{{ s.excavacionHoyos }}</td>
+            <td>{{ s.plantacion }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay selecciones registradas.</p>
+    {% endif %}
+  </div>
+
+  <!-- Riegos -->
+  <div class="section">
+    <h2>Riego y Fertilización</h2>
+    {% if riegos %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo Riego</th>
+            <th>Fecha Riego</th>
+            <th>Tipo Fertilizante</th>
+            <th>Nombre Fertilizante</th>
+            <th>Cantidad</th>
+            <th>Medida</th>
+            <th>Fecha Fertilizante</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in riegos %}
+          <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.tipoRiego }}</td>
+            <td>{{ r.fechaRiego }}</td>
+            <td>{{ r.tipoFertilizante }}</td>
+            <td>{{ r.nombreFertilizante }}</td>
+            <td>{{ r.cantidadFertilizante }}</td>
+            <td>{{ r.medidaFertilizante }}</td>
+            <td>{{ r.fechaFertilizante }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay riegos/fertilizaciones registradas.</p>
+    {% endif %}
+  </div>
+
+  <!-- Mantenimientos -->
+  <div class="section">
+    <h2>Mantenimiento y Monitoreo</h2>
+    {% if mantenimientos %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Guadaña</th>
+            <th>Necesidad Árboles</th>
+            <th>Tipo Tratamiento</th>
+            <th>Fecha Aplicación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in mantenimientos %}
+          <tr>
+            <td>{{ m.id }}</td>
+            <td>{{ m.guadana }}</td>
+            <td>{{ m.necesidadArboles }}</td>
+            <td>{{ m.tipoTratamiento }}</td>
+            <td>{{ m.fechaAplicacionTratamiento }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay mantenimientos registrados.</p>
+    {% endif %}
+  </div>
+
+  <!-- Podas -->
+  <div class="section">
+    <h2>Podas</h2>
+    {% if podas %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo Poda</th>
+            <th>Herramientas Usadas</th>
+            <th>Técnicas Usadas</th>
+            <th>Fecha Poda</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pd in podas %}
+          <tr>
+            <td>{{ pd.id }}</td>
+            <td>{{ pd.tipoPoda }}</td>
+            <td>{{ pd.herramientasUsadas }}</td>
+            <td>{{ pd.tecnicasUsadas }}</td>
+            <td>{{ pd.fechaPoda }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay podas registradas.</p>
+    {% endif %}
+  </div>
+
+  <!-- Cosechas -->
+  <div class="section">
+    <h2>Cosechas</h2>
+    {% if cosechas %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha Cosecha</th>
+            <th>Cantidad Cosechada</th>
+            <th>Calidad Exportación</th>
+            <th>Calidad Nacional</th>
+            <th>Calidad Industrial</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in cosechas %}
+          <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.fechaCosecha }}</td>
+            <td>{{ c.cantidadCosechada }}</td>
+            <td>{{ c.kilosCalidadExportacion }}</td>
+            <td>{{ c.kilosCalidadNacional }}</td>
+            <td>{{ c.kilosCalidadIndustrial }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay cosechas registradas.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
