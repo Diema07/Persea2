@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'rest_framework'
+<<<<<<< HEAD
     
+=======
+>>>>>>> b4347e1de8487fb47b221dd6fe939056af9c2ad7
 ]
 
 # Backends de autenticación
@@ -180,6 +183,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+<<<<<<< HEAD
 #notificaciones
 
 # Configuración del correo (Gmail)
@@ -215,6 +219,8 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
+=======
+>>>>>>> b4347e1de8487fb47b221dd6fe939056af9c2ad7
 # Configuración para producción
 if not DEBUG:
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEPLOY')  # Hosts permitidos en producción
