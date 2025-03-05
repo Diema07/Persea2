@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// Ajusta la importación según tu API real
 import { getCosechaByPlantacionId } from '../api/cosecha.api';
 import { CosechaForm } from '../components/cosechaForm';
 
@@ -16,7 +15,6 @@ export function CosechaPage() {
       return;
     }
     try {
-      // Ajusta según tu API (usa Number(plantacionId) si es necesario)
       const data = await getCosechaByPlantacionId(Number(plantacionId));
       setCosechas(data || []);
     } catch (error) {
@@ -31,10 +29,10 @@ export function CosechaPage() {
     }
   }, [plantacionId]);
 
-    // Botón para ir a Preparacion terreno 
-    const handleRedirectToGestionTareas = () => {
-        navigate(`/gestionTareas/${plantacionId}`);
-      };
+  // Botón para ir a Gestión de Tareas 
+  const handleRedirectToGestionTareas = () => {
+    navigate(`/gestionTareas/${plantacionId}`);
+  };
 
   return (
     <div>
@@ -46,8 +44,7 @@ export function CosechaPage() {
         onCreated={loadCosechas}  // callback para recargar la lista
       />
 
-      
-<button
+      <button
         onClick={handleRedirectToGestionTareas}
         style={{
           marginBottom: '16px',
@@ -71,10 +68,9 @@ export function CosechaPage() {
             <li key={c.id}>
               <strong>ID:</strong> {c.id} <br />
               <strong>Fecha de Cosecha:</strong> {c.fechaCosecha || '---'} <br />
-              <strong>Total Cosecha :</strong> {c.cantidadCosechada || 0} kg<br />
-              <strong>Calidad Exportación:</strong> {c.kilosCalidadExportacion || 0} kg <br />
-              <strong>Calidad Nacional:</strong> {c.kilosCalidadNacional || 0} kg <br />
-              <strong>Calidad Industrial:</strong> {c.kilosCalidadIndustrial || 0} kg <br />
+              <strong>Cantidad Alta Calidad:</strong> {c.cantidadAltaCalidad || 0} kg<br />
+              <strong>Cantidad Mediana Calidad:</strong> {c.cantidadMedianaCalidad || 0} kg<br />
+              <strong>Cantidad Baja Calidad:</strong> {c.cantidadBajaCalidad || 0} kg<br />
               <hr />
             </li>
           ))}

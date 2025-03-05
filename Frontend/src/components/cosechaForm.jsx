@@ -1,25 +1,16 @@
-// src/components/CosechaForm.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-// Ajusta las siguientes importaciones según tu API real
-import { getCosechaByPlantacionId, postCosecha, } from '../api/cosecha.api';
+import { getCosechaByPlantacionId, postCosecha } from '../api/cosecha.api';
 
 export function CosechaForm({ plantacionId, onCreated }) {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm();
 
-  // Estado para controlar si el checkbox de fecha está deshabilitado
-  const [isCheckboxDisabled, setIsCheckboxDisabled] = useState(false);
-
-  // Observamos el checkbox para asignar fecha o null
-  const watchCheckCosecha = watch('checkCosecha');
-
-  // Al montar, obtenemos si ya existe un registro (opcional)
+  // Al montar, obtenemos si ya existe un registro para prellenar el formulario
   useEffect(() => {
     async function fetchData() {
       try {
@@ -28,23 +19,13 @@ export function CosechaForm({ plantacionId, onCreated }) {
           throw new Error("plantacionId debe ser un número");
         }
 
-        // Si quieres un solo registro por plantación, podrías usar getCosechaByPlantacionId(plantacionIdNumber).
-        // O si tienes varios, y usas cosechaId, ajusta la lógica.
         const data = await getCosechaByPlantacionId(plantacionIdNumber);
 
-        // Si hay un registro existente, úsalo para prellenar
         if (data && data.length > 0) {
-          const cosecha = data[0]; // o filtra el que quieras
-
-          // Asignar checkbox si ya tiene fecha
-          setValue('checkCosecha', !!cosecha.fechaCosecha);
-          setIsCheckboxDisabled(!!cosecha.fechaCosecha);
-
-          // Prellenar campos
-          setValue('cantidadCosechada', cosecha.cantidadCosechada || '');
-          setValue('kilosCalidadExportacion', cosecha.kilosCalidadExportacion || '');
-          setValue('kilosCalidadNacional', cosecha.kilosCalidadNacional || '');
-          setValue('kilosCalidadIndustrial', cosecha.kilosCalidadIndustrial || '');
+          const cosecha = data[0];
+          setValue('cantidadAltaCalidad', cosecha.cantidadAltaCalidad || '');
+          setValue('cantidadMedianaCalidad', cosecha.cantidadMedianaCalidad || '');
+          setValue('cantidadBajaCalidad', cosecha.cantidadBajaCalidad || '');
         }
       } catch (error) {
         console.error('Error al cargar la cosecha:', error);
@@ -53,40 +34,18 @@ export function CosechaForm({ plantacionId, onCreated }) {
     fetchData();
   }, [plantacionId, setValue]);
 
-  // Cada vez que cambie el checkbox, asignamos fecha de hoy o null
-  useEffect(() => {
-    if (watchCheckCosecha) {
-      setValue('fechaCosecha', new Date().toISOString().split('T')[0]);
-    } else {
-      setValue('fechaCosecha', null);
-    }
-  }, [watchCheckCosecha, setValue]);
-
-  // Manejo del submit: CREAR (POST) o ACTUALIZAR (PATCH)
+  // Manejo del submit: CREAR (POST)
   const onSubmit = handleSubmit(async (data) => {
     try {
       const datosParaEnviar = {
-        // Campos básicos
-        cantidadCosechada: data.cantidadCosechada || 0,
-        kilosCalidadExportacion: data.kilosCalidadExportacion || 0,
-        kilosCalidadNacional: data.kilosCalidadNacional || 0,
-        kilosCalidadIndustrial: data.kilosCalidadIndustrial || 0,
+        cantidadAltaCalidad: parseFloat(data.cantidadAltaCalidad) || 0,
+        cantidadMedianaCalidad: parseFloat(data.cantidadMedianaCalidad) || 0,
+        cantidadBajaCalidad: parseFloat(data.cantidadBajaCalidad) || 0,
         idPlantacion: Number(plantacionId),
       };
 
-      // Si el checkbox está marcado, enviamos la fecha
-      if (data.checkCosecha) {
-        datosParaEnviar.fechaCosecha = data.fechaCosecha;
-      } else {
-        datosParaEnviar.fechaCosecha = null;
-      }
+      await postCosecha(datosParaEnviar);
 
-      // Decidir si creamos o actualizamos
-  
-        await postCosecha(datosParaEnviar);
-      
-
-      // Llamar callback o recargar
       if (onCreated) {
         onCreated();
       }
@@ -97,69 +56,48 @@ export function CosechaForm({ plantacionId, onCreated }) {
 
   return (
     <div>
-      <h3>Agregar cosecha </h3>
+      <h3>Agregar cosecha</h3>
       <form onSubmit={onSubmit}>
-        {/* CHECKBOX PARA FECHA */}
+        {/* CANTIDAD ALTA CALIDAD */}
         <div style={{ marginBottom: '8px' }}>
-          <input
-            type="checkbox"
-            {...register('checkCosecha')}
-          />
-          <label style={{ marginLeft: '8px' }}>
-            Fecha de Cosecha (hoy si marcas)
-          </label>
-          {watchCheckCosecha && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('fechaCosecha')})
-            </span>
-          )}
-        </div>
-
-        {/* CANTIDAD TOTAL COSECHADA */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Total Cosecha (kg):</label>
+          <label>Cantidad Alta Calidad (kg):</label>
           <input
             type="number"
             step="any"
-            {...register('cantidadCosechada', { required: true })}
+            {...register('cantidadAltaCalidad', { required: true })}
             style={{ marginLeft: '8px' }}
           />
-          {errors.cantidadCosechada && (
+          {errors.cantidadAltaCalidad && (
             <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
           )}
         </div>
 
-        {/* CALIDAD EXPORTACIÓN */}
+        {/* CANTIDAD MEDIANA CALIDAD */}
         <div style={{ marginBottom: '8px' }}>
-          <label>Calidad Exportación (kg):</label>
+          <label>Cantidad Mediana Calidad (kg):</label>
           <input
             type="number"
             step="any"
-            {...register('kilosCalidadExportacion', { required: false })}
+            {...register('cantidadMedianaCalidad', { required: true })}
             style={{ marginLeft: '8px' }}
           />
+          {errors.cantidadMedianaCalidad && (
+            <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
+          )}
         </div>
 
-        {/* CALIDAD NACIONAL */}
+        {/* CANTIDAD BAJA CALIDAD */}
         <div style={{ marginBottom: '8px' }}>
-          <label>Calidad Nacional (kg):</label>
+          <label>Cantidad Baja Calidad (kg):</label>
           <input
             type="number"
             step="any"
-            {...register('kilosCalidadNacional', { required: false })}
+            {...register('cantidadBajaCalidad', { required: true })}
             style={{ marginLeft: '8px' }}
           />
-        </div>
-
-        {/* CALIDAD INDUSTRIAL */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Calidad Industrial (kg):</label>
-          <input
-            type="number"
-            step="any"
-            {...register('kilosCalidadIndustrial', { required: false })}
-            style={{ marginLeft: '8px' }}
-          />
+          {errors.cantidadBajaCalidad && (
+            <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
+          )}
         </div>
         <button style={{ marginTop: '16px' }}>Listo</button>
       </form>

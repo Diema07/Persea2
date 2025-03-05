@@ -1,34 +1,32 @@
 import axios from 'axios';
 
-const cosechaAPI = axios.create ({
-
-    baseURL: 'http://localhost:8000/produccion/api/v1/Cosecha/',
-    withCredentials : true,
-    
+const cosechaAPI = axios.create({
+  baseURL: 'http://localhost:8000/produccion/api/v1/Cosecha/',
+  withCredentials: true,
 });
 
 // Obtener CSRF token
 const getCSRFToken = async () => {
-    const response = await axios.get('http://localhost:8000/api/csrf/', { withCredentials: true });
-    return response.data.csrfToken;
-  };
+  const response = await axios.get('http://localhost:8000/api/csrf/', { withCredentials: true });
+  return response.data.csrfToken;
+};
 
-export const getALLcosecha = async () =>{
-    try {
-        const response = await cosechaAPI.get('/');
-        return response.data;
-    } catch (error){
-        console.error('Error al obtener las cosechas:', error.response?.data || error);
-    }
+export const getALLcosecha = async () => {
+  try {
+    const response = await cosechaAPI.get('/');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener las cosechas:', error.response?.data || error);
+  }
 };
 
 export const getCosechaByPlantacionId = async (plantacionId) => {
-    try {
-        const response = await cosechaAPI.get(`?plantacionId=${plantacionId}`);
-        return response.data;
-    } catch(error){
-        console.error('Error al obtener Cosecha:', error.response?.data || error);
-    }
+  try {
+    const response = await cosechaAPI.get(`?plantacionId=${plantacionId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener Cosecha:', error.response?.data || error);
+  }
 };
 
 export const postCosecha = async (data) => {
