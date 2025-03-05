@@ -1,3 +1,5 @@
+// plantaciones.api.js
+
 import axios from 'axios';
 
 // Configuración global de Axios
@@ -12,24 +14,43 @@ const getCSRFToken = async () => {
     return response.data.csrfToken;
 };
 
-export const getAllTasks = () => taskAPI.get('/');  // No se necesita pasar config
+export const getAllTasks = () => taskAPI.get('/');
+
+// Función para obtener las plantaciones filtradas (estado = True) desde la nueva vista
+export const getFilteredTasks = () =>
+    axios.get('http://localhost:8000/plantaciones/api/v1/PlantacionFiltrada/', { withCredentials: true });
 
 // Crear una nueva plantación
 export const createTask = async (task) => {
     try {
-        const csrfToken = await getCSRFToken();  // Obtener el CSRF token antes de hacer la solicitud
-
+        const csrfToken = await getCSRFToken();
         const response = await taskAPI.post('/', task, {
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken,  // Incluir el CSRF token en la petición
+                'X-CSRFToken': csrfToken,
             },
         });
-
         console.log(response.data);
     } catch (error) {
         console.error('Error al crear la plantación:', error.response?.data || error);
     }
 };
 
-export const getPlantacionById = (id)=> taskAPI.get('/${id}');
+export const getPlantacionById = (id) => taskAPI.get(`/${id}`);
+
+// Actualizar el estado (PATCH)
+export const updateTaskState = async (id, newState) => {
+    try {
+        const csrfToken = await getCSRFToken();
+        const response = await taskAPI.patch(`${id}/`, { estado: newState }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el estado de la plantación:', error.response?.data || error);
+        throw error;
+    }
+};

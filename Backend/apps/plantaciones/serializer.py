@@ -6,3 +6,9 @@ class PlantacionSerializer(serializers.ModelSerializer):
         model = Plantacion
         fields = ['id', 'nombreParcela', 'fechaPlantacion', 'estado', 'idUsuario']
         read_only_fields = ['fechaPlantacion', 'estado', 'idUsuario']
+
+
+class PlantacionEstadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plantacion
+        fields = ['estado']
