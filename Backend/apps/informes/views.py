@@ -1,18 +1,15 @@
-# apps/informes/views.py
-
+import pdfcrowd
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-#from weasyprint import HTML
 
 from apps.plantaciones.models import Plantacion
 from apps.preparacion.models import PreparacionTerreno, SeleccionArboles
-from apps.mantenimiento.models import RiegoFertilizacion,MantenimientoMonitoreo,Poda
+from apps.mantenimiento.models import RiegoFertilizacion, MantenimientoMonitoreo, Poda
 from apps.produccion.models import Cosecha
-
 
 class InformeCompletoView(APIView):
     """
@@ -42,8 +39,9 @@ class InformeCompletoView(APIView):
         formato = request.query_params.get('formato', 'json').lower()
 
         if formato == 'pdf':
-            # 4. Generar PDF con WeasyPrint
-            # Crea un contexto para el template
+            # 4. Generar PDF con PDFCrowd
+
+            # Crear el contexto para el template
             context = {
                 "plantacion": plantacion,
                 "preparaciones": preparaciones,
@@ -54,19 +52,25 @@ class InformeCompletoView(APIView):
                 "cosechas": cosechas,
             }
 
-            # Renderiza el template HTML (debes crearlo en templates/informes/informe_completo.html)
-            html_string = render_to_string('informes/informe_completo.html', context)
+            # Renderizar el template HTML
+            html_string = render_to_string('informe_completo.html', context)
 
-            # Convierte HTML a PDF
-            pdf_file = HTML(string=html_string).write_pdf()
+            try:
+                # Configura el cliente con tus credenciales de PDFCrowd
+                # Reemplaza 'YOUR_USERNAME' y 'YOUR_API_KEY' por tus credenciales reales
+                client = pdfcrowd.HtmlToPdfClient("Persea", "b287580fca9c1ab48cfd4398d2bf20a5")
+                # Convierte el HTML a PDF (la función retorna el PDF en bytes)
+                pdf_content = client.convertString(html_string)
+            except pdfcrowd.Error as error:
+                return HttpResponse("Error al generar el PDF: " + str(error), status=500)
 
-            # Retorna el PDF como archivo descargable
-            response = HttpResponse(pdf_file, content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename=\"informe_plantacion_{plantacion_id}.pdf\"'
+            # Retornar el PDF en la respuesta
+            response = HttpResponse(pdf_content, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="informe_plantacion_{plantacion_id}.pdf"'
             return response
 
         else:
-            # 5. Retorna JSON
+            # 5. Retornar JSON
             data = {
                 "plantacion": {
                     "id": plantacion.id,
@@ -130,13 +134,11 @@ class InformeCompletoView(APIView):
                     {
                         "id": c.id,
                         "fechaCosecha": str(c.fechaCosecha),
-                        "cantidadCosechada": str(c.cantidadCosechada),
-                        "kilosCalidadExportacion": str(c.kilosCalidadExportacion),
-                        "kilosCalidadNacional": str(c.kilosCalidadNacional),
-                        "kilosCalidadIndustrial": str(c.kilosCalidadIndustrial),
+                        "cantidadAltaCalidad": str(c.cantidadAltaCalidad),
+                        "cantidadMedianaCalidad": str(c.cantidadMedianaCalidad),
+                        "cantidadBajaCalidad": str(c.cantidadBajaCalidad),
                     }
                     for c in cosechas
                 ]
             }
-
             return Response(data)

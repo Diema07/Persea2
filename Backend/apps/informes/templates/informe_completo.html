@@ -227,7 +227,6 @@
             <th>Cantidad Cosechada</th>
             <th>Calidad Exportación</th>
             <th>Calidad Nacional</th>
-            <th>Calidad Industrial</th>
           </tr>
         </thead>
         <tbody>
@@ -235,10 +234,9 @@
           <tr>
             <td>{{ c.id }}</td>
             <td>{{ c.fechaCosecha }}</td>
-            <td>{{ c.cantidadCosechada }}</td>
-            <td>{{ c.kilosCalidadExportacion }}</td>
-            <td>{{ c.kilosCalidadNacional }}</td>
-            <td>{{ c.kilosCalidadIndustrial }}</td>
+            <td>{{ c.cantidadAltaCalidad }}</td>
+            <td>{{ c.cantidadMedianaCalidad }}</td>
+            <td>{{ c.cantidadBajaCalidad }}</td>
           </tr>
           {% endfor %}
         </tbody>
