@@ -83,9 +83,8 @@ export function RiegoFertilizacionPage() {
         <p>No hay registros de Riego/Fertilización.</p>
       ) : (
         <ul className="riego-list">
-          {riegoList.map((r) => (
-            <li key={r.id} className="riego-item">
-              
+          {riegoList.map((r, index) => (
+            <li key={`${r.id}-${index}`} className="riego-item">
               {r.fechaRiego && (
                 <p><strong>Fecha Riego:</strong> {r.fechaRiego}</p>
               )}

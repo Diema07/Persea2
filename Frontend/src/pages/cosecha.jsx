@@ -66,7 +66,6 @@ export function CosechaPage() {
         <ul>
           {cosechas.map((c) => (
             <li key={c.id}>
-              <strong>ID:</strong> {c.id} <br />
               <strong>Fecha de Cosecha:</strong> {c.fechaCosecha || '---'} <br />
               <strong>Cantidad Alta Calidad:</strong> {c.cantidadAltaCalidad || 0} kg<br />
               <strong>Cantidad Mediana Calidad:</strong> {c.cantidadMedianaCalidad || 0} kg<br />

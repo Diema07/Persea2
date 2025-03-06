@@ -49,7 +49,38 @@ class RiegoFertilizacionSerializer(serializers.ModelSerializer):
 class MantenimientoMonitoreoSerializer(serializers.ModelSerializer):
     class Meta:
         model = MantenimientoMonitoreo
-        fields = '__all__'
+        fields = (
+            'idPlantacion',
+            'guadana',
+            'necesidadArboles',
+            'tipoTratamiento',
+            'fechaAplicacionTratamiento',
+        )
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        
+        # Definir los grupos:
+        # Grupo 1: guadana
+        grupo_guadana = ['guadana']
+        # Grupo 2: el resto de los campos
+        grupo_resto = ['necesidadArboles', 'tipoTratamiento', 'fechaAplicacionTratamiento']
+        
+        # Función auxiliar que verifica si algún campo del grupo es inválido (None o cadena vacía)
+        def grupo_incompleto(grupo):
+            return any(representation.get(campo) in [None, ""] for campo in grupo)
+        
+        # Si el grupo de guadana está incompleto, se elimina el campo
+        if grupo_incompleto(grupo_guadana):
+            for campo in grupo_guadana:
+                representation.pop(campo, None)
+        
+        # Si el grupo del resto de campos está incompleto, se eliminan todos los campos del grupo
+        if grupo_incompleto(grupo_resto):
+            for campo in grupo_resto:
+                representation.pop(campo, None)
+        
+        return representation
 
 class PodaSerializer(serializers.ModelSerializer):
     class Meta:

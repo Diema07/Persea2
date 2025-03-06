@@ -8,7 +8,6 @@ export function MantenimientoMonitoreoPage() {
   const idPlantacion = Number(plantacionId);
   const [mantenimientos, setMantenimientos] = useState([]);
   const navigate = useNavigate();
-  
 
   // Carga los mantenimientos existentes
   const loadMantenimientos = async () => {
@@ -18,7 +17,7 @@ export function MantenimientoMonitoreoPage() {
     }
     try {
       const data = await getMantenimientoByPlantacionId(idPlantacion);
-      setMantenimientos(data);
+      setMantenimientos(data || []);
     } catch (error) {
       console.error('Error al obtener mantenimientos:', error);
     }
@@ -33,18 +32,16 @@ export function MantenimientoMonitoreoPage() {
   // Obtener el ID del primer mantenimiento (si existe)
   const mantenimientoId = mantenimientos.length > 0 ? mantenimientos[0].id : null;
 
-  // Botón para ir a Preparacion terreno 
+  // Botón para ir a Gestión de Tareas
   const handleRedirectToGestionTareas = () => {
     navigate(`/gestionTareas/${idPlantacion}`);
   };
-
-
 
   return (
     <div>
       <h2>Mantenimiento/Monitoreo - Plantación {idPlantacion}</h2>
 
-      {/* Formulario con checkboxes y fechas automáticas */}
+      {/* Formulario para crear o editar mantenimientos */}
       <MantenimientoMonitoreoForm
         plantacionId={idPlantacion}
         mantenimientoId={mantenimientoId}
@@ -63,24 +60,29 @@ export function MantenimientoMonitoreoPage() {
           cursor: 'pointer',
         }}
       >
-        Ir a Gestion tareas 
+        Ir a Gestión de tareas 
       </button>
 
-
-      
-      {/* (Opcional) Historial de Mantenimientos */}
+      {/* Historial de Mantenimientos */}
       <h3>Historial de Mantenimientos:</h3>
       {mantenimientos.length === 0 ? (
         <p>No hay mantenimientos registrados.</p>
       ) : (
         <ul>
-          {mantenimientos.map((m) => (
-            <li key={m.id}>
-              <strong>ID:</strong> {m.id} <br />
-              <strong>Guadaña:</strong> {m.guadana || '---'} <br />
-              <strong>Necesidad de Árboles:</strong> {m.necesidadArboles || '---'} <br />
-              <strong>Tipo Tratamiento:</strong> {m.tipoTratamiento || '---'} <br />
-              <strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento || '---'} <br />
+          {mantenimientos.map((m, index) => (
+            <li key={`${m.id}-${index}`}>
+              {m.guadana && (
+                <p><strong>Guadaña:</strong> {m.guadana}</p>
+              )}
+              {m.necesidadArboles && (
+                <p><strong>Necesidad de Árboles:</strong> {m.necesidadArboles}</p>
+              )}
+              {m.tipoTratamiento && (
+                <p><strong>Tipo Tratamiento:</strong> {m.tipoTratamiento}</p>
+              )}
+              {m.fechaAplicacionTratamiento && (
+                <p><strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento}</p>
+              )}
               <hr />
             </li>
           ))}
