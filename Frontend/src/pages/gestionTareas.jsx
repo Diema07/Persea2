@@ -66,6 +66,11 @@ export function GestionTareasPage() {
             <img src={logo6} alt="Cosecha" className="icono" />
             <p>Cosecha</p>
           </Link>
+
+          <Link to={`/informe-completo/${plantacionId}/`} className="grid-cuadro">
+            <img src={logo6} alt="Cosecha" className="icono" />
+            <p>Informe</p>
+          </Link>
         </div>
       </div>
     </div>
