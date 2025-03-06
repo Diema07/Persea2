@@ -73,7 +73,6 @@ export function PodaPage() {
         <ul>
           {podas.map((p) => (
             <li key={p.id}>
-              <strong>ID:</strong> {p.id} <br />
               <strong>Tipo de Poda:</strong> {p.tipoPoda === 'formacion' ? 'Formación' : p.tipoPoda === 'mantenimiento' ? 'Mantenimiento' : 'Sanitaria'} <br />
               <strong>Herramientas Usadas:</strong> {p.herramientasUsadas === 'tijeras' ? 'Tijeras' : p.herramientasUsadas === 'serrucho' ? 'Serrucho' : 'Motosierra'} <br />
               <strong>Técnicas Usadas:</strong> {p.tecnicasUsadas === 'ralo' ? 'Raleo' : p.tecnicasUsadas === 'deschuponado' ? 'Deschuponado' : 'Rebaje'} <br />
