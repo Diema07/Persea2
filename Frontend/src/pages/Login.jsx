@@ -1,5 +1,5 @@
 import '../styles/login.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import aguacate from "../img/aguacate.png";
 import persea from "../img/persea1.png";
 import logo from "../img/logo.png";
+import avatar from '../img/avatar.jpg'
 
 export function Login() {
   const navigate = useNavigate();
@@ -31,23 +32,17 @@ export function Login() {
   };
 
   return (
-    <div className="contenedor">
-      <div className="caja">
-        <div className="contenedor-2">
-          <div className="parte-izquierda">
-            <img src={persea} alt="Planta" className="imagen" />
-            <p className="slogan">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit iste facilis ipsum nesciunt quibusdam, error, modi numquam et adipisci dolorem nulla at repellendus provident placeat amet eaque rem quasi. Nulla.
-            </p>
-            <button onClick={handleGoogleLogin} className="google-login-button">
-              <img src={logo} alt="Google Logo" className='logo'/>
-              Iniciar sesión con Google
-            </button>
-          </div>
-          <div className="parte-derecha">
-            <img src={aguacate} alt="Aguacate" className="imagen-lateral" />
-          </div>
-        </div>
+    <div className="glass-container">
+      <img src={avatar} alt="Avatar" className="glass-avatar" />
+      <div className="glass-box">
+        <h2 className='sub'>Bienvenido a  <span className="persea-text">Persea</span>!</h2>
+        <p className="glass-text">
+        Optimiza la producción y gestión de tu cultivo de aguacates de manera sencilla y eficiente. Lleva el control de tus cosechas  y análisis en un solo lugar.
+        </p>
+        <button onClick={handleGoogleLogin} className="glass-button">
+          <img src={logo} alt="Google Logo" className='glass-logo'/>
+          Iniciar sesión
+        </button>
       </div>
     </div>
   );

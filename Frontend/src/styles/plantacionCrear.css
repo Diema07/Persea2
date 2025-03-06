@@ -1,107 +1,213 @@
-body{
-    background-image: url("../img/img.png");
+body {
     background-size: cover;
     background-position: center;
-
-}
-.main1{
-    margin: 0;
 }
 
-.link {
-    display: block;  
-    width: fit-content; 
-    text-decoration: none; 
+.main1 {
+   
+   margin-left: 40px;
+    
 }
+
 
 
 .cuadro {
+    margin-top: 30px;
+    margin-bottom: 60px;
     display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
     align-items: center;
+    justify-content: space-between;
     background: linear-gradient(to right, #17aa40, #1e7c2b);
     color: white;
     border-radius: 10px;
-    padding: 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 30px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    padding: 20px;
+    width: 250px; /* Tamaño fijo para que sea más cuadrado */
+    height: 350px; /* Altura definida */
+    
+    
 }
+
+
 
 .cuadro:hover {
-    transform: scale(1.05);
+    border: 1px solid #026021;
+    background: linear-gradient(to right, #24bd4f, #299838);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.parte-izquierda {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 48%;
+
+
+
+
+.icono img {
+    width: 60px;
+    height: 60px;
+    margin: 0;
 }
 
-.parte-izquierda h1 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
+
+
+
+
+.parrafo {
+    font-size: 12px;
     text-align: center;
 }
 
-.icono {
-    
-    border-radius: 50%;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.titulo{
+    font-size: 24px;
+    margin: 0;
 }
 
-.icono img {
-    width: 40px;
-    height: 40px;
-}
-
-.dividir {
-    margin-top: 35px;
-    margin-right: 25px;
-    height: 80px;
-    width: 1px;
-    background-color: rgb(255, 255, 255);
-    
-
-}
-
-.parte-derecha {
-    width: 48%;
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-start;
-    margin-right: 10px;
-}
-
-
-.parte-derecha h2 {
-    display: flex;
+/* Estilos para el botón */
+.boton-ver-mas {
+    text-decoration: none;
+    padding: 8px 15px;
+    background-color: white;
+    color: #1e7c2b;
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 2px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.boton-ver-mas:hover {
+    background-color: #f0f0f0;
+    
+    transform: scale(1.05);
     
 }
 
-.parte-derecha p {
-    font-size: 12px;
-    color: #d1d1d1;
+
+
+
+/*¨MODALAALAA*/
+/* Botón de eliminar */
+.boton-eliminar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.boton-eliminar img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s;
+}
+
+.boton-eliminar:hover img {
+    transform: scale(1.1);
+}
+
+/* Modal */
+.modal-overlay-2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    flex-direction: column;
-    
-    
+    align-items: center;
+    justify-content: center;
 }
 
+.modal-2 {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal-2 button {
+    margin: 10px;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.confirmar {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+}
+
+.cancelar {
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.confirmar:hover {
+    background-color: darkred;
+}
+
+.cancelar:hover {
+    background-color: darkgray;
+}
+.parcela-1{
+    font-weight: bold;
+}
+/* Responsividad */
+/* Para tablets */
+@media (max-width: 1024px) {
+    .cuadro {
+        width: 80%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .titulo {
+        font-size: 20px;
+    }
+
+    .parrafo {
+        font-size: 14px;
+    }
+}
+
+/* Para móviles */
+@media (max-width: 768px) {
+    .main1 {
+        margin: 20px;
+    }
+
+    .cuadro {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .boton-ver-mas {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .icono img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Para móviles pequeños */
+@media (max-width: 480px) {
+    .titulo {
+        font-size: 18px;
+    }
+
+    .parrafo {
+        font-size: 12px;
+    }
+
+    .cuadro {
+        width: 90%;
+        padding: 8px;
+    }
+}
