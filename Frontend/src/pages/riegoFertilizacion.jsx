@@ -44,8 +44,7 @@ export function RiegoFertilizacionPage() {
     setIdRiegoEdit(null);
   };
 
-
-  // Botón para ir a Preparacion terreno 
+  // Botón para ir a Gestión de Tareas
   const handleRedirectToGestionTareas = () => {
     navigate(`/gestionTareas/${idPlantacion}`);
   };
@@ -54,10 +53,8 @@ export function RiegoFertilizacionPage() {
     <div className="riego-fertilizacion-container">
       <h2>Riego y Fertilización - Plantación {idPlantacion}</h2>
 
-      {/* Mostrar mensaje de error si existe */}
       {error && <p className="error-message">{error}</p>}
 
-      {/* Formulario para crear o editar registros */}
       <RiegoFertilizacionForm
         plantacionId={idPlantacion}
         riegoId={idRiegoEdit}
@@ -76,10 +73,9 @@ export function RiegoFertilizacionPage() {
           cursor: 'pointer',
         }}
       >
-        Ir a Gestion tareas 
+        Ir a Gestión de tareas
       </button>
 
-      {/* Historial de Riego/Fertilización */}
       <h3>Historial de Riego/Fertilización:</h3>
       {loading ? (
         <p>Cargando...</p>
@@ -89,20 +85,31 @@ export function RiegoFertilizacionPage() {
         <ul className="riego-list">
           {riegoList.map((r) => (
             <li key={r.id} className="riego-item">
-              <p><strong>ID:</strong> {r.id}</p>
-              <p><strong>Fecha Riego:</strong> {r.fechaRiego || '---'}</p>
-              <p><strong>Fecha Fertilización:</strong> {r.fechaFertilizante || '---'}</p>
-              <p><strong>Tipo de Riego:</strong> {r.tipoRiego || '---'}</p>
-              <p><strong>Método de Aplicación:</strong> {r.metodoAplicacionFertilizante || '---'}</p>
-              <p><strong>Tipo de Fertilizante:</strong> {r.tipoFertilizante || '---'}</p>
-              <p><strong>Nombre del Fertilizante:</strong> {r.nombreFertilizante || '---'}</p>
-              <p><strong>Cantidad de Fertilizante:</strong> {r.cantidadFertilizante || '---'} {r.medidaFertilizante || ''}</p>
-              <button
-                onClick={() => setIdRiegoEdit(r.id)}
-                className="edit-button"
-              >
-                Editar
-              </button>
+              
+              {r.fechaRiego && (
+                <p><strong>Fecha Riego:</strong> {r.fechaRiego}</p>
+              )}
+              {r.fechaFertilizante && (
+                <p><strong>Fecha Fertilización:</strong> {r.fechaFertilizante}</p>
+              )}
+              {r.tipoRiego && (
+                <p><strong>Tipo de Riego:</strong> {r.tipoRiego}</p>
+              )}
+              {r.metodoAplicacionFertilizante && (
+                <p><strong>Método de Aplicación:</strong> {r.metodoAplicacionFertilizante}</p>
+              )}
+              {r.tipoFertilizante && (
+                <p><strong>Tipo de Fertilizante:</strong> {r.tipoFertilizante}</p>
+              )}
+              {r.nombreFertilizante && (
+                <p><strong>Nombre del Fertilizante:</strong> {r.nombreFertilizante}</p>
+              )}
+              {(r.cantidadFertilizante || r.medidaFertilizante) && (
+                <p>
+                  <strong>Cantidad de Fertilizante:</strong> {r.cantidadFertilizante} {r.medidaFertilizante}
+                </p>
+              )}
+              
             </li>
           ))}
         </ul>
