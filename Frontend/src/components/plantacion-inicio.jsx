@@ -1,17 +1,30 @@
-// plantacion-inicio.jsx
-
 import '../styles/plantacion-inicio.css';
+import '../styles/modalCrear.css'; 
 import React, { useEffect, useState } from 'react';
-import { getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
-import { Link } from 'react-router-dom';
+import { getAllTasks } from '../api/plantaciones.api';
+import { Taskcard } from './plantacion-crear'; 
+import { useForm } from 'react-hook-form';
+import { createTask } from '../api/plantaciones.api';
+import Header from "./Header";
+
+
+// Importaciones de Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 
 export function PlantacionInicio() {
     const [plantaciones, setPlantaciones] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     useEffect(() => {
         const fetchPlantaciones = async () => {
             try {
-                const response = await getFilteredTasks();
+                const response = await getAllTasks();
                 setPlantaciones(response.data);
             } catch (error) {
                 console.error('Error al obtener las plantaciones:', error);
@@ -20,38 +33,81 @@ export function PlantacionInicio() {
 
         fetchPlantaciones();
     }, []);
+    
 
-    // Función para actualizar el estado de la plantación a false
-    const handleDeactivate = async (id) => {
+
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    // Lógica del formulario
+    const onSubmit = handleSubmit(async (data) => {
+        console.log('Datos enviados:', data);
         try {
-            await updateTaskState(id, false);
-            // Se refresca la lista para reflejar los cambios
-            const response = await getFilteredTasks();
-            setPlantaciones(response.data);
+            await createTask(data);
+            window.location.href = '/inicio-plantacion';
         } catch (error) {
-            console.error('Error al desactivar la plantación:', error);
+            console.error('Error al crear la plantación:', error);
         }
-    };
+    });
 
     return (
-        <div>
-            <h2>Mis Plantaciones</h2>
-            <ul>
-                {plantaciones.map((plantacion) => (
-                    <li key={plantacion.id}>
-                        <Link to={`/gestionTareas/${plantacion.id}`}>
-                            {plantacion.nombreParcela}
-                        </Link>
-                        {/* Mostrar el botón solo si el estado es true */}
-                        {plantacion.estado && (
-                            <button onClick={() => handleDeactivate(plantacion.id)}>
-                                Desactivar
-                            </button>
-                        )}
-                    </li>
-                ))}
-            </ul>
-            <Link to="/plantacion" className="omit-button">Crear Plantación</Link>
-        </div>
+        <>
+        <Header/>
+            <div className='main'>
+                <div className='orden'>
+                    <h2>Mis Plantaciones</h2>
+                    
+                    <button onClick={openModal} className="button">Crear Plantación</button>
+                </div>
+
+                {/* Swiper envuelve las plantaciones */}
+                <Swiper
+                    modules={[Navigation, Pagination]}
+                    loop={false}
+                    slidesPerView={3}
+                    centeredSlides={false}
+                    spaceBetween={2}
+                    navigation
+                    pagination={{ clickable: true }}
+                    className="swiper-container"
+                    breakpoints={{
+                        320: { slidesPerView: 1 }, 
+                        480: { slidesPerView: 1 },  
+                        768: { slidesPerView: 2 },  
+                        1024: { slidesPerView: 3 }  
+                    }}
+                >
+                    {plantaciones.map((plantacion) => (
+                        <SwiperSlide key={plantacion.id}>
+                            <Taskcard task={plantacion} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+                {/* Modal */}
+                {isModalOpen && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <h2>Nombre de tu parcela</h2>
+                            <form onSubmit={onSubmit}>
+                                <input
+                                    type="text"
+                                    placeholder="nombre"
+                                    {...register("nombreParcela", { required: true })}
+                                />
+                                {errors.nombreParcela && <span>Requerido</span>}
+                                <div className="button-container">
+                                    <button type="submit">Cosechar</button>
+                                    <button type="button" onClick={closeModal}>Cancelar</button>
+                                </div>
+                            </form>
+                                
+                                
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
     );
 }

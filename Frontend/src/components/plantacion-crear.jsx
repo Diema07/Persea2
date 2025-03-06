@@ -1,30 +1,47 @@
-import "../styles/plantacionCrear.css";
+import "../styles/plantacionCrear.css"; 
+import { Link } from 'react-router-dom';
+import { useState } from "react";
+
+//imagenes
 import plantaIcon from "../img/planta.png";
-import { Link,  } from 'react-router-dom';
+import deleteIcon from "../img/boton-eliminar.png";
 
 export function Taskcard({ task }) {
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+  
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+
     return (
         <div className="main1">
-            <Link to={`/gestionTareas/${task.id}`} className="link">
-                <div className="cuadro">
-                    {/* Parte izquierda */}
-                    <div className="parte-izquierda">
-                        <h1>{task.nombreParcela}</h1>
-                        <div className="icono">
-                            <img src={plantaIcon} alt="Planta" />
-                        </div>
-                    </div>
+            <div className="cuadro">
+                <button className="boton-eliminar" onClick={() => openModal(true)}>
+                    <img src={deleteIcon} alt="Eliminar" />
+                </button>
 
-                
-                    <div className="dividir"></div>
+                <div className="icono">
+                    <img src={plantaIcon} alt="Planta" />
+                </div>
 
-                    {/* Parte derecha */}
-                    <div className="parte-derecha">
-                        <h2>Recomendación</h2>
-                        <p>Para lograr una buena cosecha, se deben tener en cuenta algunos aspectos clave.</p>
+                <h2 className="titulo">{task.nombreParcela}</h2>
+                <p className="parrafo">Para lograr una buena cosecha, se deben tener en cuenta algunos aspectos clave.</p>
+                <Link to={`/gestionTareas/${task.id}`} className="boton-ver-mas">Ver más</Link>
+            </div>
+
+            {isModalOpen && (
+                <div className="modal-overlay-2">
+                    <div className="modal-2">
+                        <p>Tu plantación de "<label className="parcela-1">{task.nombreParcela}</label>" será elimina de tus plantaciones. ¿Estas seguro que quiere eliminarla?</p>
+                        <button className="confirmar" onClick={() => closeModal(false)}>Sí, eliminar</button>
+                        <button className="cancelar" onClick={() => closeModal(false)}>Cancelar</button>
+                        
                     </div>
                 </div>
-            </Link>
+            )}
         </div>
     );
 }
+
