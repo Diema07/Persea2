@@ -35,34 +35,34 @@ export function GestionTareasPage() {
     <div className="main-8">
       <div className="contenedor3">
         <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
-        <div className="grid-container">
+        <div className="grid-contenedor">
 
-          <Link to={`/preparacion/${plantacionId}/`} className="grid-item">
+          <Link to={`/preparacion/${plantacionId}/`} className="grid-cuadro">
             <img src={logo1} alt="Preparación" className="icono" />
             <p>Preparación del terreno</p>
           </Link>
 
-          <Link to={`/seleccion-arboles/${plantacionId}/`} className="grid-item">
+          <Link to={`/seleccion-arboles/${plantacionId}/`} className="grid-cuadro">
             <img src={logo2} alt="Selección" className="icono" />
             <p>Selección de árboles</p>
           </Link>
 
-          <Link to={`/riego-fertilizacion/${plantacionId}/`} className="grid-item">
+          <Link to={`/riego-fertilizacion/${plantacionId}/`} className="grid-cuadro">
             <img src={logo3} alt="Riego" className="icono" />
             <p>Gestión de Riego</p>
           </Link> 
 
-          <Link to={`/mantenimiento-monitoreo/${plantacionId}/`} className="grid-item">
+          <Link to={`/mantenimiento-monitoreo/${plantacionId}/`} className="grid-cuadro">
             <img src={logo4} alt="Mantenimiento" className="icono" />
             <p>Mantenimiento</p>
           </Link>
 
-          <Link to={`/poda/${plantacionId}/`} className="grid-item">
+          <Link to={`/poda/${plantacionId}/`} className="grid-cuadro">
             <img src={logo5} alt="Poda" className="icono" />
             <p>Poda</p>
           </Link>
 
-          <Link to={`/cosecha/${plantacionId}/`} className="grid-item">
+          <Link to={`/cosecha/${plantacionId}/`} className="grid-cuadro">
             <img src={logo6} alt="Cosecha" className="icono" />
             <p>Cosecha</p>
           </Link>

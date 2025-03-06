@@ -36,7 +36,7 @@ export function PlantacionInicio() {
     
 
 
-    // Funciones  modal
+
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -57,7 +57,7 @@ export function PlantacionInicio() {
             <div className='main'>
                 <div className='orden'>
                     <h2>Mis Plantaciones</h2>
-                    {/* Botón que abre el modal */}
+                    
                     <button onClick={openModal} className="button">Crear Plantación</button>
                 </div>
 
@@ -72,7 +72,7 @@ export function PlantacionInicio() {
                     pagination={{ clickable: true }}
                     className="swiper-container"
                     breakpoints={{
-                        320: { slidesPerView: 1 },  // Extra para pantallas muy pequeñas
+                        320: { slidesPerView: 1 }, 
                         480: { slidesPerView: 1 },  
                         768: { slidesPerView: 2 },  
                         1024: { slidesPerView: 3 }  
@@ -90,7 +90,6 @@ export function PlantacionInicio() {
                     <div className="modal">
                         <div className="modal-content">
                             <h2>Nombre de tu parcela</h2>
-                            {/* Aquí está el formulario para crear la plantación dentro del modal */}
                             <form onSubmit={onSubmit}>
                                 <input
                                     type="text"

@@ -24,7 +24,7 @@
   margin-bottom: 20px;
 }
 
-.grid-container {
+.grid-contenedor {
   margin-top: 150px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -36,7 +36,7 @@ link{
   height: 100%;
 }
 
-.grid-item {
+.grid-cuadro {
   text-decoration: none;
   width: 200px;
   height: 180px;
@@ -61,30 +61,30 @@ link{
   transition: opacity 0.3s ease;
 }
 
-.grid-item a {
+.grid-cuadro a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
   text-align: center;
 }
-.grid-item p {
+.grid-cuadro p {
   text-decoration: none;
   color: #333;
   font-weight: bold;
   text-align: center;
 }
 
-.grid-item:hover {
+.grid-cuadro:hover {
  
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(53, 185, 12, 0.6);
 }
 
 
-.grid-item:hover a {
+.grid-cuadro:hover a {
   color: rgb(17, 145, 17);
 }
-.grid-item:hover p {
+.grid-cuadro:hover p {
   color: rgb(17, 145, 17);
 }
 
