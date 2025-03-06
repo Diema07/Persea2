@@ -116,6 +116,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .modal-2 {
@@ -123,6 +124,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    
 }
 
 .modal-2 button {
@@ -137,6 +139,7 @@ body {
     background-color: red;
     color: white;
     border-radius: 5px;
+    
 }
 
 .cancelar {

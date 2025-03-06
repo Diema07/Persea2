@@ -1,12 +1,11 @@
 import '../styles/plantacion-inicio.css';
 import '../styles/modalCrear.css'; 
 import React, { useEffect, useState } from 'react';
-import { getAllTasks } from '../api/plantaciones.api';
+import { getAllTasks, getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
 import { Taskcard } from './plantacion-crear'; 
 import { useForm } from 'react-hook-form';
 import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
-
 
 // Importaciones de Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,14 +16,18 @@ import { Navigation, Pagination } from 'swiper/modules';
 
 export function PlantacionInicio() {
     const [plantaciones, setPlantaciones] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
+    
+    // Estados para los dos modales
+    const [isModalOpenCrear, setIsModalOpenCrear] = useState(false); 
+    const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false); 
+    const [plantacionSeleccionada, setPlantacionSeleccionada] = useState(null);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     useEffect(() => {
         const fetchPlantaciones = async () => {
             try {
-                const response = await getAllTasks();
+                const response = await getFilteredTasks();
                 setPlantaciones(response.data);
             } catch (error) {
                 console.error('Error al obtener las plantaciones:', error);
@@ -34,11 +37,15 @@ export function PlantacionInicio() {
         fetchPlantaciones();
     }, []);
     
+    // Funciones para abrir/cerrar modales
+    const openModalCrear = () => setIsModalOpenCrear(true);
+    const closeModalCrear = () => setIsModalOpenCrear(false);
 
-
-
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const openModalEliminar = (plantacion) => {
+        setPlantacionSeleccionada(plantacion);  // Guardamos la plantación seleccionada
+        setIsModalOpenEliminar(true);
+    };
+    const closeModalEliminar = () => setIsModalOpenEliminar(false);
 
     // Lógica del formulario
     const onSubmit = handleSubmit(async (data) => {
@@ -51,6 +58,19 @@ export function PlantacionInicio() {
         }
     });
 
+    // Función para actualizar el estado de la plantación a false (desactivar)
+    const handleDeactivate = async (id) => {
+        try {
+            await updateTaskState(id, false);  // Cambiar el estado de la plantación a false
+            // Refrescar la lista para reflejar los cambios
+            const response = await getFilteredTasks();
+            setPlantaciones(response.data);
+        } catch (error) {
+            console.error('Error al desactivar la plantación:', error);
+        }
+        closeModalEliminar(); // Cerrar el modal después de desactivar
+    };
+
     return (
         <>
         <Header/>
@@ -58,7 +78,7 @@ export function PlantacionInicio() {
                 <div className='orden'>
                     <h2>Mis Plantaciones</h2>
                     
-                    <button onClick={openModal} className="button">Crear Plantación</button>
+                    <button onClick={openModalCrear} className="button">Crear Plantación</button>
                 </div>
 
                 {/* Swiper envuelve las plantaciones */}
@@ -80,13 +100,17 @@ export function PlantacionInicio() {
                 >
                     {plantaciones.map((plantacion) => (
                         <SwiperSlide key={plantacion.id}>
-                            <Taskcard task={plantacion} />
+                            <Taskcard 
+                                task={plantacion} 
+                                onDelete={() => openModalEliminar(plantacion)}
+                                onDeactivate={() => handleDeactivate(plantacion.id)}  // Pasar la función de desactivar
+                            />
                         </SwiperSlide>
                     ))}
                 </Swiper>
 
-                {/* Modal */}
-                {isModalOpen && (
+                {/* Modal para crear plantación */}
+                {isModalOpenCrear && (
                     <div className="modal">
                         <div className="modal-content">
                             <h2>Nombre de tu parcela</h2>
@@ -98,12 +122,21 @@ export function PlantacionInicio() {
                                 />
                                 {errors.nombreParcela && <span>Requerido</span>}
                                 <div className="button-container">
-                                    <button type="submit">Cosechar</button>
-                                    <button type="button" onClick={closeModal}>Cancelar</button>
+                                    <button type="submit">Plantar</button>
+                                    <button type="button" onClick={closeModalCrear}>Cancelar</button>
                                 </div>
                             </form>
-                                
-                                
+                        </div>
+                    </div>
+                )}
+
+                {/* Modal para eliminar plantación */}
+                {isModalOpenEliminar && plantacionSeleccionada && (
+                    <div className="modal-overlay-2">
+                        <div className="modal-2">
+                            <p>Tu plantación de "<label className="parcela-1">{plantacionSeleccionada.nombreParcela}</label>" será eliminada. ¿Estás seguro?</p>
+                            <button className="confirmar" onClick={() => handleDeactivate(plantacionSeleccionada.id)}>Sí, eliminar</button>
+                            <button className="cancelar" onClick={closeModalEliminar}>Cancelar</button>
                         </div>
                     </div>
                 )}
