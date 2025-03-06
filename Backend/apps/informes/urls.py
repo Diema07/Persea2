@@ -1,6 +1,5 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework import routers
-from apps.informes import views
 from .views import InformeCompletoView
 
 router = routers.DefaultRouter()
