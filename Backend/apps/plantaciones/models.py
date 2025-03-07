@@ -6,6 +6,7 @@ class Plantacion(models.Model):
     nombreParcela = models.CharField(max_length=50)
     fechaPlantacion = models.DateField(auto_now_add=True)  # Fecha automática
     estado = models.BooleanField(default=True)
+    completado = models.BooleanField(default=False)
     idUsuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
