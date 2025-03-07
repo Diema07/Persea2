@@ -54,3 +54,14 @@ export const updateTaskState = async (id, newState) => {
         throw error;
     }
 };
+export const getEstadoTareas = async (plantacionId) => {
+    try {
+        const response = await axios.get(`http://localhost:8000/plantaciones/api/v1/Plantacion/${plantacionId}/estado-tareas/`, {
+            withCredentials: true,  // Asegúrate de incluir las credenciales si es necesario
+        });
+        return response.data;  // Devuelve solo los datos de la respuesta
+    } catch (error) {
+        console.error("Error obteniendo el estado de tareas:", error);
+        throw error;  // Relanza el error para que pueda ser manejado en el componente
+    }
+}

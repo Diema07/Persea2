@@ -113,6 +113,19 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
         datosParaEnviar.seleccionVariedades = data.seleccionVariedades;
       }
 
+      const colinosOk = !!datosParaEnviar.preparacionColinos;
+      const hoyosOk = !!datosParaEnviar.excavacionHoyos;
+      const plantacionOk = !!datosParaEnviar.plantacion;
+      const seleccionOk = !!datosParaEnviar.seleccionVariedades;
+
+
+
+      if (colinosOk && hoyosOk && plantacionOk && seleccionOk ) {
+        datosParaEnviar.completado = true;
+      } else {
+        datosParaEnviar.completado = false;
+      }
+
       // Asegúrate de enviar el ID correcto para el PATCH
       await patchSeleccion(seleccionIdNumber, datosParaEnviar);
       window.location.reload(); // Recargar la página después de la actualización

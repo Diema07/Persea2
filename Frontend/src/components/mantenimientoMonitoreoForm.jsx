@@ -12,6 +12,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -108,6 +109,8 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
       if (onCreated) {
         onCreated();
       }
+
+      reset();
     } catch (error) {
       console.error('Error al crear el mantenimiento/monitoreo:', error);
     }

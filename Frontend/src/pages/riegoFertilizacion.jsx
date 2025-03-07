@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRiegoByPlantacionId } from '../api/riegoFertilizacion.api';
 import { RiegoFertilizacionForm } from '../components/riegoFertilizacionForm';
+import atras from "../img/atras.png";
+
 
 export function RiegoFertilizacionPage() {
   const { plantacionId } = useParams();
@@ -51,6 +53,18 @@ export function RiegoFertilizacionPage() {
 
   return (
     <div className="riego-fertilizacion-container">
+
+      
+      <button
+        onClick={handleRedirectToGestionTareas}
+      >
+        <img 
+          src={atras} 
+          alt="Flecha atras" 
+          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
+        />
+      </button>
+
       <h2>Riego y Fertilización - Plantación {idPlantacion}</h2>
 
       {error && <p className="error-message">{error}</p>}
@@ -61,20 +75,6 @@ export function RiegoFertilizacionPage() {
         onCreated={handleUpdated}
       />
 
-      <button
-        onClick={handleRedirectToGestionTareas}
-        style={{
-          marginBottom: '16px',
-          padding: '8px 16px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Ir a Gestión de tareas
-      </button>
 
       <h3>Historial de Riego/Fertilización:</h3>
       {loading ? (

@@ -9,6 +9,7 @@ export function PodaForm({ plantacionId, onCreated }) {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -84,6 +85,9 @@ export function PodaForm({ plantacionId, onCreated }) {
       if (onCreated) {
         onCreated();
       } 
+
+      reset();
+      
     } catch (error) {
       console.error('Error al crear Poda:', error);
     }

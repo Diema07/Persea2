@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPodaByPlantacionId } from '../api/poda.api';
 import { PodaForm } from '../components/podaForm';
+import atras from "../img/atras.png";
 
 export function PodaPage() {
   const { plantacionId } = useParams();
@@ -40,6 +41,18 @@ export function PodaPage() {
 
   return (
     <div>
+
+      
+      <button
+        onClick={handleRedirectToGestionTareas}
+      >
+        <img 
+          src={atras} 
+          alt="Flecha atras" 
+          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
+        />
+      </button>
+
       <h2>Poda - Plantación {idPlantacion}</h2>
 
       {/* Formulario */}
@@ -48,21 +61,6 @@ export function PodaPage() {
         podaId={podaId}
         onCreated={loadPodas}
       />
-
-      <button
-        onClick={handleRedirectToGestionTareas}
-        style={{
-          marginBottom: '16px',
-          padding: '8px 16px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Ir a Gestion tareas 
-      </button>
 
 
       {/* Historial de Podas */}

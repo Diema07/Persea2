@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {getPreparacionByPlantacionId,} from '../api/preparacionTerreno.api';
 import { PreparacionTerrenoForm } from '../components/preparacionTerrenoForm';
+import atras from "../img/atras.png";
+
 
 export function PreparacionTerrenoPage() {
   const { plantacionId } = useParams();
@@ -41,30 +43,27 @@ export function PreparacionTerrenoPage() {
 
   return (
     <div>
+
+      
+      <button
+        onClick={handleRedirectToGestionTareas}
+      >
+        <img 
+          src={atras} 
+          alt="Flecha atras" 
+          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
+        />
+      </button>
+
       <h2>Preparación de Terreno - Plantación {idPlantacion}</h2>
 
       {/* Formulario con checkboxes y fechas automáticas */}
       <PreparacionTerrenoForm
-        plantacionId={idPlantacion} // Pasar el ID convertido a número
+        plantacionId={idPlantacion}
         preparacionId={preparacionId}
         onCreated={loadPreparaciones}
       />
 
-      {/* Botón para redirigir a la página de selección de árboles */}
-      <button
-        onClick={handleRedirectToGestionTareas}
-        style={{
-          marginBottom: '16px',
-          padding: '8px 16px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Ir a Gestion tareas 
-      </button>
 
 
       {/* Listado de preparaciones (historial) */}

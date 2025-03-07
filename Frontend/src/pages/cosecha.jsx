@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCosechaByPlantacionId } from '../api/cosecha.api';
 import { CosechaForm } from '../components/cosechaForm';
+import atras from "../img/atras.png";
+
 
 export function CosechaPage() {
   const { plantacionId } = useParams();
@@ -36,6 +38,18 @@ export function CosechaPage() {
 
   return (
     <div>
+
+<button
+  onClick={handleRedirectToGestionTareas}
+>
+  <img 
+    src={atras} 
+    alt="Flecha atras" 
+    style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
+  />
+</button>
+
+
       <h2>Cosecha - Plantación {plantacionId}</h2>
 
       {/* Formulario para crear/actualizar cosechas */}
@@ -43,21 +57,6 @@ export function CosechaPage() {
         plantacionId={plantacionId}
         onCreated={loadCosechas}  // callback para recargar la lista
       />
-
-      <button
-        onClick={handleRedirectToGestionTareas}
-        style={{
-          marginBottom: '16px',
-          padding: '8px 16px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Ir a Gestion tareas 
-      </button>
 
       <h3>Historial de Cosechas</h3>
       {cosechas.length === 0 ? (

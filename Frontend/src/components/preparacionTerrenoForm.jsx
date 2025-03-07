@@ -124,6 +124,20 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
         datosParaEnviar.delimitacionParcela = data.delimitacionParcela;
       }
 
+      // ---- NUEVO: Lógica para completado ----
+      // Revisamos si todos los campos están completos
+      const limpiezaOk = !!datosParaEnviar.limpiezaTerreno;
+      const analisisOk = !!datosParaEnviar.analisisSuelo;
+      const correcionOk = !!datosParaEnviar.correcionSuelo;
+      const labranzaOk = !!datosParaEnviar.labranza;
+      const delimOk = !!datosParaEnviar.delimitacionParcela;
+
+      if (limpiezaOk && analisisOk && correcionOk && labranzaOk && delimOk) {
+        datosParaEnviar.completado = true;
+      } else {
+        datosParaEnviar.completado = false;
+      }
+
       // Asegúrate de enviar el ID correcto para el PATCH
       await patchPreparacion(preparacionIdNumber, datosParaEnviar);
 

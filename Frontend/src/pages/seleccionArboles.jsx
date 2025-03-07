@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSeleccionByPlantacionId } from '../api/seleccionArboles.api';
 import { SeleccionArbolesForm } from '../components/seleccionArbolesForm';
+import atras from "../img/atras.png";
+
 
 export function SeleccionArbolesPage() {
   const { plantacionId } = useParams(); // /seleccion-arboles/:plantacionId
@@ -40,6 +42,18 @@ export function SeleccionArbolesPage() {
 
   return (
     <div>
+
+      
+      <button
+        onClick={handleRedirectToGestionTareas}
+      >
+        <img 
+          src={atras} 
+          alt="Flecha atras" 
+          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
+        />
+      </button>
+
       <h2>Selección de Árboles - Plantación {idPlantacion}</h2>
 
       {/* Formulario con checkboxes y fechas automáticas */}
@@ -48,21 +62,6 @@ export function SeleccionArbolesPage() {
         seleccionId={seleccionId}
         onCreated={loadSelecciones}
       />
-
-      <button
-        onClick={handleRedirectToGestionTareas}
-        style={{
-          marginBottom: '16px',
-          padding: '8px 16px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Ir a Gestion tareas 
-      </button>
 
 
       {/* Listado de selecciones (historial)

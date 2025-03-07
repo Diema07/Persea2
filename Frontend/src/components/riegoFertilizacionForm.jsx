@@ -11,6 +11,7 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -130,6 +131,9 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
       if (onCreated) {
         onCreated();
       }
+
+      reset();
+      
     } catch (error) {
       console.error('Error al guardar el riego/fertilización:', error);
     }

@@ -7,6 +7,7 @@ export function CosechaForm({ plantacionId, onCreated }) {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -49,6 +50,9 @@ export function CosechaForm({ plantacionId, onCreated }) {
       if (onCreated) {
         onCreated();
       }
+
+      reset();
+      
     } catch (error) {
       console.error('Error al guardar la cosecha:', error);
     }
