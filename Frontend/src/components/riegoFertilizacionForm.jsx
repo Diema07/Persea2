@@ -5,7 +5,7 @@ import {
   postRiegoFertilizacion,
 } from '../api/riegoFertilizacion.api';
 
-export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
+export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
   const {
     register,
     handleSubmit,
@@ -15,17 +15,26 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
     formState: { errors },
   } = useForm();
 
-  // Estado para controlar si los checkboxes están deshabilitados
   const [isCheckboxDisabled, setIsCheckboxDisabled] = useState({
     riego: false,
     fertilizante: false,
   });
 
-  // Observar checkboxes
   const watchCheckRiego = watch('checkRiego');
   const watchCheckFertilizante = watch('checkFertilizante');
 
-  // Al montar, obtenemos si ya existe un registro (opcional)
+  // Efecto para deshabilitar el otro checkbox cuando uno está seleccionado
+  useEffect(() => {
+    if (watchCheckRiego) {
+      setIsCheckboxDisabled((prev) => ({ ...prev, fertilizante: true }));
+    } else if (watchCheckFertilizante) {
+      setIsCheckboxDisabled((prev) => ({ ...prev, riego: true }));
+    } else {
+      setIsCheckboxDisabled({ riego: false, fertilizante: false });
+    }
+  }, [watchCheckRiego, watchCheckFertilizante]);
+
+  // Cargar datos existentes al montar el componente
   useEffect(() => {
     async function fetchData() {
       try {
@@ -36,12 +45,9 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
 
         const data = await getRiegoByPlantacionId(plantacionIdNumber);
 
-        // Si hay un registro existente, puedes usarlo para deshabilitar checkboxes
-        // o mostrar un mensaje. Opcional:
         if (data && data.length > 0) {
           const riegoFertilizacion = data[0];
 
-          // Asignar checkboxes si ya tienen fecha
           setValue('checkRiego', !!riegoFertilizacion.fechaRiego);
           setValue('checkFertilizante', !!riegoFertilizacion.fechaFertilizante);
 
@@ -50,7 +56,6 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
             fertilizante: !!riegoFertilizacion.fechaFertilizante,
           });
 
-          // Prellenar campos de texto si quieres
           setValue('tipoRiego', riegoFertilizacion.tipoRiego || '');
           setValue('metodoAplicacionFertilizante', riegoFertilizacion.metodoAplicacionFertilizante || '');
           setValue('tipoFertilizante', riegoFertilizacion.tipoFertilizante || '');
@@ -65,12 +70,12 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
     fetchData();
   }, [plantacionId, setValue]);
 
-  // Cada vez que cambie un checkbox, asignamos fecha de hoy o null
+  // Asignar fecha de hoy si el checkbox está marcado
   useEffect(() => {
     if (watchCheckRiego) {
       setValue('fechaRiego', new Date().toISOString().split('T')[0]);
     } else {
-      setValue('fechaRiego', null); // Asignar null si no está marcado
+      setValue('fechaRiego', null);
     }
   }, [watchCheckRiego, setValue]);
 
@@ -78,62 +83,58 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
     if (watchCheckFertilizante) {
       setValue('fechaFertilizante', new Date().toISOString().split('T')[0]);
     } else {
-      setValue('fechaFertilizante', null); // Asignar null si no está marcado
+      setValue('fechaFertilizante', null);
     }
   }, [watchCheckFertilizante, setValue]);
 
-  // Manejo del submit: CREAR (POST) o ACTUALIZAR (PATCH) un registro
+  // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
     try {
       const datosParaEnviar = {};
 
-      // Solo incluir campos si el checkbox está marcado
       if (data.checkRiego) {
         datosParaEnviar.fechaRiego = data.fechaRiego;
+        datosParaEnviar.tipoRiego = data.tipoRiego;
       } else {
-        datosParaEnviar.fechaRiego = null; // Enviar null si no está marcado
+        datosParaEnviar.fechaRiego = null;
       }
 
       if (data.checkFertilizante) {
         datosParaEnviar.fechaFertilizante = data.fechaFertilizante;
-      } else {
-        datosParaEnviar.fechaFertilizante = null; // Enviar null si no está marcado
-      }
-
-      // Incluir otros campos
-      if (data.tipoRiego) {
-        datosParaEnviar.tipoRiego = data.tipoRiego;
-      }
-      if (data.metodoAplicacionFertilizante) {
         datosParaEnviar.metodoAplicacionFertilizante = data.metodoAplicacionFertilizante;
-      }
-      if (data.tipoFertilizante) {
         datosParaEnviar.tipoFertilizante = data.tipoFertilizante;
-      }
-      if (data.nombreFertilizante) {
         datosParaEnviar.nombreFertilizante = data.nombreFertilizante;
-      }
-      if (data.cantidadFertilizante) {
         datosParaEnviar.cantidadFertilizante = data.cantidadFertilizante;
-      }
-      if (data.medidaFertilizante) {
         datosParaEnviar.medidaFertilizante = data.medidaFertilizante;
+      } else {
+        datosParaEnviar.fechaFertilizante = null;
       }
 
-      // Asignar la plantación a la que pertenece
       datosParaEnviar.idPlantacion = Number(plantacionId);
 
-        // Si no hay un riegoId, creamos un nuevo registro (POST)
       await postRiegoFertilizacion(datosParaEnviar);
-      
 
-      // Recargar la página o ejecutar una función de callback
       if (onCreated) {
         onCreated();
       }
 
-      reset();
-      
+      // Resetear el formulario después de enviar
+      reset({
+        checkRiego: false,
+        checkFertilizante: false,
+        fechaRiego: null,
+        fechaFertilizante: null,
+        tipoRiego: '',
+        metodoAplicacionFertilizante: '',
+        tipoFertilizante: '',
+        nombreFertilizante: '',
+        cantidadFertilizante: '',
+        medidaFertilizante: '',
+      });
+
+      // Restablecer el estado de los checkboxes
+      setIsCheckboxDisabled({ riego: false, fertilizante: false });
+
     } catch (error) {
       console.error('Error al guardar el riego/fertilización:', error);
     }
@@ -148,6 +149,7 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
           <input
             type="checkbox"
             {...register('checkRiego')}
+            disabled={isCheckboxDisabled.riego}
           />
           <label style={{ marginLeft: '8px' }}>Riego</label>
           {watchCheckRiego && (
@@ -157,26 +159,29 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
           )}
         </div>
 
-        {/* TIPO DE RIEGO */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Tipo de Riego:</label>
-          <select
-            {...register('tipoRiego', { required: false })}
-            style={{ marginLeft: '8px' }}
-          >
-            <option value="">-- Seleccione una opción --</option>
-            <option value="aspersión">Aspersión</option>
-            <option value="goteo">Goteo</option>
-            <option value="gravedad">Gravedad</option>
-          </select>
-          {errors.tipoRiego && <span style={{ color: 'red' }}></span>}
-        </div>
+        {/* Mostrar campos de riego solo si el checkbox de riego está marcado */}
+        {watchCheckRiego && (
+          <div style={{ marginBottom: '8px' }}>
+            <label>Tipo de Riego:</label>
+            <select
+              {...register('tipoRiego', { required: true })}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value=""></option>
+              <option value="aspersión">Aspersión</option>
+              <option value="goteo">Goteo</option>
+              <option value="gravedad">Gravedad</option>
+            </select>
+            {errors.tipoRiego && <span style={{ color: 'red' }}></span>}
+          </div>
+        )}
 
         {/* FERTILIZACIÓN */}
         <div style={{ marginBottom: '8px' }}>
           <input
             type="checkbox"
             {...register('checkFertilizante')}
+            disabled={isCheckboxDisabled.fertilizante}
           />
           <label style={{ marginLeft: '8px' }}>Fertilización</label>
           {watchCheckFertilizante && (
@@ -186,74 +191,73 @@ export function RiegoFertilizacionForm({ plantacionId,  onCreated }) {
           )}
         </div>
 
+        {/* Mostrar campos de fertilización solo si el checkbox de fertilización está marcado */}
+        {watchCheckFertilizante && (
+          <>
+            <div style={{ marginBottom: '8px' }}>
+              <label>Método de Aplicación:</label>
+              <select
+                {...register('metodoAplicacionFertilizante', { required: true })}
+                style={{ marginLeft: '8px' }}
+              >
+                <option value=""></option>
+                <option value="al suelo">Al suelo</option>
+                <option value="foliar">Foliar</option>
+                <option value="fertirriego">Fertirriego</option>
+              </select>
+              {errors.metodoAplicacionFertilizante && <span style={{ color: 'red' }}></span>}
+            </div>
 
-        {/* MÉTODO DE APLICACIÓN DE FERTILIZANTE */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Método de Aplicación:</label>
-          <select
-            {...register('metodoAplicacionFertilizante', { required: false })}
-            style={{ marginLeft: '8px' }}
-          >
-            <option value="">-- Seleccione una opción --</option>
-            <option value="al suelo">Al suelo</option>
-            <option value="foliar">Foliar</option>
-            <option value="fertirriego">Fertirriego</option>
-          </select>
-          {errors.metodoAplicacionFertilizante && <span style={{ color: 'red' }}></span>}
-        </div>
+            <div style={{ marginBottom: '8px' }}>
+              <label>Tipo de Fertilizante:</label>
+              <select
+                {...register('tipoFertilizante', { required: true })}
+                style={{ marginLeft: '8px' }}
+              >
+                <option value=""></option>
+                <option value="orgánico">Orgánico</option>
+                <option value="químico">Químico</option>
+                <option value="mixto">Mixto</option>
+              </select>
+              {errors.tipoFertilizante && <span style={{ color: 'red' }}></span>}
+            </div>
 
-        {/* TIPO DE FERTILIZANTE */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Tipo de Fertilizante:</label>
-          <select
-            {...register('tipoFertilizante', { required: false })}
-            style={{ marginLeft: '8px' }}
-          >
-            <option value="">-- Seleccione una opción --</option>
-            <option value="orgánico">Orgánico</option>
-            <option value="químico">Químico</option>
-            <option value="mixto">Mixto</option>
-          </select>
-          {errors.tipoFertilizante && <span style={{ color: 'red' }}></span>}
-        </div>
+            <div style={{ marginBottom: '8px' }}>
+              <label>Nombre del Fertilizante:</label>
+              <input
+                type="text"
+                {...register('nombreFertilizante', { required: true })}
+                style={{ marginLeft: '8px' }}
+              />
+              {errors.nombreFertilizante && <span style={{ color: 'red' }}></span>}
+            </div>
 
-        {/* NOMBRE DEL FERTILIZANTE */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Nombre del Fertilizante:</label>
-          <input
-            type="text"
-            {...register('nombreFertilizante', { required: false })}
-            style={{ marginLeft: '8px' }}
-          />
-          {errors.nombreFertilizante && <span style={{ color: 'red' }}></span>}
-        </div>
+            <div style={{ marginBottom: '8px' }}>
+              <label>Cantidad de Fertilizante:</label>
+              <input
+                type="number"
+                step="any"
+                {...register('cantidadFertilizante', { required: true })}
+                style={{ marginLeft: '8px' }}
+              />
+              {errors.cantidadFertilizante && <span style={{ color: 'red' }}></span>}
+            </div>
 
-        {/* CANTIDAD DE FERTILIZANTE */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Cantidad de Fertilizante:</label>
-          <input
-            type="number"
-            step="any"
-            {...register('cantidadFertilizante', { required: false })}
-            style={{ marginLeft: '8px' }}
-          />
-          {errors.cantidadFertilizante && <span style={{ color: 'red' }}></span>}
-        </div>
-
-        {/* MEDIDA DEL FERTILIZANTE */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Medida del Fertilizante:</label>
-          <select
-            {...register('medidaFertilizante', { required: false })}
-            style={{ marginLeft: '8px' }}
-          >
-            <option value="">-- Seleccione una opción --</option>
-            <option value="kg">kg</option>
-            <option value="litros">litros</option>
-            <option value="toneladas">toneladas</option>
-          </select>
-          {errors.medidaFertilizante && <span style={{ color: 'red' }}></span>}
-        </div>
+            <div style={{ marginBottom: '8px' }}>
+              <label>Medida del Fertilizante:</label>
+              <select
+                {...register('medidaFertilizante', { required: true })}
+                style={{ marginLeft: '8px' }}
+              >
+                <option value=""></option>
+                <option value="kg">kg</option>
+                <option value="litros">litros</option>
+                <option value="toneladas">toneladas</option>
+              </select>
+              {errors.medidaFertilizante && <span style={{ color: 'red' }}></span>}
+            </div>
+          </>
+        )}
 
         <button style={{ marginTop: '16px' }}>Listo</button>
       </form>

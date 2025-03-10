@@ -50,3 +50,5 @@ export const postInforme = async (data) => {
     throw error;
   }
 };
+
+

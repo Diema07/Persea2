@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { getCosechaByPlantacionId, postCosecha } from '../api/cosecha.api';
+import React, { useEffect, useState } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import { getCosechaByPlantacionId, postCosecha, desactivarCosechaYPlantacion } from '../api/cosecha.api';
 
 export function CosechaForm({ plantacionId, onCreated }) {
   const {
@@ -8,10 +8,24 @@ export function CosechaForm({ plantacionId, onCreated }) {
     handleSubmit,
     setValue,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
-  // Al montar, obtenemos si ya existe un registro para prellenar el formulario
+  const [cantidadTotal, setCantidadTotal] = useState(0);
+
+  const watchCantidadAltaCalidad = useWatch({ control, name: 'cantidadAltaCalidad' });
+  const watchCantidadMedianaCalidad = useWatch({ control, name: 'cantidadMedianaCalidad' });
+  const watchCantidadBajaCalidad = useWatch({ control, name: 'cantidadBajaCalidad' });
+
+  useEffect(() => {
+    const total =
+      (parseFloat(watchCantidadAltaCalidad) || 0) +
+      (parseFloat(watchCantidadMedianaCalidad) || 0) +
+      (parseFloat(watchCantidadBajaCalidad) || 0);
+    setCantidadTotal(total);
+  }, [watchCantidadAltaCalidad, watchCantidadMedianaCalidad, watchCantidadBajaCalidad]);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -35,13 +49,18 @@ export function CosechaForm({ plantacionId, onCreated }) {
     fetchData();
   }, [plantacionId, setValue]);
 
-  // Manejo del submit: CREAR (POST)
   const onSubmit = handleSubmit(async (data) => {
     try {
+      const cantidadTotal =
+        (parseFloat(data.cantidadAltaCalidad) || 0) +
+        (parseFloat(data.cantidadMedianaCalidad) || 0) +
+        (parseFloat(data.cantidadBajaCalidad) || 0);
+
       const datosParaEnviar = {
         cantidadAltaCalidad: parseFloat(data.cantidadAltaCalidad) || 0,
         cantidadMedianaCalidad: parseFloat(data.cantidadMedianaCalidad) || 0,
         cantidadBajaCalidad: parseFloat(data.cantidadBajaCalidad) || 0,
+        cantidadTotal: cantidadTotal,
         idPlantacion: Number(plantacionId),
       };
 
@@ -52,11 +71,27 @@ export function CosechaForm({ plantacionId, onCreated }) {
       }
 
       reset();
-      
     } catch (error) {
       console.error('Error al guardar la cosecha:', error);
     }
   });
+
+  const handleCosechaTerminada = async () => {
+    const confirmacion = window.confirm(
+      '¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción desactivará la cosecha y la plantación.'
+    );
+
+    if (confirmacion) {
+      try {
+        await desactivarCosechaYPlantacion(plantacionId);
+        alert('Cosecha y plantación desactivadas correctamente.');
+        window.location.reload(); // Recargar la página para reflejar los cambios
+      } catch (error) {
+        console.error('Error al desactivar cosecha y plantación:', error);
+        alert('Ocurrió un error al desactivar la cosecha y la plantación.');
+      }
+    }
+  };
 
   return (
     <div>
@@ -103,8 +138,36 @@ export function CosechaForm({ plantacionId, onCreated }) {
             <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
           )}
         </div>
+
+        {/* CANTIDAD TOTAL (solo lectura) */}
+        <div style={{ marginBottom: '8px' }}>
+          <label>Cantidad Total (kg):</label>
+          <input
+            type="number"
+            step="any"
+            value={cantidadTotal}
+            readOnly
+            style={{ marginLeft: '8px' }}
+          />
+        </div>
+
         <button style={{ marginTop: '16px' }}>Listo</button>
       </form>
+
+      <button
+        onClick={handleCosechaTerminada}
+        style={{
+          backgroundColor: '#ff4444',
+          color: 'white',
+          padding: '10px 20px',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          marginTop: '16px',
+        }}
+      >
+        Cosecha Terminada
+      </button>
     </div>
   );
 }

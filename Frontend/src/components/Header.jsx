@@ -1,11 +1,12 @@
 import '../styles/header.css'
+
 const Header = () => {
     return (
       <header>
         
         <nav>
           <ul>
-            <li><a href="/">Informe</a></li>
+            <li><a href="/informe-completo/">Informe</a></li>
             <li><a href='/inicio-plantacion'>Plantaciones</a></li>
           </ul>
         </nav>

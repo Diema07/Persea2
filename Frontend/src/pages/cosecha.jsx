@@ -69,6 +69,7 @@ export function CosechaPage() {
               <strong>Cantidad Alta Calidad:</strong> {c.cantidadAltaCalidad || 0} kg<br />
               <strong>Cantidad Mediana Calidad:</strong> {c.cantidadMedianaCalidad || 0} kg<br />
               <strong>Cantidad Baja Calidad:</strong> {c.cantidadBajaCalidad || 0} kg<br />
+              <strong>Total Cantidad:</strong> {c.cantidadTotal || 0} kg<br />
               <hr />
             </li>
           ))}

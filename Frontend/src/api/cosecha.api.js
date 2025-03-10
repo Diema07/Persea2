@@ -45,3 +45,23 @@ export const postCosecha = async (data) => {
     throw error;
   }
 };
+
+
+
+export const desactivarCosechaYPlantacion = async (plantacionId) => {
+  try {
+    const csrfToken = await getCSRFToken();
+    const response = await cosechaAPI.post('/desactivar-cosecha-plantacion/', {
+      plantacionId: plantacionId,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al desactivar cosecha y plantación:', error.response?.data || error);
+    throw error;
+  }
+};

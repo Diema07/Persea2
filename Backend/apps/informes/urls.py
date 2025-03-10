@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('informe-completo/<int:plantacion_id>/', InformeCompletoView.as_view(), name='informe_completo'),
+    
 ]
 
 

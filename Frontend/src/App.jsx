@@ -14,6 +14,7 @@ import { InformeCompletoPage } from './pages/informe';
 
 
 
+
 function App() {
   return (
     <BrowserRouter>

@@ -52,6 +52,7 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
 
           // Deshabilitar checkboxes si el campo ya está registrado
           setIsCheckboxDisabled({
+            seleccion: !!seleccion.seleccionVariedades,
             colinos: !!seleccion.preparacionColinos,
             hoyos: !!seleccion.excavacionHoyos,
             plantacion: !!seleccion.plantacion,
@@ -146,8 +147,10 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
             {...register('seleccionVariedades')}
             style={{ marginLeft: '8px' }}
             required
+            disabled={isCheckboxDisabled.seleccion} // Deshabilitar si ya está registrado
+
           >
-            <option value="">-- Seleccione una opción --</option>
+            <option value=""></option>
             {variedades.map((variedad) => (
               <option key={variedad.value} value={variedad.value}>
                 {variedad.label}
