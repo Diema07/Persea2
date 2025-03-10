@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getSeleccionByPlantacionId, patchSeleccion } from '../api/seleccionArboles.api';
+import '../styles/formulario.css';
 
 export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
   const {
@@ -135,77 +136,82 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
     }
   });
 
-  return (
-    <div>
-      <h3>Agregar Selección de Árboles</h3>
-      <form onSubmit={onSubmit}>
-        {/* SELECT: Selección de variedades */}
-        <div style={{ marginBottom: '16px' }}>
-          <label htmlFor="seleccionVariedades">Seleccione la variedad de aguacate:</label>
-          <select
-            id="seleccionVariedades"
-            {...register('seleccionVariedades')}
-            style={{ marginLeft: '8px' }}
-            required
-            disabled={isCheckboxDisabled.seleccion} // Deshabilitar si ya está registrado
+    return (
+      <div className="preparacion-terreno-container">
+        <h3>Agregar Selección de Árboles</h3>
+        <form className="preparacion-form" onSubmit={onSubmit}>
+          {/* SELECT: Selección de variedades */}
+          <div className="form-group">
+            <label className="form-label" htmlFor="seleccionVariedades">
+              Seleccione la variedad de aguacate:
+            </label>
+            <select
+              id="seleccionVariedades"
+              className="form-input"
+              {...register('seleccionVariedades')}
+              required
+              disabled={isCheckboxDisabled.seleccion} // Deshabilitar si ya está registrado
 
-          >
+            >
             <option value=""></option>
-            {variedades.map((variedad) => (
-              <option key={variedad.value} value={variedad.value}>
-                {variedad.label}
-              </option>
-            ))}
-          </select>
-        </div>
+              {variedades.map((variedad) => (
+                <option key={variedad.value} value={variedad.value}>
+                  {variedad.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* CHECKBOX 1: Preparación de colinos */}
-        <div style={{ marginBottom: '8px' }}>
-          <input
-            type="checkbox"
-            {...register('checkColinos')}
-            disabled={isCheckboxDisabled.colinos} // Deshabilitar si ya está registrado
-          />
-          <label style={{ marginLeft: '8px' }}>Preparación de colinos</label>
-          {watchCheckColinos && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('preparacionColinos')})
-            </span>
-          )}
-        </div>
+          {/* CHECKBOX 1: Preparación de colinos */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              {...register('checkColinos')}
+              disabled={isCheckboxDisabled.colinos} // Deshabilitar si ya está registrado
+            />
+            <label className="form-label">Preparación de colinos</label>
+            {watchCheckColinos && (
+              <span className="form-fecha">
+                (Fecha: {watch('preparacionColinos')})
+              </span>
+            )}
+          </div>
 
-        {/* CHECKBOX 2: Excavación de hoyos */}
-        <div style={{ marginBottom: '8px' }}>
-          <input
-            type="checkbox"
-            {...register('checkHoyos')}
-            disabled={isCheckboxDisabled.hoyos} // Deshabilitar si ya está registrado
-          />
-          <label style={{ marginLeft: '8px' }}>Excavación de hoyos</label>
-          {watchCheckHoyos && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('excavacionHoyos')})
-            </span>
-          )}
-        </div>
+          {/* CHECKBOX 2: Excavación de hoyos */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              {...register('checkHoyos')}
+              disabled={isCheckboxDisabled.hoyos} // Deshabilitar si ya está registrado
+            />
+            <label className="form-label">Excavación de hoyos</label>
+            {watchCheckHoyos && (
+              <span className="form-fecha">
+                (Fecha: {watch('excavacionHoyos')})
+              </span>
+            )}
+          </div>
 
-        {/* CHECKBOX 3: Plantación */}
-        <div style={{ marginBottom: '8px' }}>
-          <input
-            type="checkbox"
-            {...register('checkPlantacion')}
-            disabled={isCheckboxDisabled.plantacion} // Deshabilitar si ya está registrado
-          />
-          <label style={{ marginLeft: '8px' }}>Fecha de plantación</label>
-          {watchCheckPlantacion && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('plantacion')})
-            </span>
-          )}
-        </div>
+          {/* CHECKBOX 3: Plantación */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              {...register('checkPlantacion')}
+              disabled={isCheckboxDisabled.plantacion} // Deshabilitar si ya está registrado
+            />
+            <label className="form-label">Fecha de plantación</label>
+            {watchCheckPlantacion && (
+              <span className="form-fecha">
+                (Fecha: {watch('plantacion')})
+              </span>
+            )}
+          </div>
 
-        <button style={{ marginTop: '16px' }}>Listo</button>
-      </form>
-    </div>
+          <button className="form-button">Listo</button>
+        </form>
+      </div>
   );
 }

@@ -94,48 +94,48 @@ export function CosechaForm({ plantacionId, onCreated }) {
   };
 
   return (
-    <div>
-      <h3>Agregar cosecha</h3>
-      <form onSubmit={onSubmit}>
+    <div className="preparacion-terreno-container">
+      <h3>Agregar Cosecha</h3>
+      <form className="preparacion-form" onSubmit={onSubmit}>
         {/* CANTIDAD ALTA CALIDAD */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Cantidad Alta Calidad (kg):</label>
+        <div className="form-group">
+          <label className="form-label">Cantidad Alta Calidad (kg):</label>
           <input
             type="number"
             step="any"
+            className="form-input"
             {...register('cantidadAltaCalidad', { required: true })}
-            style={{ marginLeft: '8px' }}
           />
           {errors.cantidadAltaCalidad && (
-            <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
+            <span className="form-error">Requerido</span>
           )}
         </div>
 
         {/* CANTIDAD MEDIANA CALIDAD */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Cantidad Mediana Calidad (kg):</label>
+        <div className="form-group">
+          <label className="form-label">Cantidad Mediana Calidad (kg):</label>
           <input
             type="number"
             step="any"
+            className="form-input"
             {...register('cantidadMedianaCalidad', { required: true })}
-            style={{ marginLeft: '8px' }}
           />
           {errors.cantidadMedianaCalidad && (
-            <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
+            <span className="form-error">Requerido</span>
           )}
         </div>
 
         {/* CANTIDAD BAJA CALIDAD */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Cantidad Baja Calidad (kg):</label>
+        <div className="form-group">
+          <label className="form-label">Cantidad Baja Calidad (kg):</label>
           <input
             type="number"
             step="any"
+            className="form-input"
             {...register('cantidadBajaCalidad', { required: true })}
-            style={{ marginLeft: '8px' }}
           />
           {errors.cantidadBajaCalidad && (
-            <span style={{ color: 'red', marginLeft: '8px' }}>Requerido</span>
+            <span className="form-error">Requerido</span>
           )}
         </div>
 

@@ -133,36 +133,39 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   });
 
   return (
-    <div>
+    <div className="preparacion-terreno-container">
       <h3>Agregar Mantenimiento/Monitoreo</h3>
-      <form onSubmit={onSubmit}>
+      <form className="preparacion-form" onSubmit={onSubmit}>
         {/* GUADAÑA */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
+            className="form-checkbox"
             {...register('checkGuadana')}
             disabled={isCheckboxDisabled.guadana}
           />
-          <label style={{ marginLeft: '8px' }}>Guadaña</label>
+          <label className="form-label">Guadaña</label>
           {watchCheckGuadana && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
+            <span className="form-fecha">
               (Fecha: {watch('guadana')})
             </span>
           )}
         </div>
 
-        {/* APLICACIÓN DE TRATAMIENTO */}
-        <div style={{ marginBottom: '8px' }}>
+       
+        {/* FECHA DE APLICACIÓN DE TRATAMIENTO */}
+        <div className="form-group">
           <input
             type="checkbox"
+            className="form-checkbox"
             {...register('checkAplicacion')}
             disabled={isCheckboxDisabled.aplicacion}
           />
-          <label style={{ marginLeft: '8px' }}>
-            Aplicación de Tratamiento
+          <label className="form-label">
+          Aplicación de Tratamiento
           </label>
           {watchCheckAplicacion && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
+            <span className="form-fecha">
               (Fecha: {watch('fechaAplicacionTratamiento')})
             </span>
           )}

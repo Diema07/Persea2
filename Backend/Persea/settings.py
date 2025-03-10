@@ -67,7 +67,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Redirección después del login
 LOGIN_REDIRECT_URL = 'http://localhost:3000/inicio-plantacion'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'http://localhost:3000/Login'
 
 # Configuración de CORS
 CORS_ALLOW_ALL_ORIGINS = True 
@@ -134,11 +134,22 @@ TEMPLATES = [
 # Configuración de WSGI
 WSGI_APPLICATION = "Persea.wsgi.application"
 
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 # Configuración de la base de datos
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "Persea",
+        "USER": "root",
+        "PASSWORD": "0000",
+        "HOST": "localhost",
+        "PORT": "3306",
     }
 }
 

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getPreparacionByPlantacionId, patchPreparacion } from '../api/preparacionTerreno.api';
+import '../styles/historial.css';
+import '../styles/formulario.css';
+
 
 export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
   const {
@@ -152,89 +155,169 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
       console.error('Error al actualizar la preparación de terreno:', error);
     }
   });
-
   return (
-    <div>
+    <div className="preparacion-terreno-container">
       <h3>Agregar Preparación de Terreno</h3>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="preparacion-form">
         {/* LIMPIEZA DEL TERRENO */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
             {...register('checkLimpieza')}
-            disabled={isCheckboxDisabled.limpieza} // Deshabilitar si ya está registrado
+            disabled={isCheckboxDisabled.limpieza}
+            className="form-checkbox"
           />
-          <label style={{ marginLeft: '8px' }}>Limpieza del terreno</label>
+          <label className="form-label">Limpieza del terreno</label>
           {watchCheckLimpieza && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('limpiezaTerreno')})
-            </span>
+            <span className="form-fecha">(Fecha: {watch('limpiezaTerreno')})</span>
           )}
         </div>
-
+  
         {/* ANÁLISIS DE SUELO */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
             {...register('checkAnalisis')}
-            disabled={isCheckboxDisabled.analisis} // Deshabilitar si ya está registrado
+            disabled={isCheckboxDisabled.analisis}
+            className="form-checkbox"
           />
-          <label style={{ marginLeft: '8px' }}>Análisis de suelo</label>
+          <label className="form-label">Análisis de suelo</label>
           {watchCheckAnalisis && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('analisisSuelo')})
-            </span>
+            <span className="form-fecha">(Fecha: {watch('analisisSuelo')})</span>
           )}
         </div>
-
+  
         {/* CORRECCIÓN DE SUELO */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
             {...register('checkCorrecion')}
-            disabled={isCheckboxDisabled.correcion} // Deshabilitar si ya está registrado
+            disabled={isCheckboxDisabled.correcion}
+            className="form-checkbox"
           />
-          <label style={{ marginLeft: '8px' }}>Corrección de suelo</label>
+          <label className="form-label">Corrección de suelo</label>
           {watchCheckCorrecion && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('correcionSuelo')})
-            </span>
+            <span className="form-fecha">(Fecha: {watch('correcionSuelo')})</span>
           )}
         </div>
-
+  
         {/* LABRANZA */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
             {...register('checkLabranza')}
-            disabled={isCheckboxDisabled.labranza} // Deshabilitar si ya está registrado
+            disabled={isCheckboxDisabled.labranza}
+            className="form-checkbox"
           />
-          <label style={{ marginLeft: '8px' }}>Labranza</label>
+          <label className="form-label">Labranza</label>
           {watchCheckLabranza && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
-              (Fecha: {watch('labranza')})
-            </span>
+            <span className="form-fecha">(Fecha: {watch('labranza')})</span>
           )}
         </div>
-
+  
         {/* DELIMITACIÓN DE PARCELA (FLOAT) */}
-        <div style={{ marginTop: '12px' }}>
-          <label>Delimitación de parcela (m²):</label>
+        <div className="form-group">
+          <label className="form-label">Delimitación de parcela (m²):</label>
           <input
             type="number"
             step="any"
             {...register('delimitacionParcela', { required: false })}
             disabled={isCheckboxDisabled.delimitacionParcela}
-            style={{ marginLeft: '10px' }}
+            className="form-input"
           />
           {errors.delimitacionParcela && (
-            <span style={{ color: 'red', marginLeft: '8px' }}>
-            </span>
+            <span className="form-error"></span>
           )}
         </div>
-
-        <button style={{ marginTop: '16px' }}>Listo</button>
+  
+        <button type="submit" className="form-button"> Listo</button>
       </form>
     </div>
   );
 }
+
+  // return (
+  //   <div>
+  //     <h3>Agregar Preparación de Terreno</h3>
+  //     <form onSubmit={onSubmit}>
+  //       {/* LIMPIEZA DEL TERRENO */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input
+  //           type="checkbox"
+  //           {...register('checkLimpieza')}
+  //           disabled={isCheckboxDisabled.limpieza} // Deshabilitar si ya está registrado
+  //         />
+  //         <label style={{ marginLeft: '8px' }}>Limpieza del terreno</label>
+  //         {watchCheckLimpieza && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('limpiezaTerreno')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       {/* ANÁLISIS DE SUELO */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input
+  //           type="checkbox"
+  //           {...register('checkAnalisis')}
+  //           disabled={isCheckboxDisabled.analisis} // Deshabilitar si ya está registrado
+  //         />
+  //         <label style={{ marginLeft: '8px' }}>Análisis de suelo</label>
+  //         {watchCheckAnalisis && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('analisisSuelo')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       {/* CORRECCIÓN DE SUELO */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input
+  //           type="checkbox"
+  //           {...register('checkCorrecion')}
+  //           disabled={isCheckboxDisabled.correcion} // Deshabilitar si ya está registrado
+  //         />
+  //         <label style={{ marginLeft: '8px' }}>Corrección de suelo</label>
+  //         {watchCheckCorrecion && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('correcionSuelo')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       {/* LABRANZA */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input
+  //           type="checkbox"
+  //           {...register('checkLabranza')}
+  //           disabled={isCheckboxDisabled.labranza} // Deshabilitar si ya está registrado
+  //         />
+  //         <label style={{ marginLeft: '8px' }}>Labranza</label>
+  //         {watchCheckLabranza && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('labranza')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       {/* DELIMITACIÓN DE PARCELA (FLOAT) */}
+  //       <div style={{ marginTop: '12px' }}>
+  //         <label>Delimitación de parcela (m²):</label>
+  //         <input
+  //           type="number"
+  //           step="any"
+  //           {...register('delimitacionParcela', { required: false })}
+  //           disabled={isCheckboxDisabled.delimitacionParcela}
+  //           style={{ marginLeft: '10px' }}
+  //         />
+  //         {errors.delimitacionParcela && (
+  //           <span style={{ color: 'red', marginLeft: '8px' }}>
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       <button style={{ marginTop: '16px' }}>Listo</button>
+  //     </form>
+  //   </div>
+  // );
+ 

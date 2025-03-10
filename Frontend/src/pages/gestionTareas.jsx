@@ -44,7 +44,7 @@ export function GestionTareasPage() {
   }, [plantacionId]);
 
   const handleRedirectToInicioPlantacion = () => {
-    navigate(`/inicio-plantacion/`);
+    navigate(`/inicio-plantacion`);
   };
 
   // Solo si preparacion y seleccion están completadas => se desbloquean las demás

@@ -3,31 +3,31 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100vh;
-    margin-top: 0px;
+    min-height: 100vh;
+    margin-top: 0;
     display: flex;
     align-items: center;
     flex-direction: column;
-    
-     
-   
-    
+    padding: 20px;
+    overflow: hidden; /* Evita el scroll */
 }
-.orden{
-    margin: 100px;
+
+.orden {
+    margin-bottom: 10%; /* Margen relativo */
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+     /* Ajusta el contenido dinámicamente */
 }
-.orden h2{
-    color:#1e7c2b;
-    margin-bottom: 40px;
+
+.orden h2 {
+    color: #1e7c2b;
+    margin-bottom: 20px; /* Reducido para pantallas pequeñas */
     font-size: 60px;
     font-weight: bold;
-    
-
+    text-align: center;
 }
+
 .button {
     margin-top: 15px;
     text-decoration: none;
@@ -41,17 +41,14 @@
     transition: background 0.3s;
 }
 
+
 .button:hover {
     background-color: #196623;
 }
+
 .swiper-container {
-    
     width: 100%;
-    max-width: 1000px; /* Se mantiene en pantallas grandes */
-   
-    
-    
-   
+    max-width: 1000px; 
 }
 
 .swiper-slide {
@@ -62,28 +59,19 @@
 
 .swiper-button-next, .swiper-button-prev {
     color: #17500c !important;  
-   
     font-weight: bold;
     transform: translateY(-50%);
-    
 }
 
-
-
+/* Activo de la paginación */
 .swiper-pagination-bullet-active {
     background-color: #107a14 !important;
 }
 
-/* Responsividad */
-/* Para tablets */
+/* Ajustes para tablets */
 @media (max-width: 1024px) {
-    .main {
-        height: auto;
-        padding: 20px;
-    }
-
-    .swiper-container {
-        width: 90%;
+    .orden {
+        margin: 5%;
     }
 
     .orden h2 {
@@ -91,26 +79,21 @@
     }
 }
 
-/* Para móviles */
+/* Ajustes para móviles */
 @media (max-width: 768px) {
-    .swiper-container {
-        width: 100%;
-    }
-
     .orden {
-        margin: 50px;
+        margin: 10px;
     }
 
     .orden h2 {
-        font-size: 30px;
-    }
-
-    .button {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-
-    .swiper-button-next, .swiper-button-prev {
-        display: none;
+        font-size: 28px;
     }
 }
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 480px) {
+    .orden h2 {
+        font-size: 24px;
+    }
+}
+

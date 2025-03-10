@@ -2,19 +2,26 @@ python -m venv venv
 
 venv\Scripts\activate
 
-python manage.py makemigrations
-python manage.py migrate
-
-
 pip freeze > requirements.txt
 
 pip install -r requirements.txt
 
 
-pip install weasyprint
 pip install celery
+pip install mysqlclient
 
 
+python manage.py runserver
+
+
+Database:
+mysql -u root -p
+password: 0000
+
+CREATE DATABASE Persea;
+USE Persea;
+
+python manage.py makemigrations
+python manage.py migrate
 
 python manage.py createsuperuser
-python manage.py runserver   

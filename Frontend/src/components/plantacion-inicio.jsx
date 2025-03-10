@@ -6,6 +6,7 @@ import { Taskcard } from './plantacion-crear';
 import { useForm } from 'react-hook-form';
 import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
+import advertencia from '../img/advertencia.png'
 
 
 // Importaciones de Swiper
@@ -73,8 +74,7 @@ export function PlantacionInicio() {
     };
 
     return (
-        <>
-        <Header/>
+        
             <div className='main'>
                 <div className='orden'>
                     <h2>Mis Plantaciones</h2>
@@ -96,7 +96,8 @@ export function PlantacionInicio() {
                         320: { slidesPerView: 1 }, 
                         480: { slidesPerView: 1 },  
                         768: { slidesPerView: 2 },  
-                        1024: { slidesPerView: 3 }  
+                        1024: { slidesPerView: 2 },  
+                        1280: { slidesPerView: 3 }  
                     }}
                 >
                     {plantaciones.map((plantacion) => (
@@ -112,19 +113,20 @@ export function PlantacionInicio() {
 
                 {/* Modal para crear plantación */}
                 {isModalOpenCrear && (
-                    <div className="modal">
+                    <div className="modal-1">
                         <div className="modal-content">
                             <h2>Nombre de tu parcela</h2>
                             <form onSubmit={onSubmit}>
                                 <input
                                     type="text"
+                                    className='input-1'
                                     placeholder="nombre"
                                     {...register("nombreParcela", { required: true })}
                                 />
                                 {errors.nombreParcela && <span>Requerido</span>}
                                 <div className="button-container">
-                                    <button type="submit">Plantar</button>
-                                    <button type="button" onClick={closeModalCrear}>Cancelar</button>
+                                    <button type="submit" className='submit-1'>Plantar</button>
+                                    <button type="button" className=" button-1" onClick={closeModalCrear}>Cancelar</button>
                                 </div>
                             </form>
                         </div>
@@ -135,13 +137,15 @@ export function PlantacionInicio() {
                 {isModalOpenEliminar && plantacionSeleccionada && (
                     <div className="modal-overlay-2">
                         <div className="modal-2">
-                            <p>Tu plantación de "<label className="parcela-1">{plantacionSeleccionada.nombreParcela}</label>" será eliminada. ¿Estás seguro?</p>
+                            <img src={advertencia} alt="Advertencia" className='img-advertencia' />
+                            <h3>¿Estás seguro/a de eliminar esta plantación?</h3>
+                            <p>Tu plantación de "<label className="parcela-1">{plantacionSeleccionada.nombreParcela}</label>" será eliminada. ¿Estás seguro/a?</p>
                             <button className="confirmar" onClick={() => handleDeactivate(plantacionSeleccionada.id)}>Sí, eliminar</button>
                             <button className="cancelar" onClick={closeModalEliminar}>Cancelar</button>
                         </div>
                     </div>
                 )}
             </div>
-        </>
+        
     );
 }

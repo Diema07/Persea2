@@ -1,6 +1,6 @@
 .glass-container {
   background-image: url('../img/fondo1.png');
-  background-size: 100vw 100vh;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
@@ -8,13 +8,15 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 20px;
+  text-align: center;
 }
 
 .glass-avatar {
-  width: 230px;
-  height: 230px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .glass-box {
@@ -25,49 +27,97 @@
   backdrop-filter: blur(15px);
   box-shadow: 0px 0px 6px 5px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
-  padding: 40px;
+  padding: 30px;
   text-align: center;
-  max-width: 500px;
+  max-width: 450px;
+  width: 90%;
 }
-.sub{
+
+.sub {
   color: #fff;
-  
+  font-size: 1.8rem;
+  margin-bottom: 10px;
 }
 
 .glass-text {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #fff;
-  font-size: 1.5rem;
- 
+  font-size: 1.3rem;
 }
-
-/*.persea-text{
-  color: rgb(16, 158, 3);
-}*/
 
 .glass-button {
   background-color: #ffffff;
-  border: 2px solid transparent;
   border: none;
-  padding: 15px 20px;
+  padding: 12px 18px;
   border-radius: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-
-}
-
-.glass-logo {
-  width: 30px;
-  height: 30px;
-  margin-right: 15px;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .glass-button:hover {
   background-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;          
+  color: #ffffff;
   border: 2px solid #ffffff;
-  
+  transform: scale(1.05);
+}
+
+.glass-logo {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  .glass-avatar {
+    width: 150px;
+    height: 150px;
+  }
+
+  .glass-box {
+    padding: 20px;
+    max-width: 400px;
+  }
+
+  .glass-text {
+    font-size: 1.1rem;
+  }
+
+  .glass-button {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+
+  .glass-logo {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-box {
+    width: 95%;
+  }
+
+  .sub {
+    font-size: 1.5rem;
+  }
+
+  .glass-text {
+    font-size: 1rem;
+  }
+
+  .glass-button {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .glass-logo {
+    width: 18px;
+    height: 18px;
+  }
 }

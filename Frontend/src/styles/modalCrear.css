@@ -1,18 +1,19 @@
-.modal {
+.modal-1 {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo más oscuro para mejor visibilidad */
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-    width: 25%;
-    height: 25%; 
+    width: 30%;
+    max-width: 400px;
     background-color: white;
     padding: 20px;
     border-radius: 12px;
@@ -23,25 +24,22 @@
     text-align: center;
 }
 
-
-/*form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}*/
-
-
+/* Contenedor de botones */
 .button-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 10px; /*espacioooo*/
-    margin-top: 30px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
+.img-advertencia{
+    width: 40px;
+    height: 40px;
+}
 
-button[type="submit"] {
+/* Botón de submit */
+.submit-1{
     background-color: #28a745;
     color: white;
     border: none;
@@ -53,12 +51,12 @@ button[type="submit"] {
     transition: background 0.3s ease;
 }
 
-button[type="submit"]:hover {
+.submit-1:hover {
     background-color: #218838;
 }
 
-
-button[type="button"] {
+/* Botón de cancelar o cerrar */
+.button-1 {
     background-color: #dc3545;
     color: white;
     border: none;
@@ -70,14 +68,14 @@ button[type="button"] {
     transition: background 0.3s ease;
 }
 
-button[type="button"]:hover {
+.button-1:hover {
     background-color: #c82333;
 }
 
-
-input {
+/* Estilos de inputs */
+.input-1 {
     width: 90%;
-    max-width: 250px; 
+    max-width: 250px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -85,9 +83,51 @@ input {
     margin-top: 10px;
 }
 
-input:focus {
+.input-1:focus {
     border-color: #28a745;
     outline: none;
     box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
+
+
+/* RESPONSIVIDAD */
+
+/* Para tablets */
+@media (max-width: 1024px) {
+    .modal-content {
+        width: 40%;
+    }
+}
+
+/* Para móviles */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 60%;
+    }
+
+    .button-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+/* Para móviles pequeños (menos de 480px) */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    input {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+}

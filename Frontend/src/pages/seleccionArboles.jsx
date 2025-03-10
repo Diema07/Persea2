@@ -5,6 +5,7 @@ import { SeleccionArbolesForm } from '../components/seleccionArbolesForm';
 import atras from "../img/atras.png";
 
 
+
 export function SeleccionArbolesPage() {
   const { plantacionId } = useParams(); // /seleccion-arboles/:plantacionId
   const idPlantacion = Number(plantacionId); // Convierte plantacionId a número
