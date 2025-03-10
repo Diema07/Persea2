@@ -92,60 +92,127 @@ export function PodaForm({ plantacionId, onCreated }) {
       console.error('Error al crear Poda:', error);
     }
   });
-
   return (
-    <div>
-      <h3> Agregar Poda</h3>
-      <form onSubmit={onSubmit}>
+    <div className="preparacion-terreno-container">
+      <h3>Agregar Poda</h3>
+      <form className="preparacion-form" onSubmit={onSubmit}>
         {/* Tipo de Poda */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Tipo de Poda:</label>
-          <select {...register('tipoPoda', { required: true })} style={{ marginLeft: '8px' }}>
+        <div className="form-group">
+          <label className="form-label">Tipo de Poda:</label>
+          <select
+            className="form-input"
+            {...register('tipoPoda', { required: true })}
+          >
             <option value="">Seleccione...</option>
             <option value="formacion">Formación</option>
             <option value="mantenimiento">Mantenimiento</option>
             <option value="sanitaria">Sanitaria</option>
           </select>
-          {errors.tipoPoda && <span style={{ color: 'red' }}>Requerido</span>}
+          {errors.tipoPoda && <span className="form-error">Requerido</span>}
         </div>
 
         {/* Herramientas Usadas */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Herramientas Usadas:</label>
-          <select {...register('herramientasUsadas', { required: true })} style={{ marginLeft: '8px' }}>
+        <div className="form-group">
+          <label className="form-label">Herramientas Usadas:</label>
+          <select
+            className="form-input"
+            {...register('herramientasUsadas', { required: true })}
+          >
             <option value="">Seleccione...</option>
             <option value="tijeras">Tijeras</option>
             <option value="serrucho">Serrucho</option>
             <option value="motosierra">Motosierra</option>
           </select>
-          {errors.herramientasUsadas && <span style={{ color: 'red' }}>Requerido</span>}
+          {errors.herramientasUsadas && <span className="form-error">Requerido</span>}
         </div>
 
         {/* Técnicas Usadas */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Técnicas Usadas:</label>
-          <select {...register('tecnicasUsadas', { required: true })} style={{ marginLeft: '8px' }}>
+        <div className="form-group">
+          <label className="form-label">Técnicas Usadas:</label>
+          <select
+            className="form-input"
+            {...register('tecnicasUsadas', { required: true })}
+          >
             <option value="">Seleccione...</option>
             <option value="ralo">Raleo</option>
             <option value="deschuponado">Deschuponado</option>
             <option value="rebaje">Rebaje</option>
           </select>
-          {errors.tecnicasUsadas && <span style={{ color: 'red' }}>Requerido</span>}
+          {errors.tecnicasUsadas && <span className="form-error">Requerido</span>}
         </div>
 
         {/* Fecha de Poda */}
-        <div style={{ marginBottom: '8px' }}>
-          <input type="checkbox" {...register('checkFechaPoda')} />
-          <label style={{ marginLeft: '8px' }}>Fecha de Poda (hoy si marcas)</label>
+        <div className="form-group">
+          <input
+            type="checkbox"
+            className="form-checkbox"
+            {...register('checkFechaPoda')}
+          />
+          <label className="form-label">Fecha de Poda (hoy si marcas)</label>
           {watchCheckFechaPoda && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
+            <span className="form-fecha">
               (Fecha: {watch('fechaPoda')})
             </span>
           )}
         </div>
 
-        <button style={{ marginTop: '16px' }}>Guardar</button>
+        <button className="form-button">Guardar</button>
       </form>
     </div>
-  );
+);
+  // return (
+  //   <div>
+  //     <h3> Agregar Poda</h3>
+  //     <form onSubmit={onSubmit}>
+  //       {/* Tipo de Poda */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <label>Tipo de Poda:</label>
+  //         <select {...register('tipoPoda', { required: true })} style={{ marginLeft: '8px' }}>
+  //           <option value="">Seleccione...</option>
+  //           <option value="formacion">Formación</option>
+  //           <option value="mantenimiento">Mantenimiento</option>
+  //           <option value="sanitaria">Sanitaria</option>
+  //         </select>
+  //         {errors.tipoPoda && <span style={{ color: 'red' }}>Requerido</span>}
+  //       </div>
+
+  //       {/* Herramientas Usadas */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <label>Herramientas Usadas:</label>
+  //         <select {...register('herramientasUsadas', { required: true })} style={{ marginLeft: '8px' }}>
+  //           <option value="">Seleccione...</option>
+  //           <option value="tijeras">Tijeras</option>
+  //           <option value="serrucho">Serrucho</option>
+  //           <option value="motosierra">Motosierra</option>
+  //         </select>
+  //         {errors.herramientasUsadas && <span style={{ color: 'red' }}>Requerido</span>}
+  //       </div>
+
+  //       {/* Técnicas Usadas */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <label>Técnicas Usadas:</label>
+  //         <select {...register('tecnicasUsadas', { required: true })} style={{ marginLeft: '8px' }}>
+  //           <option value="">Seleccione...</option>
+  //           <option value="ralo">Raleo</option>
+  //           <option value="deschuponado">Deschuponado</option>
+  //           <option value="rebaje">Rebaje</option>
+  //         </select>
+  //         {errors.tecnicasUsadas && <span style={{ color: 'red' }}>Requerido</span>}
+  //       </div>
+
+  //       {/* Fecha de Poda */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input type="checkbox" {...register('checkFechaPoda')} />
+  //         <label style={{ marginLeft: '8px' }}>Fecha de Poda (hoy si marcas)</label>
+  //         {watchCheckFechaPoda && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('fechaPoda')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       <button style={{ marginTop: '16px' }}>Guardar</button>
+  //     </form>
+  //   </div>
+  // );
 }

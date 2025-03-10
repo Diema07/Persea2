@@ -117,67 +117,134 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   });
 
   return (
-    <div>
+    <div className="preparacion-terreno-container">
       <h3>Agregar Mantenimiento/Monitoreo</h3>
-      <form onSubmit={onSubmit}>
+      <form className="preparacion-form" onSubmit={onSubmit}>
         {/* GUADAÑA */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
+            className="form-checkbox"
             {...register('checkGuadana')}
           />
-          <label style={{ marginLeft: '8px' }}>Guadaña</label>
+          <label className="form-label">Guadaña</label>
           {watchCheckGuadana && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
+            <span className="form-fecha">
               (Fecha: {watch('guadana')})
             </span>
           )}
         </div>
 
         {/* NECESIDAD DE ÁRBOLES */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Necesidad de Árboles:</label>
+        <div className="form-group">
+          <label className="form-label">Necesidad de Árboles:</label>
           <input
             type="text"
+            className="form-input"
             {...register('necesidadArboles', { required: false })}
-            style={{ marginLeft: '8px' }}
           />
-          {errors.necesidadArboles && <span style={{ color: 'red' }}></span>}
+          {errors.necesidadArboles && <span className="form-error"></span>}
         </div>
 
         {/* TIPO DE TRATAMIENTO */}
-        <div style={{ marginBottom: '8px' }}>
-          <label>Tipo de Tratamiento:</label>
+        <div className="form-group">
+          <label className="form-label">Tipo de Tratamiento:</label>
           <select
+            className="form-input"
             {...register('tipoTratamiento', { required: false })}
-            style={{ marginLeft: '8px' }}
           >
-            <option value="">-- Seleccione una opción --</option>
+            <option value=""></option>
             <option value="insecticida">Insecticida</option>
             <option value="fungicida">Fungicida</option>
             <option value="herbicida">Herbicida</option>
           </select>
-          {errors.tipoTratamiento && <span style={{ color: 'red' }}></span>}
+          {errors.tipoTratamiento && <span className="form-error"></span>}
         </div>
 
         {/* FECHA DE APLICACIÓN DE TRATAMIENTO */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className="form-group">
           <input
             type="checkbox"
+            className="form-checkbox"
             {...register('checkAplicacion')}
           />
-          <label style={{ marginLeft: '8px' }}>
+          <label className="form-label">
             Fecha de Aplicación de Tratamiento
           </label>
           {watchCheckAplicacion && (
-            <span style={{ marginLeft: '16px', color: 'green' }}>
+            <span className="form-fecha">
               (Fecha: {watch('fechaAplicacionTratamiento')})
             </span>
           )}
         </div>
 
-        <button style={{ marginTop: '16px' }}>Listo</button>
+        <button className="form-button">Listo</button>
       </form>
     </div>
-  );
+);
+
+  // return (
+  //   <div>
+  //     <h3>Agregar Mantenimiento/Monitoreo</h3>
+  //     <form onSubmit={onSubmit}>
+  //       {/* GUADAÑA */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input
+  //           type="checkbox"
+  //           {...register('checkGuadana')}
+  //         />
+  //         <label style={{ marginLeft: '8px' }}>Guadaña</label>
+  //         {watchCheckGuadana && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('guadana')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       {/* NECESIDAD DE ÁRBOLES */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <label>Necesidad de Árboles:</label>
+  //         <input
+  //           type="text"
+  //           {...register('necesidadArboles', { required: false })}
+  //           style={{ marginLeft: '8px' }}
+  //         />
+  //         {errors.necesidadArboles && <span style={{ color: 'red' }}></span>}
+  //       </div>
+
+  //       {/* TIPO DE TRATAMIENTO */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <label>Tipo de Tratamiento:</label>
+  //         <select
+  //           {...register('tipoTratamiento', { required: false })}
+  //           style={{ marginLeft: '8px' }}
+  //         >
+  //           <option value="">-- Seleccione una opción --</option>
+  //           <option value="insecticida">Insecticida</option>
+  //           <option value="fungicida">Fungicida</option>
+  //           <option value="herbicida">Herbicida</option>
+  //         </select>
+  //         {errors.tipoTratamiento && <span style={{ color: 'red' }}></span>}
+  //       </div>
+
+  //       {/* FECHA DE APLICACIÓN DE TRATAMIENTO */}
+  //       <div style={{ marginBottom: '8px' }}>
+  //         <input
+  //           type="checkbox"
+  //           {...register('checkAplicacion')}
+  //         />
+  //         <label style={{ marginLeft: '8px' }}>
+  //           Fecha de Aplicación de Tratamiento
+  //         </label>
+  //         {watchCheckAplicacion && (
+  //           <span style={{ marginLeft: '16px', color: 'green' }}>
+  //             (Fecha: {watch('fechaAplicacionTratamiento')})
+  //           </span>
+  //         )}
+  //       </div>
+
+  //       <button style={{ marginTop: '16px' }}>Listo</button>
+  //     </form>
+  //   </div>
+  // );
 }

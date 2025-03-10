@@ -4,36 +4,34 @@ body {
 }
 
 .main1 {
-   
-   margin-left: 40px;
-    
+    margin: 0 5%; /* Margen relativo */
+    padding: 20px;
+    box-sizing: border-box; /* Evita desbordamiento */
 }
 
-
-
 .cuadro {
-    margin-top: 30px;
+    margin-top: 0px;
     margin-bottom: 60px;
     display: flex;
-    flex-direction: column; /* Alinea los elementos en columna */
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(to right, #17aa40, #1e7c2b);
     color: white;
     border-radius: 10px;
     padding: 20px;
-    width: 250px; /* Tamaño fijo para que sea más cuadrado */
-    height: 350px; /* Altura definida */
-    
-    
+    box-sizing: border-box; /* Evita desbordamiento */
 }
-
 
 
 .cuadro:hover {
     border: 1px solid #026021;
     background: linear-gradient(to right, #24bd4f, #299838);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.boton-eliminar{
+    width: 30px;
+    height: 30px;
 }
 
 
@@ -84,8 +82,6 @@ body {
 
 
 
-/*¨MODALAALAA*/
-/* Botón de eliminar */
 .boton-eliminar {
     position: absolute;
     top: 10px;
@@ -105,7 +101,7 @@ body {
     transform: scale(1.1);
 }
 
-/* Modal */
+
 .modal-overlay-2 {
     position: fixed;
     top: 0;
@@ -158,59 +154,25 @@ body {
 .parcela-1{
     font-weight: bold;
 }
-/* Responsividad */
-/* Para tablets */
-@media (max-width: 1024px) {
+@media (max-width: 1920px) {
     .cuadro {
-        width: 80%;
-        height: auto;
-        padding: 15px;
-    }
-
-    .titulo {
-        font-size: 20px;
-    }
-
-    .parrafo {
-        font-size: 14px;
+        width: 250px; /* Tamaño para laptops */
+        height: 350px; /* Altura para laptops */
     }
 }
 
-/* Para móviles */
+/* Estilos para escritorio (23.8 pulgadas, más de 1920px de ancho) */
+@media (min-width: 1921px) {
+    .cuadro {
+        width: 600px; /* Tamaño más grande para escritorio */
+        height: 800px; /* Altura más grande para escritorio */
+    }
+}
+
+/* Estilos para móviles (menos de 768px de ancho) */
 @media (max-width: 768px) {
-    .main1 {
-        margin: 20px;
-    }
-
     .cuadro {
-        width: 100%;
-        max-width: 300px;
-        padding: 10px;
-    }
-
-    .boton-ver-mas {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-
-    .icono img {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-/* Para móviles pequeños */
-@media (max-width: 480px) {
-    .titulo {
-        font-size: 18px;
-    }
-
-    .parrafo {
-        font-size: 12px;
-    }
-
-    .cuadro {
-        width: 90%;
-        padding: 8px;
+        width: 90%; /* Ancho relativo para móviles */
+        height: auto; /* Altura dinámica para móviles */
     }
 }

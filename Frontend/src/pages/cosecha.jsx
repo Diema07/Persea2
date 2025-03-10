@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getCosechaByPlantacionId } from '../api/cosecha.api';
 import { CosechaForm } from '../components/cosechaForm';
 import atras from "../img/atras.png";
+import '../styles/historial.css';
 
 
 export function CosechaPage() {

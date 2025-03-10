@@ -3,14 +3,111 @@
 <head>
   <meta charset="utf-8">
   <title>Informe Completo</title>
+  
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    h1, h2, h3 { color: #006400; margin-bottom: 8px; }
-    .section { margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-    table th, table td { border: 1px solid #ccc; padding: 6px; font-size: 14px; }
-    table th { background-color: #f2f2f2; }
+   
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      color: #006400;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 24px;
+      border-bottom: 2px solid #006400;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-top: 16px;
+      margin-bottom: 12px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    table th {
+      background-color: #006400;
+      color: #fff;
+      font-weight: bold;
+    }
+
+
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+
+    }
+  
+
+ 
+    /* Responsividad */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 18px;
+      }
+
+      table th, table td {
+        padding: 10px;
+        font-size: 12px;
+      }
+    }
   </style>
+
 </head>
 <body>
   <h1>Informe Completo de la Plantación</h1>

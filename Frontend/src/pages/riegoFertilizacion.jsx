@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getRiegoByPlantacionId } from '../api/riegoFertilizacion.api';
 import { RiegoFertilizacionForm } from '../components/riegoFertilizacionForm';
 import atras from "../img/atras.png";
+import '../styles/historial.css';
 
 
 export function RiegoFertilizacionPage() {
@@ -76,7 +77,7 @@ export function RiegoFertilizacionPage() {
       />
 
 
-      <h3>Historial de Riego/Fertilización:</h3>
+      <h3 className='sub-titulo-form'>Historial de Riego/Fertilización:</h3>
       {loading ? (
         <p>Cargando...</p>
       ) : riegoList.length === 0 ? (

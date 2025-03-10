@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {getPreparacionByPlantacionId,} from '../api/preparacionTerreno.api';
 import { PreparacionTerrenoForm } from '../components/preparacionTerrenoForm';
 import atras from "../img/atras.png";
+import '../styles/historial.css';
 
 
 export function PreparacionTerrenoPage() {

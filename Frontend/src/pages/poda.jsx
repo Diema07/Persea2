@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPodaByPlantacionId } from '../api/poda.api';
 import { PodaForm } from '../components/podaForm';
 import atras from "../img/atras.png";
+import '../styles/historial.css';
 
 export function PodaPage() {
   const { plantacionId } = useParams();
@@ -64,22 +65,22 @@ export function PodaPage() {
 
 
       {/* Historial de Podas */}
-      <h3>Historial de Podas:</h3>
-      {podas.length === 0 ? (
-        <p>No hay registros de poda.</p>
-      ) : (
-        <ul>
-          {podas.map((p) => (
-            <li key={p.id}>
-              <strong>Tipo de Poda:</strong> {p.tipoPoda === 'formacion' ? 'Formación' : p.tipoPoda === 'mantenimiento' ? 'Mantenimiento' : 'Sanitaria'} <br />
-              <strong>Herramientas Usadas:</strong> {p.herramientasUsadas === 'tijeras' ? 'Tijeras' : p.herramientasUsadas === 'serrucho' ? 'Serrucho' : 'Motosierra'} <br />
-              <strong>Técnicas Usadas:</strong> {p.tecnicasUsadas === 'ralo' ? 'Raleo' : p.tecnicasUsadas === 'deschuponado' ? 'Deschuponado' : 'Rebaje'} <br />
-              <strong>Fecha de Poda:</strong> {p.fechaPoda || '---'} <br />
-              <hr />
-            </li>
-          ))}
-        </ul>
-      )}
+      <h3 className='sub-titulo-form'>Historial de Podas:</h3> 
+        {podas.length === 0 ? (
+          <p>No hay registros de poda.</p>
+        ) : (
+          <ul className="riego-list"> 
+            {podas.map((p) => (
+              <li key={p.id} className="riego-item"> 
+                <p><strong>Tipo de Poda:</strong> {p.tipoPoda === 'formacion' ? 'Formación' : p.tipoPoda === 'mantenimiento' ? 'Mantenimiento' : 'Sanitaria'}</p>
+                <p><strong>Herramientas Usadas:</strong> {p.herramientasUsadas === 'tijeras' ? 'Tijeras' : p.herramientasUsadas === 'serrucho' ? 'Serrucho' : 'Motosierra'}</p>
+                <p><strong>Técnicas Usadas:</strong> {p.tecnicasUsadas === 'ralo' ? 'Raleo' : p.tecnicasUsadas === 'deschuponado' ? 'Deschuponado' : 'Rebaje'}</p>
+                <p><strong>Fecha de Poda:</strong> {p.fechaPoda || '---'}</p>
+                
+              </li>
+            ))}
+          </ul>
+        )}
     </div>
   );
 }

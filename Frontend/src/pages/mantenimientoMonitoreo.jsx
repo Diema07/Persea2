@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getMantenimientoByPlantacionId } from '../api/mantenimientoMonitoreo.api';
 import { MantenimientoMonitoreoForm } from '../components/mantenimientoMonitoreoForm';
 import atras from "../img/atras.png";
+import '../styles/historial.css';
 
 
 export function MantenimientoMonitoreoPage() {
@@ -63,30 +64,30 @@ export function MantenimientoMonitoreoPage() {
       />
 
       {/* Historial de Mantenimientos */}
-      <h3>Historial de Mantenimientos:</h3>
-      {mantenimientos.length === 0 ? (
-        <p>No hay mantenimientos registrados.</p>
-      ) : (
-        <ul>
-          {mantenimientos.map((m, index) => (
-            <li key={`${m.id}-${index}`}>
-              {m.guadana && (
-                <p><strong>Guadaña:</strong> {m.guadana}</p>
-              )}
-              {m.necesidadArboles && (
-                <p><strong>Necesidad de Árboles:</strong> {m.necesidadArboles}</p>
-              )}
-              {m.tipoTratamiento && (
-                <p><strong>Tipo Tratamiento:</strong> {m.tipoTratamiento}</p>
-              )}
-              {m.fechaAplicacionTratamiento && (
-                <p><strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento}</p>
-              )}
-              <hr />
-            </li>
-          ))}
-        </ul>
-      )}
+      <h3 className='sub-titulo-form'>Historial de Mantenimientos:</h3>
+        {mantenimientos.length === 0 ? (
+          <p>No hay mantenimientos registrados.</p>
+        ) : (
+          <ul className="riego-list"> 
+            {mantenimientos.map((m, index) => (
+              <li key={`${m.id}-${index}`} className="riego-item"> 
+                {m.guadana && (
+                  <p><strong>Guadaña:</strong> {m.guadana}</p>
+                )}
+                {m.necesidadArboles && (
+                  <p><strong>Necesidad de Árboles:</strong> {m.necesidadArboles}</p>
+                )}
+                {m.tipoTratamiento && (
+                  <p><strong>Tipo Tratamiento:</strong> {m.tipoTratamiento}</p>
+                )}
+                {m.fechaAplicacionTratamiento && (
+                  <p><strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento}</p>
+                )}
+               
+              </li>
+            ))}
+          </ul>
+        )}
     </div>
   );
 }
