@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 //imagenes
 import plantaIcon from "../img/planta.png";
-import deleteIcon from "../img/boton-eliminar.png";
+import deleteIcon from "../img/boton-eliminar_2.png";
 
 export function Taskcard({ task, onDelete }) {
     return (

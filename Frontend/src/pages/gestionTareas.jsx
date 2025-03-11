@@ -9,6 +9,7 @@ import logo4 from "../img/img4.png";
 import logo5 from "../img/img5.png";
 import logo6 from "../img/img6.png";
 import atras from "../img/atras.png";
+import advertencia from "../img/advertencia.png";
 
 
 export function GestionTareasPage() {
@@ -152,7 +153,7 @@ export function GestionTareasPage() {
       {isModalOpen && (
         <div className="modal-overlay-2">
           <div className="modal-2">
-            <img src={atras} alt="Advertencia" className="img-advertencia" />
+            <img src={advertencia} alt="Advertencia" className="img-advertencia" />
             <h3>Debes completar 'Preparación' y 'Selección'</h3>
             <p>
               Para acceder a esta tarea, primero debes completar las tareas de{" "}

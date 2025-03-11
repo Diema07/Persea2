@@ -4,7 +4,7 @@ body {
 }
 
 .main1 {
-    margin: 0 5%; /* Margen relativo */
+    margin:  5%; 
     padding: 20px;
     box-sizing: border-box; /* Evita desbordamiento */
 }
@@ -19,7 +19,7 @@ body {
     background: linear-gradient(to right, #17aa40, #1e7c2b);
     color: white;
     border-radius: 10px;
-    padding: 20px;
+    padding: 5px 20px 20px 20px;
     box-sizing: border-box; /* Evita desbordamiento */
 }
 
@@ -28,10 +28,6 @@ body {
     border: 1px solid #026021;
     background: linear-gradient(to right, #24bd4f, #299838);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-.boton-eliminar{
-    width: 30px;
-    height: 30px;
 }
 
 
@@ -82,9 +78,7 @@ body {
 
 
 .boton-eliminar {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    margin-left: 98%;
     background: none;
     border: none;
     cursor: pointer;

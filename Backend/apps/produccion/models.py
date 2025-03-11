@@ -6,8 +6,6 @@ class Cosecha(models.Model):
     cantidadMedianaCalidad = models.FloatField()
     cantidadBajaCalidad = models.FloatField()
     cantidadTotal = models.FloatField()
-    completado = models.BooleanField(default=False)
-
 
 
     idPlantacion = models.ForeignKey('plantaciones.Plantacion', on_delete=models.CASCADE, related_name='cosechas')

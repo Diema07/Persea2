@@ -56,16 +56,10 @@ export function RiegoFertilizacionPage() {
     <div className="riego-fertilizacion-container">
 
       
-      <button
-        onClick={handleRedirectToGestionTareas}
-      >
-        <img 
-          src={atras} 
-          alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
-        />
-      </button>
-
+     
+           <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+                <img src={atras} alt="Eliminar" />
+           </button>
       <h2>Riego y Fertilización - Plantación {idPlantacion}</h2>
 
       {error && <p className="error-message">{error}</p>}

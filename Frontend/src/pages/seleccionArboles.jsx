@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getSeleccionByPlantacionId } from '../api/seleccionArboles.api';
 import { SeleccionArbolesForm } from '../components/seleccionArbolesForm';
 import atras from "../img/atras.png";
+import '../styles/formulario.css'
 
 
 
@@ -45,15 +46,9 @@ export function SeleccionArbolesPage() {
     <div>
 
       
-      <button
-        onClick={handleRedirectToGestionTareas}
-      >
-        <img 
-          src={atras} 
-          alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
-        />
-      </button>
+      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+                 <img src={atras} alt="Eliminar" />
+            </button>
 
       <h2>Selección de Árboles - Plantación {idPlantacion}</h2>
 

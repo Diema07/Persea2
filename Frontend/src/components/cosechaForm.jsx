@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { getCosechaByPlantacionId, postCosecha, desactivarCosechaYPlantacion } from '../api/cosecha.api';
+import advertencia from '../img/advertencia.png'
 
 export function CosechaForm({ plantacionId, onCreated }) {
   const {
@@ -17,6 +18,7 @@ export function CosechaForm({ plantacionId, onCreated }) {
   const watchCantidadAltaCalidad = useWatch({ control, name: 'cantidadAltaCalidad' });
   const watchCantidadMedianaCalidad = useWatch({ control, name: 'cantidadMedianaCalidad' });
   const watchCantidadBajaCalidad = useWatch({ control, name: 'cantidadBajaCalidad' });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const total =
@@ -76,24 +78,29 @@ export function CosechaForm({ plantacionId, onCreated }) {
     }
   });
 
-  const handleCosechaTerminada = async () => {
-    const confirmacion = window.confirm(
-      '¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción desactivará la cosecha y la plantación.'
-    );
+  // const handleCosechaTerminada = async () => {
+  //   const confirmacion = window.confirm(
+  //     '¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción desactivará la cosecha y la plantación.'
+  //   );
 
-    if (confirmacion) {
-      try {
-        await desactivarCosechaYPlantacion(plantacionId);
-        alert('Cosecha y plantación desactivadas correctamente.');
-        window.location.reload(); // Recargar la página para reflejar los cambios
-      } catch (error) {
-        console.error('Error al desactivar cosecha y plantación:', error);
-        alert('Ocurrió un error al desactivar la cosecha y la plantación.');
-      }
-    }
-  };
+  //   if (confirmacion) {
+  //     try {
+  //       await desactivarCosechaYPlantacion(plantacionId);
+  //       alert('Cosecha y plantación desactivadas correctamente.');
+  //       window.location.reload(); // Recargar la página para reflejar los cambios
+  //     } catch (error) {
+  //       console.error('Error al desactivar cosecha y plantación:', error);
+  //       alert('Ocurrió un error al desactivar la cosecha y la plantación.');
+  //     }
+  //   }
+  // };
+  const handleCosechaTerminada = () => {
+    setIsModalOpen(true); 
+    };
+  
 
   return (
+    <>
     <div className="preparacion-terreno-container">
       <h3>Agregar Cosecha</h3>
       <form className="preparacion-form" onSubmit={onSubmit}>
@@ -140,18 +147,18 @@ export function CosechaForm({ plantacionId, onCreated }) {
         </div>
 
         {/* CANTIDAD TOTAL (solo lectura) */}
-        <div style={{ marginBottom: '8px' }}>
+        <div className='form-group'>
           <label>Cantidad Total (kg):</label>
           <input
             type="number"
             step="any"
             value={cantidadTotal}
             readOnly
-            style={{ marginLeft: '8px' }}
+            className='form-input'
           />
         </div>
 
-        <button style={{ marginTop: '16px' }}>Listo</button>
+        <button className="form-button">Listo</button>
       </form>
 
       <button
@@ -169,5 +176,26 @@ export function CosechaForm({ plantacionId, onCreated }) {
         Cosecha Terminada
       </button>
     </div>
+
+    {/* Modal de advertencia */}
+          {isModalOpen && (
+            <div className="modal-overlay-2">
+              <div className="modal-2">
+                <img src={advertencia} alt="Advertencia" className="img-advertencia" />
+                <h3>¿Terminar cosecha?</h3>
+                <p>
+                ¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción <strong>desactivará </strong>la cosecha y la plantación.
+                </p>
+                <button className="confirmar" onClick={() => setIsModalOpen(false)}>
+                  Confirmar
+                </button>
+                
+                <button className="cancelar" onClick={() => setIsModalOpen(false)}>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )}
+      </>
   );
 }
