@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { getCosechaByPlantacionId, postCosecha, desactivarCosechaYPlantacion } from '../api/cosecha.api';
 import advertencia from '../img/advertencia.png'
+import { getCosechaByPlantacionId, postCosecha, completarPlantacion } from '../api/cosecha.api';
 
 export function CosechaForm({ plantacionId, onCreated }) {
   const {
@@ -94,10 +94,36 @@ export function CosechaForm({ plantacionId, onCreated }) {
   //     }
   //   }
   // };
-  const handleCosechaTerminada = () => {
-    setIsModalOpen(true); 
+  const handleCosechaTerminada = async () => {
+    setIsModalOpen(true);
+  
+      try {
+        await completarPlantacion(plantacionId);
+        
+         window.location.href = "http://localhost:3000/inicio-plantacion";
+       } catch (error) {
+        console.error('Error al completar la plantación:', error);
+        alert('Ocurrió un error al completar la plantación.');
+      }
+     
     };
   
+  // const handleCosechaTerminada = async () => {
+  //   const confirmacion = window.confirm(
+  //     '¿Estás seguro de que deseas marcar la cosecha como terminada? Esto completará la plantación y creará una nueva automáticamente.'
+  //   );
+
+  //   if (confirmacion) {
+  //     try {
+  //       await completarPlantacion(plantacionId);
+  //       alert('Plantación completada y nueva plantación creada correctamente.');
+  //       window.location.href = "http://localhost:3000/inicio-plantacion";
+  //     } catch (error) {
+  //       console.error('Error al completar la plantación:', error);
+  //       alert('Ocurrió un error al completar la plantación.');
+  //     }
+  //   }
+  // };
 
   return (
     <>

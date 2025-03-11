@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from .serializer import PlantacionSerializer, PlantacionEstadoSerializer
 from .models import Plantacion
 from apps.preparacion.models import PreparacionTerreno, SeleccionArboles
+from .signals import plantacion_completada
 
 
 class PlantacionView(viewsets.ModelViewSet):
@@ -61,6 +62,17 @@ class PlantacionView(viewsets.ModelViewSet):
             "seleccion": seleccion.completado if seleccion else False
         }
         return Response(data)
+    
+    @action(detail=True, methods=['post'], url_path='completar')
+    def completar_plantacion(self, request, pk=None):
+        # Obtener la plantación
+        plantacion = self.get_object()
+        # Actualizar el estado (esto podría hacerse aquí o en la señal)
+        plantacion.estado = 'COMPLETA'
+        plantacion.save()
+        # Disparar la señal pasando la plantación completada
+        plantacion_completada.send(sender=Plantacion, plantacion=plantacion)
+        return Response({"message": "Plantación completada y nueva plantación creada."}, status=status.HTTP_200_OK)
 
 
 class PlantacionFiltradaView(viewsets.ReadOnlyModelViewSet):
@@ -69,7 +81,7 @@ class PlantacionFiltradaView(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return Plantacion.objects.filter(idUsuario=self.request.user, estado=True).order_by('-id')
+            return Plantacion.objects.filter(idUsuario=self.request.user, estado='ACTIVA').order_by('-id')
         return Plantacion.objects.none()
     
     
