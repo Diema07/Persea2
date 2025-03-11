@@ -57,8 +57,7 @@ body {
     font-size: 24px;
     margin: 0;
 }
-
-/* Estilos para el botón */
+ 
 .boton-ver-mas {
     text-decoration: none;
     padding: 8px 15px;
@@ -156,8 +155,8 @@ body {
 }
 @media (max-width: 1920px) {
     .cuadro {
-        width: 250px; /* Tamaño para laptops */
-        height: 350px; /* Altura para laptops */
+        width: 250px; 
+        height: 350px; 
     }
 }
 

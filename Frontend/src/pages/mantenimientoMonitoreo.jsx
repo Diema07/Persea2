@@ -5,7 +5,6 @@ import { MantenimientoMonitoreoForm } from '../components/mantenimientoMonitoreo
 import atras from "../img/atras.png";
 import '../styles/historial.css';
 
-
 export function MantenimientoMonitoreoPage() {
   const { plantacionId } = useParams();
   const idPlantacion = Number(plantacionId);
@@ -41,16 +40,12 @@ export function MantenimientoMonitoreoPage() {
   };
 
   return (
-    <div>
-
-      
-      <button
-        onClick={handleRedirectToGestionTareas}
-      >
+    <div className="riego-fertilizacion-container">
+      <button onClick={handleRedirectToGestionTareas} className="back-button">
         <img 
           src={atras} 
           alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
+          className="back-icon" 
         />
       </button>
 
@@ -65,29 +60,33 @@ export function MantenimientoMonitoreoPage() {
 
       {/* Historial de Mantenimientos */}
       <h3 className='sub-titulo-form'>Historial de Mantenimientos:</h3>
-        {mantenimientos.length === 0 ? (
-          <p>No hay mantenimientos registrados.</p>
-        ) : (
-          <ul className="riego-list"> 
-            {mantenimientos.map((m, index) => (
-              <li key={`${m.id}-${index}`} className="riego-item"> 
-                {m.guadana && (
-                  <p><strong>Guadaña:</strong> {m.guadana}</p>
-                )}
-                {m.necesidadArboles && (
-                  <p><strong>Necesidad de Árboles:</strong> {m.necesidadArboles}</p>
-                )}
-                {m.tipoTratamiento && (
-                  <p><strong>Tipo Tratamiento:</strong> {m.tipoTratamiento}</p>
-                )}
-                {m.fechaAplicacionTratamiento && (
-                  <p><strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento}</p>
-                )}
-               
-              </li>
-            ))}
-          </ul>
-        )}
+      {mantenimientos.length === 0 ? (
+        <p>No hay mantenimientos registrados.</p>
+      ) : (
+        <ul className="riego-list">
+          {mantenimientos.map((m, index) => (
+            <li key={`${m.id}-${index}`} className="riego-item">
+              {m.guadana && (
+                <p><strong>Guadaña:</strong> {m.guadana}</p>
+              )}
+              {m.necesidadArboles && (
+                <p><strong>Necesidad de Árboles:</strong> {m.necesidadArboles}</p>
+              )}
+              {m.tipoTratamiento && (
+                <p><strong>Tipo Tratamiento:</strong> {m.tipoTratamiento}</p>
+              )}
+              {m.nombreTratamiento && (
+                <p><strong>Nombre de Tratamiento</strong> {m.nombreTratamiento}</p>
+              )}
+              {m.fechaAplicacionTratamiento && (
+                <p><strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento}</p>
+              )}
+             
+              
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

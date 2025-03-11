@@ -74,6 +74,9 @@ export function PlantacionInicio() {
     };
 
     return (
+        <>
+        <Header/>
+           
         
             <div className='main'>
                 <div className='orden'>
@@ -146,6 +149,7 @@ export function PlantacionInicio() {
                     </div>
                 )}
             </div>
+         </>
         
     );
 }

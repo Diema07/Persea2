@@ -59,19 +59,19 @@ export function CosechaPage() {
         onCreated={loadCosechas}  // callback para recargar la lista
       />
 
-      <h3>Historial de Cosechas</h3>
+      <h3 className='sub-titulo-form'>Historial de Cosechas:</h3> {/* Aplica la clase sub-titulo-form */}
       {cosechas.length === 0 ? (
         <p>No hay cosechas registradas.</p>
       ) : (
-        <ul>
+        <ul className="riego-list"> {/* Reutiliza la clase riego-list */}
           {cosechas.map((c) => (
-            <li key={c.id}>
-              <strong>Fecha de Cosecha:</strong> {c.fechaCosecha || '---'} <br />
-              <strong>Cantidad Alta Calidad:</strong> {c.cantidadAltaCalidad || 0} kg<br />
-              <strong>Cantidad Mediana Calidad:</strong> {c.cantidadMedianaCalidad || 0} kg<br />
-              <strong>Cantidad Baja Calidad:</strong> {c.cantidadBajaCalidad || 0} kg<br />
-              <strong>Total Cantidad:</strong> {c.cantidadTotal || 0} kg<br />
-              <hr />
+            <li key={c.id} className="riego-item"> {/* Reutiliza la clase riego-item */}
+              <p><strong>Fecha de Cosecha:</strong> {c.fechaCosecha || '---'}</p>
+              <p><strong>Cantidad Alta Calidad:</strong> {c.cantidadAltaCalidad || 0} kg</p>
+              <p><strong>Cantidad Mediana Calidad:</strong> {c.cantidadMedianaCalidad || 0} kg</p>
+              <p><strong>Cantidad Baja Calidad:</strong> {c.cantidadBajaCalidad || 0} kg</p>
+              <p><strong>Total Cantidad:</strong> {c.cantidadTotal || 0} kg</p>
+              
             </li>
           ))}
         </ul>

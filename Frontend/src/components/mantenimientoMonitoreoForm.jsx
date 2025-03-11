@@ -60,6 +60,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
 
           setValue('necesidadArboles', mantenimiento.necesidadArboles || '');
           setValue('tipoTratamiento', mantenimiento.tipoTratamiento || '');
+          setValue('nombreTratamiento', mantenimiento.nombreTratamiento || '');
         }
       } catch (error) {
         console.error('Error al cargar el mantenimiento/monitoreo:', error);
@@ -100,10 +101,16 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
         datosParaEnviar.fechaAplicacionTratamiento = data.fechaAplicacionTratamiento;
         datosParaEnviar.necesidadArboles = data.necesidadArboles;
         datosParaEnviar.tipoTratamiento = data.tipoTratamiento;
+        datosParaEnviar.nombreTratamiento = data.nombreTratamiento;
+        datosParaEnviar.cantidadTratamiento = data.cantidadTratamiento;
+        datosParaEnviar.medidaTratamiento = data.medidaTratamiento;
       } else {
         datosParaEnviar.fechaAplicacionTratamiento = null;
         datosParaEnviar.necesidadArboles = null;
         datosParaEnviar.tipoTratamiento = null;
+        datosParaEnviar.nombreTratamiento = null;
+        datosParaEnviar.cantidadTratamiento = null;
+        datosParaEnviar.medidaTratamiento = null;
       }
 
       datosParaEnviar.idPlantacion = Number(plantacionId);
@@ -122,6 +129,10 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
         fechaAplicacionTratamiento: null,
         necesidadArboles: '',
         tipoTratamiento: '',
+        nombreTratamiento: '',
+        cantidadTratamiento: '',
+        medidaTratamiento: '',
+        
       });
 
       // Restablecer el estado de los checkboxes
@@ -152,7 +163,6 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
           )}
         </div>
 
-       
         {/* FECHA DE APLICACIÓN DE TRATAMIENTO */}
         <div className="form-group">
           <input
@@ -161,9 +171,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
             {...register('checkAplicacion')}
             disabled={isCheckboxDisabled.aplicacion}
           />
-          <label className="form-label">
-          Aplicación de Tratamiento
-          </label>
+          <label className="form-label">Aplicación de Tratamiento</label>
           {watchCheckAplicacion && (
             <span className="form-fecha">
               (Fecha: {watch('fechaAplicacionTratamiento')})
@@ -174,34 +182,82 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
         {/* Mostrar campos de aplicación de tratamiento solo si el checkbox está marcado */}
         {watchCheckAplicacion && (
           <>
-            <div style={{ marginBottom: '8px' }}>
-              <label>Necesidad de Árboles:</label>
+            <div className="form-group">
+              <label className="form-label">Necesidad de Árboles:</label>
               <input
                 type="text"
                 {...register('necesidadArboles', { required: true })}
-                style={{ marginLeft: '8px' }}
+                className="form-input"
               />
-              {errors.necesidadArboles && <span style={{ color: 'red' }}>Este campo es requerido</span>}
+              {errors.necesidadArboles && (
+                <span className="form-error">Este campo es requerido</span>
+              )}
             </div>
 
-            <div style={{ marginBottom: '8px' }}>
-              <label>Tipo de Tratamiento:</label>
+
+
+            <div className="form-group">
+              <label className="form-label">Tipo de Tratamiento:</label>
               <select
                 {...register('tipoTratamiento', { required: true })}
-                style={{ marginLeft: '8px' }}
+                className="form-input"
               >
                 <option value=""></option>
                 <option value="insecticida">Insecticida</option>
                 <option value="fungicida">Fungicida</option>
                 <option value="herbicida">Herbicida</option>
               </select>
-              {errors.tipoTratamiento && <span style={{ color: 'red' }}>Este campo es requerido</span>}
+              {errors.tipoTratamiento && (
+                <span className="form-error">Este campo es requerido</span>
+              )}
+              
+            </div>
+
+
+            <div className="form-group">
+              <label className="form-label">Nombre de Tratamiento:</label>
+              <input
+                type="text"
+                {...register('nombreTratamiento', { required: true })}
+                className="form-input"
+              />
+             {errors.nombreTratamiento && (
+                <span className="form-error">Este campo es requerido</span>
+              )}
+            </div>
+
+
+            <div className="form-group">
+              <label className="form-label">Cantidad Tratamiento:</label>
+              <input
+                type="text"
+                {...register('cantidadTratamiento', { required: true })}
+                className="form-input"
+              />
+             {errors.cantidadTratamiento && (
+                <span className="form-error">Este campo es requerido</span>
+              )}
+            </div>
+
+
+            <div className="form-group">
+              <label className="form-label">Medida Tratamiento</label>
+              <select
+                {...register('medidaTratamiento', { required: true })}
+                className="form-input"
+              >
+                <option value=""></option>
+                <option value="kg">kg</option>
+                <option value="litros">litros</option>
+                <option value="toneladas">toneladas</option>
+              </select>
+              {errors.medidaTratamiento && <span className="form-error"></span>}
             </div>
           </>
         )}
 
-        <button style={{ marginTop: '16px' }}>Listo</button>
+        <button type="submit" className="form-button">Listo</button>
       </form>
     </div>
-  );
+);
 }

@@ -13,16 +13,17 @@
 }
 
 .orden {
-    margin-bottom: 10%; /* Margen relativo */
+    margin-top: 10%;
+    margin-bottom: 5%; 
     display: flex;
     flex-direction: column;
     align-items: center;
-     /* Ajusta el contenido dinámicamente */
+    
 }
 
 .orden h2 {
     color: #1e7c2b;
-    margin-bottom: 20px; /* Reducido para pantallas pequeñas */
+    margin-bottom: 20px; 
     font-size: 60px;
     font-weight: bold;
     text-align: center;
@@ -63,7 +64,8 @@
     transform: translateY(-50%);
 }
 
-/* Activo de la paginación */
+
+
 .swiper-pagination-bullet-active {
     background-color: #107a14 !important;
 }

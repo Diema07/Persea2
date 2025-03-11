@@ -16,6 +16,7 @@ export function GestionTareasPage() {
   const navigate = useNavigate();
   const [nombreParcela, setNombreParcela] = useState("");
   const [estado, setEstado] = useState({ preparacion: false, seleccion: false,});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchPlantacion = async () => {
@@ -50,106 +51,122 @@ export function GestionTareasPage() {
   // Solo si preparacion y seleccion están completadas => se desbloquean las demás
   const tareasDesbloqueadas = estado.preparacion && estado.seleccion;
 
+  // const handleBlockedClick = (e) => {
+  //   e.preventDefault();
+  //   alert("Debes completar 'Preparación' y 'Selección' antes de acceder a las demás tareas.");
+  // };
+
   const handleBlockedClick = (e) => {
     e.preventDefault();
-    alert("Debes completar 'Preparación' y 'Selección' antes de acceder a las demás tareas.");
+    setIsModalOpen(true); 
   };
 
   return (
     <>
+      <div className="main-8">
+        <button onClick={handleRedirectToInicioPlantacion}>
+          <img
+            src={atras}
+            alt="Flecha atras"
+            style={{ width: "35px", height: "35px" }}
+          />
+        </button>
 
-    <div className="main-8">
-
-      <button
-        onClick={handleRedirectToInicioPlantacion}
-      >
-        <img 
-          src={atras} 
-          alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
-        />
-      </button>
-      
-
-      <div className="contenedor3">
-        <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
-        <div className="grid-contenedor">
-
-          <Link to={`/preparacion/${plantacionId}/`} className="grid-cuadro">
-            <img src={logo1} alt="Preparación" className="icono" />
-            <p>Preparación del terreno</p>
-          </Link>
-
-          <Link to={`/seleccion-arboles/${plantacionId}/`} className="grid-cuadro">
-            <img src={logo2} alt="Selección" className="icono" />
-            <p>Selección de árboles</p>
-          </Link>
-
-           {/* Riego (bloqueado si !tareasDesbloqueadas) */}
-           {tareasDesbloqueadas ? (
-            <Link to={`/riego-fertilizacion/${plantacionId}/`} className="grid-cuadro">
-              <img src={logo3} alt="Riego" className="icono" />
-              <p>Gestión de Riego</p>
+        <div className="contenedor3">
+          <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
+          <div className="grid-contenedor">
+            <Link to={`/preparacion/${plantacionId}/`} className="grid-cuadro">
+              <img src={logo1} alt="Preparación" className="icono" />
+              <p>Preparación del terreno</p>
             </Link>
-          ) : (
-            <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-              <img src={logo3} alt="Riego" className="icono" />
-              <p>Gestión de Riego</p>
-            </div>
-          )}
+
+            <Link to={`/seleccion-arboles/${plantacionId}/`} className="grid-cuadro">
+              <img src={logo2} alt="Selección" className="icono" />
+              <p>Selección de árboles</p>
+            </Link>
 
             {tareasDesbloqueadas ? (
-            <Link to={`/mantenimiento-monitoreo/${plantacionId}/`} className="grid-cuadro">
-              <img src={logo4} alt="Mantenimiento" className="icono" />
-              <p>Mantenimiento</p>
-            </Link>
-          ) : (
-            <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-              <img src={logo4} alt="Mantenimiento" className="icono" />
-              <p>Mantenimiento</p>
-            </div>
-          )}
+              <Link to={`/riego-fertilizacion/${plantacionId}/`} className="grid-cuadro">
+                <img src={logo3} alt="Riego" className="icono" />
+                <p>Gestión de Riego</p>
+              </Link>
+            ) : (
+              <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
+                <img src={logo3} alt="Riego" className="icono" />
+                <p>Gestión de Riego</p>
+              </div>
+            )}
 
             {tareasDesbloqueadas ? (
-            <Link to={`/poda/${plantacionId}/`} className="grid-cuadro">
-              <img src={logo5} alt="Poda" className="icono" />
-              <p>Poda</p>
-            </Link>
-          ) : (
-            <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-              <img src={logo5} alt="Poda" className="icono" />
-              <p>Poda</p>
-            </div>
-          )}
+              <Link to={`/mantenimiento-monitoreo/${plantacionId}/`} className="grid-cuadro">
+                <img src={logo4} alt="Mantenimiento" className="icono" />
+                <p>Mantenimiento</p>
+              </Link>
+            ) : (
+              <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
+                <img src={logo4} alt="Mantenimiento" className="icono" />
+                <p>Mantenimiento</p>
+              </div>
+            )}
 
             {tareasDesbloqueadas ? (
-            <Link to={`/cosecha/${plantacionId}/`} className="grid-cuadro">
-              <img src={logo6} alt="Cosecha" className="icono" />
-              <p>Cosecha</p>
-            </Link>
-          ) : (
-            <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-              <img src={logo6} alt="Cosecha" className="icono" />
-              <p>Cosecha</p>
-            </div>
-          )}
+              <Link to={`/poda/${plantacionId}/`} className="grid-cuadro">
+                <img src={logo5} alt="Poda" className="icono" />
+                <p>Poda</p>
+              </Link>
+            ) : (
+              <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
+                <img src={logo5} alt="Poda" className="icono" />
+                <p>Poda</p>
+              </div>
+            )}
 
             {tareasDesbloqueadas ? (
-            <Link to={`/informe-completo/${plantacionId}/`} className="grid-cuadro">
-              <img src={logo6} alt="Informe" className="icono" />
-              <p>Informe</p>
-            </Link>
-          ) : (
-            <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-              <img src={logo6} alt="Informe" className="icono" />
-              <p>Informe</p>
-            </div>
-          )}
+              <Link to={`/cosecha/${plantacionId}/`} className="grid-cuadro">
+                <img src={logo6} alt="Cosecha" className="icono" />
+                <p>Cosecha</p>
+              </Link>
+            ) : (
+              <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
+                <img src={logo6} alt="Cosecha" className="icono" />
+                <p>Cosecha</p>
+              </div>
+            )}
+
+            {tareasDesbloqueadas ? (
+              <Link to={`/informe-completo/${plantacionId}/`} className="grid-cuadro">
+                <img src={logo6} alt="Informe" className="icono" />
+                <p>Informe</p>
+              </Link>
+            ) : (
+              <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
+                <img src={logo6} alt="Informe" className="icono" />
+                <p>Informe</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Modal de advertencia */}
+      {isModalOpen && (
+        <div className="modal-overlay-2">
+          <div className="modal-2">
+            <img src={atras} alt="Advertencia" className="img-advertencia" />
+            <h3>Debes completar 'Preparación' y 'Selección'</h3>
+            <p>
+              Para acceder a esta tarea, primero debes completar las tareas de{" "}
+              <strong>Preparación</strong> y <strong>Selección</strong>.
+            </p>
+            <button className="confirmar" onClick={() => setIsModalOpen(false)}>
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
+
 }
 
 export default GestionTareasPage;
