@@ -5,6 +5,11 @@ const cosechaAPI = axios.create({
   withCredentials: true,
 });
 
+const plantacionAPI = axios.create({
+  baseURL: 'http://localhost:8000/plantaciones/api/v1/Plantacion/',
+  withCredentials: true,
+});
+
 // Obtener CSRF token
 const getCSRFToken = async () => {
   const response = await axios.get('http://localhost:8000/api/csrf/', { withCredentials: true });
@@ -48,12 +53,10 @@ export const postCosecha = async (data) => {
 
 
 
-export const desactivarCosechaYPlantacion = async (plantacionId) => {
+export const completarPlantacion = async (plantacionId) => {
   try {
     const csrfToken = await getCSRFToken();
-    const response = await cosechaAPI.post('/desactivar-cosecha-plantacion/', {
-      plantacionId: plantacionId,
-    }, {
+    const response = await plantacionAPI.post(`${plantacionId}/completar/`, {}, {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrfToken,
@@ -61,7 +64,7 @@ export const desactivarCosechaYPlantacion = async (plantacionId) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error al desactivar cosecha y plantación:', error.response?.data || error);
+    console.error('Error al completar la plantación:', error.response?.data || error);
     throw error;
   }
 };

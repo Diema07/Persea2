@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { getCosechaByPlantacionId, postCosecha, desactivarCosechaYPlantacion } from '../api/cosecha.api';
+import { getCosechaByPlantacionId, postCosecha, completarPlantacion } from '../api/cosecha.api';
 
 export function CosechaForm({ plantacionId, onCreated }) {
   const {
@@ -78,17 +78,17 @@ export function CosechaForm({ plantacionId, onCreated }) {
 
   const handleCosechaTerminada = async () => {
     const confirmacion = window.confirm(
-      '¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción desactivará la cosecha y la plantación.'
+      '¿Estás seguro de que deseas marcar la cosecha como terminada? Esto completará la plantación y creará una nueva automáticamente.'
     );
 
     if (confirmacion) {
       try {
-        await desactivarCosechaYPlantacion(plantacionId);
-        alert('Cosecha y plantación desactivadas correctamente.');
-        window.location.reload(); // Recargar la página para reflejar los cambios
+        await completarPlantacion(plantacionId);
+        alert('Plantación completada y nueva plantación creada correctamente.');
+        window.location.href = "http://localhost:3000/inicio-plantacion";
       } catch (error) {
-        console.error('Error al desactivar cosecha y plantación:', error);
-        alert('Ocurrió un error al desactivar la cosecha y la plantación.');
+        console.error('Error al completar la plantación:', error);
+        alert('Ocurrió un error al completar la plantación.');
       }
     }
   };
