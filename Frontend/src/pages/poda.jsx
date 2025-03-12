@@ -44,14 +44,9 @@ export function PodaPage() {
     <div>
 
       
-      <button
-        onClick={handleRedirectToGestionTareas}
-      >
-        <img 
-          src={atras} 
-          alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
-        />
+     
+      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+           <img src={atras} alt="Eliminar" />
       </button>
 
       <h2>Poda - Plantación {idPlantacion}</h2>

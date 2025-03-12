@@ -4,6 +4,7 @@ import { getMantenimientoByPlantacionId } from '../api/mantenimientoMonitoreo.ap
 import { MantenimientoMonitoreoForm } from '../components/mantenimientoMonitoreoForm';
 import atras from "../img/atras.png";
 import '../styles/historial.css';
+import '../styles/formulario.css'
 
 export function MantenimientoMonitoreoPage() {
   const { plantacionId } = useParams();
@@ -47,13 +48,10 @@ export function MantenimientoMonitoreoPage() {
 
   return (
     <div className="riego-fertilizacion-container">
-      <button onClick={handleRedirectToGestionTareas}>
-        <img 
-          src={atras} 
-          alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
-        />
-      </button>
+      
+            <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+                 <img src={atras} alt="Eliminar" />
+            </button>
 
       <h2>Mantenimiento/Monitoreo - Plantación {idPlantacion}</h2>
 

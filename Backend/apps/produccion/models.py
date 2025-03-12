@@ -8,7 +8,6 @@ class Cosecha(models.Model):
     cantidadTotal = models.FloatField()
 
 
-
     idPlantacion = models.ForeignKey('plantaciones.Plantacion', on_delete=models.CASCADE, related_name='cosechas')
 
     def __str__(self):

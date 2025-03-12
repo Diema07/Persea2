@@ -63,7 +63,7 @@ export function PlantacionInicio() {
     // Función para actualizar el estado de la plantación a false (desactivar)
     const handleDeactivate = async (id) => {
         try {
-            await updateTaskState(id, false);  // Cambiar el estado de la plantación a false
+            await updateTaskState(id, "INACTIVA");  // Cambiar el estado de la plantación a false
             // Refrescar la lista para reflejar los cambios
             const response = await getFilteredTasks();
             setPlantaciones(response.data);

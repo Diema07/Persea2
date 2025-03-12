@@ -105,7 +105,9 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   });
 
   return (
+     
     <div className="preparacion-terreno-container">
+      
       <h3>Agregar Mantenimiento/Monitoreo</h3>
       <form className="preparacion-form" onSubmit={onSubmit}>
         {/* GUADAÑA */}

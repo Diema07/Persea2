@@ -46,15 +46,9 @@ export function PreparacionTerrenoPage() {
     <div>
 
       
-      <button
-        onClick={handleRedirectToGestionTareas}
-      >
-        <img 
-          src={atras} 
-          alt="Flecha atras" 
-          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
-        />
-      </button>
+     <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+                <img src={atras} alt="Eliminar" />
+           </button>
 
       <h2>Preparación de Terreno - Plantación {idPlantacion}</h2>
 
