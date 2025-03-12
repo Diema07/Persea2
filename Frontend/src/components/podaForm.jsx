@@ -6,59 +6,52 @@ export function PodaForm({ plantacionId, onCreated }) {
   const {
     register,
     handleSubmit,
+    watch,
     reset,
     formState: { errors },
   } = useForm();
 
+  const watchTipoPoda = watch('tipoPoda');
 
-  // Cargar datos existentes al montar el componente
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const plantacionIdNumber = Number(plantacionId);
-  //       if (isNaN(plantacionIdNumber)) {
-  //         throw new Error("plantacionId debe ser un número");
-  //       }
-  //       const data = await getPodaByPlantacionId(plantacionIdNumber);
+  const sugerenciasPoda = {
+    formacion: {
+      frecuencia: "1-2 veces/año",
+      epoca: "Primavera y Otoño",
+      herramientas: "Tijeras, serrucho, escalera",
+      tecnicas: "Deschuponado, raleo, despunte"
+    },
+    mantenimiento: {
+      frecuencia: "1 vez/año",
+      epoca: "Después de la cosecha",
+      herramientas: "Tijeras, serrucho, motosierra",
+      tecnicas: "Raleo, deschuponado, rebaje"
+    },
+    sanitaria: {
+      frecuencia: "Segun necesidad",
+      epoca: "Cualquier época",
+      herramientas: "Serrucho, tijeras, sellador",
+      tecnicas: "Rebaje, raleo"
+    
+    },
+    rejuvenecimiento: {
+      frecuencia: "Cada 5-10 años",
+      epoca: "Después de la cosecha",
+      herramientas: "Serrucho, motosierra, sellador",
+      tecnicas: "Rebaje, raleo, deschuponado"
+    }
+  };
 
-  //       if (data && data.length > 0) {
-  //         const Poda = data[0];
+  console.log("Tipo de poda seleccionada:", watchTipoPoda);
 
-  //         setValue('checkFechaPoda', !!Poda.fechaPoda);
-
-  //         setIsCheckboxDisabled({
-  //           Poda: !!Poda.fechaPoda,
-  //         });
-
-  //         setValue('tipoPoda', Poda.tipoPoda || '');
-  //         setValue('herramientasUsadas', Poda.herramientasUsadas || '');
-  //         setValue('tecnicasUsadas', Poda.tecnicasUsadas || '');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error al cargar Poda:', error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [plantacionId, setValue]);
-
-  // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const datosParaEnviar = {};
+      const datosParaEnviar = {
+        idPlantacion: Number(plantacionId),
+        tipoPoda: data.tipoPoda,
+        herramientasUsadas: data.herramientasUsadas,
+        tecnicasUsadas: data.tecnicasUsadas
+      };
 
-      if (data.tipoPoda) {
-        datosParaEnviar.tipoPoda = data.tipoPoda;
-      }
-
-      if (data.herramientasUsadas) {
-        datosParaEnviar.herramientasUsadas = data.herramientasUsadas;
-      }
-
-      if (data.tecnicasUsadas) {
-        datosParaEnviar.tecnicasUsadas = data.tecnicasUsadas;
-      }
-
-      datosParaEnviar.idPlantacion = Number(plantacionId);
       console.log("Datos a enviar:", datosParaEnviar);
 
       await postPoda(datosParaEnviar);
@@ -71,6 +64,7 @@ export function PodaForm({ plantacionId, onCreated }) {
       console.error('Error al crear Poda:', error);
     }
   });
+
   return (
     <div className="preparacion-terreno-container">
       <h3>Agregar Poda</h3>
@@ -78,25 +72,22 @@ export function PodaForm({ plantacionId, onCreated }) {
         {/* Tipo de Poda */}
         <div className="form-group">
           <label className="form-label">Tipo de Poda:</label>
-          <select
-            className="form-input"
-            {...register('tipoPoda', { required: true })}
-          >
+          <select className="form-input" {...register('tipoPoda', { required: true })}>
             <option value=""></option>
             <option value="formacion">Formación</option>
             <option value="mantenimiento">Mantenimiento</option>
             <option value="sanitaria">Sanitaria</option>
+            <option value="rejuvenecimiento">Rejuvenecimiento</option>
+
           </select>
           {errors.tipoPoda && <span className="form-error">Requerido</span>}
         </div>
 
+
         {/* Herramientas Usadas */}
         <div className="form-group">
           <label className="form-label">Herramientas Usadas:</label>
-          <select
-            className="form-input"
-            {...register('herramientasUsadas', { required: true })}
-          >
+          <select className="form-input" {...register('herramientasUsadas', { required: true })}>
             <option value=""></option>
             <option value="tijeras">Tijeras</option>
             <option value="serrucho">Serrucho</option>
@@ -108,10 +99,7 @@ export function PodaForm({ plantacionId, onCreated }) {
         {/* Técnicas Usadas */}
         <div className="form-group">
           <label className="form-label">Técnicas Usadas:</label>
-          <select
-            className="form-input"
-            {...register('tecnicasUsadas', { required: true })}
-          >
+          <select className="form-input" {...register('tecnicasUsadas', { required: true })}>
             <option value=""></option>
             <option value="ralo">Raleo</option>
             <option value="deschuponado">Deschuponado</option>
@@ -119,6 +107,17 @@ export function PodaForm({ plantacionId, onCreated }) {
           </select>
           {errors.tecnicasUsadas && <span className="form-error">Requerido</span>}
         </div>
+
+         {/* Sugerencias de poda dinámicas */}
+         {watchTipoPoda && sugerenciasPoda[watchTipoPoda] && (
+          <div className="sugerencias">
+            <h4>🌳 {watchTipoPoda === "formacion" ? "Poda de Formación" : watchTipoPoda === "mantenimiento" ? "Poda de Mantenimiento" : watchTipoPoda === "sanitaria" ? "Poda Sanitaria" : "Poda de Rejuvenecimiento"}</h4>
+            <p><strong>🔄 Frecuencia:</strong> {sugerenciasPoda[watchTipoPoda].frecuencia}</p>
+            <p><strong>📅 Época Recomendada:</strong> {sugerenciasPoda[watchTipoPoda].epoca}</p>
+            <p><strong>🛠 Herramientas:</strong> {sugerenciasPoda[watchTipoPoda].herramientas}</p>
+            <p><strong>✂️ Técnicas Principales:</strong> {sugerenciasPoda[watchTipoPoda].tecnicas}</p>
+          </div>
+        )}
 
         <button className="form-button">Guardar</button>
       </form>

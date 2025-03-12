@@ -20,6 +20,7 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
   });
 
   // Observar checkboxes
+  const watchVariedad = watch('seleccionVariedades');
   const watchCheckColinos = watch('checkColinos');
   const watchCheckHoyos = watch('checkHoyos');
   const watchCheckPlantacion = watch('checkPlantacion');
@@ -30,6 +31,27 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
     { value: 'aguacate criollo', label: 'Aguacate Criollo' },
     { value: 'aguacate papelillo', label: 'Aguacate Papelillo' },
   ];
+
+  const datosProduccion = {
+    'aguacate hass': {
+      primeraCosecha: '3 a 5 años',
+      joven: '30 - 80 kg (3-5 años)',
+      adulto: '100 - 300 kg (6-15 años)',
+      viejo: '150 - 250 kg (16+ años)',
+    },
+    'aguacate criollo': {
+      primeraCosecha: '3 a 4 años',
+      joven: '20 - 50 kg (3-5 años)',
+      adulto: '60 - 200 kg (6-15 años)',
+      viejo: '80 - 150 kg (16+ años)',
+    },
+    'aguacate papelillo': {
+      primeraCosecha: '4 a 6 años',
+      joven: '25 - 70 kg (4-6 años)',
+      adulto: '80 - 250 kg (7-15 años)',
+      viejo: '100 - 200 kg (16+ años)',
+    },
+  };
 
   // Al montar, obtenemos los datos existentes
   useEffect(() => {
@@ -208,9 +230,21 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
                 (Fecha: {watch('plantacion')})
               </span>
             )}
-          </div>
 
-          <button className="form-button">Listo</button>
+          </div>{/* Mostrar sugerencias de producción según la variedad seleccionada */}
+          {watchVariedad && datosProduccion[watchVariedad] && (
+          <div className="sugerencias">
+            <p><strong>🌱 Primera cosecha:</strong> {datosProduccion[watchVariedad].primeraCosecha}</p>
+            <p><strong>🔹 Producción estimada:</strong></p>
+            <ul>
+              <li><strong>Joven:</strong> {datosProduccion[watchVariedad].joven}</li>
+              <li><strong>Adulto:</strong> {datosProduccion[watchVariedad].adulto}</li>
+              <li><strong>Viejo:</strong> {datosProduccion[watchVariedad].viejo}</li>
+            </ul>
+          </div>
+        )}
+
+          <button className="form-button">Guardar</button>
         </form>
       </div>
   );

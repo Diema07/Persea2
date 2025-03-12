@@ -73,6 +73,7 @@ class Poda(models.Model):
         ('formacion', 'Formación'),
         ('mantenimiento', 'Mantenimiento'),
         ('sanitaria', 'Sanitaria'),
+        ('rejuvenecimiento', 'Rejuvenecimiento'),
     ]
     tipoPoda = models.CharField(max_length=30, null=True, blank=True, choices=TIPOS_PODA)
 

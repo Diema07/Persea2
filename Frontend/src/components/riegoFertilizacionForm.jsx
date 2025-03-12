@@ -175,6 +175,25 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
           </div>
         )}
 
+         {/* Sugerencias para Riego */}
+         {watchCheckRiego && (
+          <div className="sugerencias">
+            <h4>🌊 Programa de Riego Sugerido</h4>
+            <p><strong>Árboles jóvenes (1-3 años):</strong></p>
+            <ul>
+              <li><strong>Primavera-Verano:</strong> Cada 7-10 días (Aumenta en climas cálidos).</li>
+              <li><strong>Otoño-Invierno:</strong> Cada 10-15 días (Reduce en climas fríos o lluviosos).</li>
+            </ul>
+            <p><strong>Árboles en producción (4+ años):</strong></p>
+            <ul>
+              <li><strong>Floración:</strong> Cada 7-10 días (Mantener suelo húmedo).</li>
+              <li><strong>Cuajado de frutos:</strong> Cada 7-10 días (Suministro constante).</li>
+              <li><strong>Post-cosecha:</strong> Cada 10-15 días (Reducir gradualmente).</li>
+            </ul>
+          </div>
+        )}
+
+
         {/* FERTILIZACIÓN */}
         <div className="form-group">
           <input
@@ -259,7 +278,31 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
           </>
         )}
 
-        <button className="form-button">Listo</button>
+        {/* Sugerencias para Fertilización */}
+        {watchCheckFertilizante && (
+          <div className="sugerencias">
+            <h4>🌿 Recomendaciones de Fertilización</h4>
+            <p><strong>Árboles jóvenes (1-3 años):</strong></p>
+            <ul>
+              <li><strong>Frecuencia:</strong> Cada 2-3 meses.</li>
+              <li><strong>Objetivo:</strong> Promover crecimiento vegetativo.</li>
+              <li><strong>Recomendación:</strong> Fertilizantes ricos en N, P y K en proporción equilibrada.</li>
+            </ul>
+            <p><strong>Árboles en producción (4+ años):</strong></p>
+            <ul>
+              <li><strong>Frecuencia:</strong> 3-4 veces al año.</li>
+              <li><strong>Objetivo:</strong> Mantener equilibrio nutricional.</li>
+            </ul>
+            <h5>Etapas clave:</h5>
+            <ul>
+              <li><strong>Antes de la floración:</strong> Fertilizantes ricos en P y K.</li>
+              <li><strong>Durante el desarrollo de frutos:</strong> Aumentar potasio (K).</li>
+              <li><strong>Después de la cosecha:</strong> Aplicar nitrógeno (N).</li>
+            </ul>
+          </div>
+        )}
+
+        <button className="form-button">Guardar</button>
       </form>
     </div>
 );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCosechaByPlantacionId } from '../api/cosecha.api';
+import { getSeleccionByPlantacionId } from '../api/seleccionArboles.api';
 import { CosechaForm } from '../components/cosechaForm';
 import atras from "../img/atras.png";
 import '../styles/historial.css';
@@ -10,6 +11,8 @@ export function CosechaPage() {
   const { plantacionId } = useParams();
   const [cosechas, setCosechas] = useState([]);
   const navigate = useNavigate();
+
+  const [variedad, setVariedad] = useState(null);
  
 
   // Carga los registros de cosecha existentes
@@ -26,10 +29,26 @@ export function CosechaPage() {
     }
   };
 
+  const loadVariedad = async () => {
+    try {
+      const seleccion = await getSeleccionByPlantacionId(Number(plantacionId));
+        
+      if (seleccion.length > 0) {
+        setVariedad(seleccion[0].seleccionVariedades);
+      } else {
+        console.warn("No se encontró selección de variedades para la plantación.");
+      }
+    } catch (error) {
+      console.error("Error al obtener la variedad de la selección de árboles:", error);
+    }
+  };
+  
+
   // Al montar o cambiar de plantacionId, carga las cosechas
   useEffect(() => {
     if (plantacionId) {
       loadCosechas();
+      loadVariedad();
     }
   }, [plantacionId]);
 
@@ -52,6 +71,7 @@ export function CosechaPage() {
       {/* Formulario para crear/actualizar cosechas */}
       <CosechaForm
         plantacionId={plantacionId}
+        variedad={variedad}
         onCreated={loadCosechas}  // callback para recargar la lista
       />
 

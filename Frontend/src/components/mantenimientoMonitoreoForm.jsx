@@ -126,6 +126,23 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
           )}
         </div>
 
+         {/* Sugerencias para Guadañada */}
+         {watchCheckGuadana && (
+          <div className="sugerencias">
+            <h4>🌾 Programa de Guadañada Sugerido</h4>
+            <p><strong>Árboles jóvenes (1-3 años):</strong></p>
+            <ul>
+              <li><strong>Primavera-Verano:</strong> Cada 4-6 semanas (Las malezas crecen más rápido).</li>
+              <li><strong>Otoño-Invierno:</strong> Cada 6-8 semanas (Reducir en climas fríos).</li>
+            </ul>
+            <p><strong>Árboles en producción (4+ años):</strong></p>
+            <ul>
+              <li><strong>Primavera-Verano:</strong> Cada 6-8 semanas (Mantener área libre de malezas).</li>
+              <li><strong>Otoño-Invierno:</strong> Cada 8-10 semanas (Reducir si las malezas crecen más lento).</li>
+            </ul>
+          </div>
+        )}
+
         {/* FUMIGACIÓN */}
         <div className="form-group">
           <input
@@ -219,9 +236,25 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
           </>
         )}
 
-        <button type="submit" className="form-button">
-          Listo
-        </button>
+        {/* Sugerencias para Fumigación */}
+        {watchCheckAplicacion && (
+          <div className="sugerencias">
+            <h4>🦠 Programa de Fumigación Sugerido</h4>
+            <h5>Preventivo:</h5>
+            <ul>
+              <li><strong>Inicio de primavera:</strong> Cada 2-3 meses (Fungicida preventivo).</li>
+              <li><strong>Inicio de verano:</strong> Cada 2-3 meses (Insecticida preventivo).</li>
+            </ul>
+            <h5>Correctivo:</h5>
+            <ul>
+              <li><strong>Detección de plagas:</strong> Aplicar insecticida específico de inmediato.</li>
+              <li><strong>Detección de enfermedades:</strong> Aplicar fungicida específico de inmediato.</li>
+            </ul>
+          </div>
+        )}
+
+
+        <button type="submit" className="form-button">Guardar</button>
       </form>
     </div>
   );

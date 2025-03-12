@@ -23,6 +23,13 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
     delimitacionParcela: false
   });
 
+  const [arbolesSugeridos, setArbolesSugeridos] = useState({
+    hass: [0, 0],
+    criollo: [0, 0],
+    papelillo: [0, 0],
+  });
+
+
   // Observar checkboxes
   const watchCheckLimpieza = watch('checkLimpieza');
   const watchCheckAnalisis = watch('checkAnalisis');
@@ -100,6 +107,26 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
     }
   }, [watchCheckLabranza, setValue]);
 
+  const distanciasSiembra = {
+    hass: [{ x: 6, y: 5 }, { x: 7, y: 5 }],  // 30m² o 35m² por árbol
+    criollo: [{ x: 8, y: 8 }, { x: 10, y: 10 }], // 64m² o 100m² por árbol
+    papelillo: [{ x: 7, y: 7 }, { x: 8, y: 6 }], // 49m² o 48m² por árbol
+  };
+
+  useEffect(() => {
+    if (watchDelimitacionParcela) {
+      const nuevosValores = {};
+      Object.entries(distanciasSiembra).forEach(([variedad, opciones]) => {
+        nuevosValores[variedad] = opciones.map((opcion) => {
+          const areaPorArbol = opcion.x * opcion.y;
+          return Math.floor(watchDelimitacionParcela / areaPorArbol); // Redondeamos hacia abajo
+        });
+      });
+      setArbolesSugeridos(nuevosValores);
+    } else {
+      setArbolesSugeridos({ hass: [0, 0], criollo: [0, 0], papelillo: [0, 0] });
+    }
+  }, [watchDelimitacionParcela]);
   const onSubmit = handleSubmit(async (data) => {
     try {
       // Verifica que preparacionId sea un número
@@ -229,95 +256,32 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
             <span className="form-error"></span>
           )}
         </div>
+
+       {/* Sugerencia de árboles según la variedad */}
+       {watchDelimitacionParcela && (
+          <div className="sugerencias">
+            <p className="sugerencia">
+              🌱 <strong>Hass:</strong> <br />
+              - En este terreno te caben aproximadamente {arbolesSugeridos.hass[0]} árboles con distancia 6 x 5 m.<br />
+              - En este terreno te caben aproximadamente {arbolesSugeridos.hass[1]} árboles con distancia 7 x 5 m.
+            </p>
+            <p className="sugerencia">
+              🌱 <strong>Criollo:</strong> <br />
+              - En este terreno te caben aproximadamente {arbolesSugeridos.criollo[0]} árboles con distancia 8 x 8 m.<br />
+              - En este terreno te caben aproximadamente {arbolesSugeridos.criollo[1]} árboles con distancia 10 x 10 m.
+            </p>
+            <p className="sugerencia">
+              🌱 <strong>Papelillo:</strong> <br />
+              - En este terreno te caben aproximadamente {arbolesSugeridos.papelillo[0]} árboles con distancia 7 x 7 m.<br />
+              - En este terreno te caben aproximadamente {arbolesSugeridos.papelillo[1]} árboles con distancia 8 x 6 m.
+            </p>
+          </div>
+        )}
   
-        <button type="submit" className="form-button"> Listo</button>
+        <button type="submit" className="form-button"> Guardar</button>
       </form>
     </div>
   );
 }
 
-  // return (
-  //   <div>
-  //     <h3>Agregar Preparación de Terreno</h3>
-  //     <form onSubmit={onSubmit}>
-  //       {/* LIMPIEZA DEL TERRENO */}
-  //       <div style={{ marginBottom: '8px' }}>
-  //         <input
-  //           type="checkbox"
-  //           {...register('checkLimpieza')}
-  //           disabled={isCheckboxDisabled.limpieza} // Deshabilitar si ya está registrado
-  //         />
-  //         <label style={{ marginLeft: '8px' }}>Limpieza del terreno</label>
-  //         {watchCheckLimpieza && (
-  //           <span style={{ marginLeft: '16px', color: 'green' }}>
-  //             (Fecha: {watch('limpiezaTerreno')})
-  //           </span>
-  //         )}
-  //       </div>
-
-  //       {/* ANÁLISIS DE SUELO */}
-  //       <div style={{ marginBottom: '8px' }}>
-  //         <input
-  //           type="checkbox"
-  //           {...register('checkAnalisis')}
-  //           disabled={isCheckboxDisabled.analisis} // Deshabilitar si ya está registrado
-  //         />
-  //         <label style={{ marginLeft: '8px' }}>Análisis de suelo</label>
-  //         {watchCheckAnalisis && (
-  //           <span style={{ marginLeft: '16px', color: 'green' }}>
-  //             (Fecha: {watch('analisisSuelo')})
-  //           </span>
-  //         )}
-  //       </div>
-
-  //       {/* CORRECCIÓN DE SUELO */}
-  //       <div style={{ marginBottom: '8px' }}>
-  //         <input
-  //           type="checkbox"
-  //           {...register('checkCorrecion')}
-  //           disabled={isCheckboxDisabled.correcion} // Deshabilitar si ya está registrado
-  //         />
-  //         <label style={{ marginLeft: '8px' }}>Corrección de suelo</label>
-  //         {watchCheckCorrecion && (
-  //           <span style={{ marginLeft: '16px', color: 'green' }}>
-  //             (Fecha: {watch('correcionSuelo')})
-  //           </span>
-  //         )}
-  //       </div>
-
-  //       {/* LABRANZA */}
-  //       <div style={{ marginBottom: '8px' }}>
-  //         <input
-  //           type="checkbox"
-  //           {...register('checkLabranza')}
-  //           disabled={isCheckboxDisabled.labranza} // Deshabilitar si ya está registrado
-  //         />
-  //         <label style={{ marginLeft: '8px' }}>Labranza</label>
-  //         {watchCheckLabranza && (
-  //           <span style={{ marginLeft: '16px', color: 'green' }}>
-  //             (Fecha: {watch('labranza')})
-  //           </span>
-  //         )}
-  //       </div>
-
-  //       {/* DELIMITACIÓN DE PARCELA (FLOAT) */}
-  //       <div style={{ marginTop: '12px' }}>
-  //         <label>Delimitación de parcela (m²):</label>
-  //         <input
-  //           type="number"
-  //           step="any"
-  //           {...register('delimitacionParcela', { required: false })}
-  //           disabled={isCheckboxDisabled.delimitacionParcela}
-  //           style={{ marginLeft: '10px' }}
-  //         />
-  //         {errors.delimitacionParcela && (
-  //           <span style={{ color: 'red', marginLeft: '8px' }}>
-  //           </span>
-  //         )}
-  //       </div>
-
-  //       <button style={{ marginTop: '16px' }}>Listo</button>
-  //     </form>
-  //   </div>
-  // );
- 
+  

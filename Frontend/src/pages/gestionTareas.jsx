@@ -33,8 +33,6 @@ export function GestionTareasPage() {
     const fetchEstadoTareas = async () => {
       try {
         const data = await getEstadoTareas(plantacionId);
-        console.log("Datos recibidos:", data);  // Log de depuración
-        // data = { preparacion: true/false, seleccion: true/false }
         setEstado(data);
       } catch (error) {
         console.error("Error obteniendo el estado de tareas:", error);
