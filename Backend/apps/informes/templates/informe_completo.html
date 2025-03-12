@@ -126,7 +126,6 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Limpieza Terreno</th>
             <th>Análisis Suelo</th>
             <th>Corrección Suelo</th>
@@ -137,7 +136,6 @@
         <tbody>
           {% for p in preparaciones %}
           <tr>
-            <td>{{ p.id }}</td>
             <td>{{ p.limpiezaTerreno }}</td>
             <td>{{ p.analisisSuelo }}</td>
             <td>{{ p.correcionSuelo }}</td>
@@ -159,7 +157,6 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Variedades</th>
             <th>Preparación Colinos</th>
             <th>Excavación Hoyos</th>
@@ -169,7 +166,6 @@
         <tbody>
           {% for s in selecciones %}
           <tr>
-            <td>{{ s.id }}</td>
             <td>{{ s.seleccionVariedades }}</td>
             <td>{{ s.preparacionColinos }}</td>
             <td>{{ s.excavacionHoyos }}</td>
@@ -191,17 +187,15 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Tipo de Riego</th>
           <th>Fecha Riego</th>
+          <th>Tipo de Riego</th>
         </tr>
       </thead>
       <tbody>
         {% for r in riego_group %}
           <tr>
-            <td>{{ r.id }}</td>
-            <td>{{ r.tipoRiego }}</td>
             <td>{{ r.fechaRiego }}</td>
+            <td>{{ r.tipoRiego }}</td>
           </tr>
         {% empty %}
           <tr>
@@ -216,25 +210,23 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Fecha Fertilización</th>
           <th>Método de Aplicación</th>
           <th>Tipo Fertilizante</th>
           <th>Nombre Fertilizante</th>
           <th>Cantidad</th>
           <th>Medida</th>
-          <th>Fecha Fertilización</th>
         </tr>
       </thead>
       <tbody>
         {% for r in fertilizacion_group %}
           <tr>
-            <td>{{ r.id }}</td>
+            <td>{{ r.fechaFertilizante }}</td>
             <td>{{ r.metodoAplicacionFertilizante }}</td>
             <td>{{ r.tipoFertilizante }}</td>
             <td>{{ r.nombreFertilizante }}</td>
             <td>{{ r.cantidadFertilizante }}</td>
             <td>{{ r.medidaFertilizante }}</td>
-            <td>{{ r.fechaFertilizante }}</td>
           </tr>
         {% empty %}
           <tr>
@@ -253,14 +245,12 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Guadaña</th>
         </tr>
       </thead>
       <tbody>
         {% for m in guadana_group %}
           <tr>
-            <td>{{ m.id }}</td>
             <td>{{ m.guadana }}</td>
           </tr>
         {% empty %}
@@ -271,33 +261,37 @@
       </tbody>
     </table>
 
-    <!-- Sección Mantenimiento y Monitoreo -->
-    <h3>Mantenimiento y Monitoreo</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Necesidad de Árboles</th>
-          <th>Tipo Tratamiento</th>
-          <th>Fecha Aplicación</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for m in mant_group %}
-          <tr>
-            <td>{{ m.id }}</td>
-            <td>{{ m.necesidadArboles }}</td>
-            <td>{{ m.tipoTratamiento }}</td>
-            <td>{{ m.fechaAplicacionTratamiento }}</td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="4">No hay registros de Mantenimiento y Monitoreo completos.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+     <!-- Sección Mantenimiento y Monitoreo -->
+     <h3>Fumigación</h3>
+     <table>
+       <thead>
+         <tr>
+           <th>Fecha Aplicación</th>
+           <th>Método de Aplicación</th>
+           <th>Tipo Tratamiento</th>
+           <th>Nombre Tratamiento</th>
+           <th>Cantidad Tratamiento</th>
+           <th>Medida Tratamiento</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% for m in mant_group %}
+           <tr>
+             <td>{{ m.fechaAplicacionTratamiento }}</td>
+             <td>{{ m.metodoAplicacionFumigacion }}</td>
+             <td>{{ m.tipoTratamiento }}</td>
+             <td>{{ m.nombreTratamiento }}</td>
+             <td>{{ m.cantidadTratamiento }}</td>
+             <td>{{ m.medidaTratamiento }}</td>
+           </tr>
+         {% empty %}
+           <tr>
+             <td colspan="7">No hay registros de Mantenimiento y Monitoreo completos.</td>
+           </tr>
+         {% endfor %}
+       </tbody>
+     </table>
+   </div>
 
   <!-- Podas -->
   <div class="section">
@@ -306,21 +300,19 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Fecha Poda</th>
             <th>Tipo Poda</th>
             <th>Herramientas Usadas</th>
             <th>Técnicas Usadas</th>
-            <th>Fecha Poda</th>
           </tr>
         </thead>
         <tbody>
           {% for pd in podas %}
           <tr>
-            <td>{{ pd.id }}</td>
+            <td>{{ pd.fechaPoda }}</td>
             <td>{{ pd.tipoPoda }}</td>
             <td>{{ pd.herramientasUsadas }}</td>
             <td>{{ pd.tecnicasUsadas }}</td>
-            <td>{{ pd.fechaPoda }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -337,21 +329,21 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Fecha Cosecha</th>
-            <th>Cantidad Alta Calidad</th>
-            <th>Cantidad Mediana Calidad</th>
-            <th>Cantidad Baja Calidad</th>
+            <th>Calidad Alta </th>
+            <th>Calidad Media </th>
+            <th>Calidad Baja </th>
+            <th>Total Cantidad</th>
           </tr>
         </thead>
         <tbody>
           {% for c in cosechas %}
           <tr>
-            <td>{{ c.id }}</td>
             <td>{{ c.fechaCosecha }}</td>
             <td>{{ c.cantidadAltaCalidad }}</td>
             <td>{{ c.cantidadMedianaCalidad }}</td>
             <td>{{ c.cantidadBajaCalidad }}</td>
+            <td>{{ c.cantidadTotal }}</td>
           </tr>
           {% endfor %}
         </tbody>

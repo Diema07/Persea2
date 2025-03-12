@@ -25,25 +25,19 @@ class RiegoFertilizacionView(viewsets.ModelViewSet):
         return RiegoFertilizacion.objects.none()
 
     def create(self, request, *args, **kwargs):
-        """
-        Sobrescribe el método create para asignar la fecha actual
-        a los campos de tipo DateField si vienen en request.data.
-        """
         data = request.data.copy()
 
-        # Campos DateField en RiegoFertilizacion: fechaRiego, fechaFertilizante
-        if 'fechaRiego' in data:
-            data['fechaRiego'] = timezone.now().date()
-        if 'fechaFertilizante' in data:
-            data['fechaFertilizante'] = timezone.now().date()
+        if 'guadana' in data and data['guadana'] is not None:
+            data['guadana'] = timezone.now().date()
+
+        if 'fechaAplicacionTratamiento' in data and data['fechaAplicacionTratamiento'] is not None:
+            data['fechaAplicacionTratamiento'] = timezone.now().date()
+
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-
 
 class MantenimientoMonitoreoView(viewsets.ModelViewSet):
     serializer_class = MantenimientoMonitoreoSerializer
@@ -55,32 +49,22 @@ class MantenimientoMonitoreoView(viewsets.ModelViewSet):
                 idPlantacion__idUsuario=self.request.user
             )
             plantacion_id = self.request.query_params.get('plantacionId', None)
-            print(f"Plantacion ID recibido en backend: {plantacion_id}")
             if plantacion_id:
                 queryset = queryset.filter(idPlantacion__id=plantacion_id)
             return queryset
         return MantenimientoMonitoreo.objects.none()
-    #print(MantenimientoMonitoreo.objects.filter(idPlantacion__id=3).values())
 
     def create(self, request, *args, **kwargs):
-        """
-        Sobrescribe el método create para asignar la fecha actual
-        a los campos de tipo DateField si vienen en request.data.
-        """
         data = request.data.copy()
+        print(request.data)
 
-        # Campos DateField: guadaña, fechaAplicacionTratamiento
-        if 'guadana' in data:
-            data['guadana'] = timezone.now().date()
-        if 'fechaAplicacionTratamiento' in data:
+        if 'fechaAplicacionTratamiento' in data and not data['fechaAplicacionTratamiento']:
             data['fechaAplicacionTratamiento'] = timezone.now().date()
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
 
 class PodaView(viewsets.ModelViewSet):
     serializer_class = PodaSerializer
@@ -98,19 +82,12 @@ class PodaView(viewsets.ModelViewSet):
         return Poda.objects.none()
 
     def create(self, request, *args, **kwargs):
-        """
-        Sobrescribe el método create para asignar la fecha actual
-        a los campos de tipo DateField si vienen en request.data.
-        """
         data = request.data.copy()
 
-        # Campo DateField en Poda: fechaPoda
-        if 'fechaPoda' in data:
+        if 'fechaPoda' not in data or not data['fechaPoda']:
             data['fechaPoda'] = timezone.now().date()
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    

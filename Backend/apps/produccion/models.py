@@ -6,7 +6,6 @@ class Cosecha(models.Model):
     cantidadMedianaCalidad = models.FloatField()
     cantidadBajaCalidad = models.FloatField()
     cantidadTotal = models.FloatField()
-    completado = models.BooleanField(default=False)
 
 
 

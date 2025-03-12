@@ -6,7 +6,6 @@ class RiegoFertilizacion(models.Model):
         ('goteo', 'Goteo'),
         ('gravedad', 'Gravedad'),
     ]
-    # Se aplica la lista de opciones a "tipoRiego"
     tipoRiego = models.CharField(max_length=30, null=True, blank=True, choices=RIEGO_OPCIONES)
     fechaRiego = models.DateField(null=True, blank=True)
 
@@ -15,7 +14,6 @@ class RiegoFertilizacion(models.Model):
         ('foliar', 'Foliar'),
         ('fertirriego', 'Fertirriego'),
     ]
-    # Se aplica la lista de opciones a "metodoAplicacionFertilizante"
     metodoAplicacionFertilizante = models.CharField(max_length=30, null=True, blank=True, choices=METODO_APLICACION_OPCIONES)
 
     TIPO_FERTILIZANTE_OPCIONES = [
@@ -23,17 +21,16 @@ class RiegoFertilizacion(models.Model):
         ('químico', 'Químico'),
         ('mixto', 'Mixto'),
     ]
-    # Se aplica la lista de opciones a "tipoFertilizante"
     tipoFertilizante = models.CharField(max_length=30, null=True, blank=True, choices=TIPO_FERTILIZANTE_OPCIONES)
     nombreFertilizante = models.CharField(max_length=30, null=True, blank=True)
     cantidadFertilizante = models.FloatField(null=True, blank=True)
 
     MEDIDA_FERTILIZANTE_OPCIONES = [
         ('kg', 'Kilogramos'),
+        ('gr', 'Gramos'),
         ('litros', 'Litros'),
-        ('toneladas', 'Toneladas'),
+        ('ml', 'mililitros'),
     ]
-    # Se aplica la lista de opciones a "medidaFertilizante"
     medidaFertilizante = models.CharField(max_length=20, null=True, blank=True, choices=MEDIDA_FERTILIZANTE_OPCIONES)
     fechaFertilizante = models.DateField(null=True, blank=True)
     idPlantacion = models.ForeignKey('plantaciones.Plantacion', on_delete=models.CASCADE, related_name='riego_fertilizacion')
@@ -42,22 +39,34 @@ class RiegoFertilizacion(models.Model):
         return f"Riego/Fertilización para {self.idPlantacion.nombreParcela}"
 
 class MantenimientoMonitoreo(models.Model):
+    guadana = models.DateField(null=True, blank=True)
+
+    METODO_APLICACION_OPCIONES = [
+        ('al suelo', 'Al suelo'),
+        ('foliar', 'Foliar'),
+    ]
+    metodoAplicacionFumigacion = models.CharField(max_length=30, null=True, blank=True, choices=METODO_APLICACION_OPCIONES)
+
     TIPO_TRATAMIENTO_CHOICES = [
         ('insecticida', 'Insecticida'),
         ('fungicida', 'Fungicida'),
         ('herbicida', 'Herbicida'),
     ]
-
-    guadana = models.DateField(null=True, blank=True)
-    necesidadArboles = models.CharField(max_length=30, null=True, blank=True)
-    # Se aplica la lista de opciones a "tipoTratamiento"
     tipoTratamiento = models.CharField(max_length=30, null=True, blank=True, choices=TIPO_TRATAMIENTO_CHOICES)
     fechaAplicacionTratamiento = models.DateField(null=True, blank=True)
+    nombreTratamiento = models.CharField(max_length=30, null=True, blank=True)
+    cantidadTratamiento = models.FloatField(null=True, blank=True)
+    MEDIDA_TRATAMIENTO_OPCIONES = [
+        ('kg', 'Kilogramos'),
+        ('gr', 'Gramos'),
+        ('litros', 'Litros'),
+        ('ml', 'mililitros'),
+    ]
+    medidaTratamiento = models.CharField(max_length=20, null=True, blank=True, choices=MEDIDA_TRATAMIENTO_OPCIONES)
     idPlantacion = models.ForeignKey('plantaciones.Plantacion', on_delete=models.CASCADE, related_name='mantenimiento')
 
     def __str__(self):
         return f"Mantenimiento de {self.idPlantacion.nombreParcela}"
-
 
 class Poda(models.Model):
     TIPOS_PODA = [
@@ -65,7 +74,6 @@ class Poda(models.Model):
         ('mantenimiento', 'Mantenimiento'),
         ('sanitaria', 'Sanitaria'),
     ]
-    # Se aplica la lista de opciones a "tipoPoda"
     tipoPoda = models.CharField(max_length=30, null=True, blank=True, choices=TIPOS_PODA)
 
     HERRAMIENTAS_USADAS = [
@@ -73,7 +81,6 @@ class Poda(models.Model):
         ('serrucho', 'Serrucho'),
         ('motosierra', 'Motosierra'),
     ]
-    # Se aplica la lista de opciones a "herramientasUsadas"
     herramientasUsadas = models.CharField(max_length=60, null=True, blank=True, choices=HERRAMIENTAS_USADAS)
 
     TECNICAS_USADAS = [
@@ -81,7 +88,6 @@ class Poda(models.Model):
         ('deschuponado', 'Deschuponado'),
         ('rebaje', 'Rebaje'),
     ]
-    # Se aplica la lista de opciones a "tecnicasUsadas"
     tecnicasUsadas = models.CharField(max_length=60, null=True, blank=True, choices=TECNICAS_USADAS)
     fechaPoda = models.DateField(null=True, blank=True)
     idPlantacion = models.ForeignKey('plantaciones.Plantacion', on_delete=models.CASCADE, related_name='podas')

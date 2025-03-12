@@ -19,7 +19,6 @@ class RiegoFertilizacionSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         
-        # Definir los grupos de campos
         grupo_riego = ['tipoRiego', 'fechaRiego']
         grupo_fertilizante = [
             'metodoAplicacionFertilizante',
@@ -30,16 +29,13 @@ class RiegoFertilizacionSerializer(serializers.ModelSerializer):
             'fechaFertilizante'
         ]
         
-        # Función auxiliar que verifica si algún campo del grupo es inválido (None o cadena vacía)
         def grupo_incompleto(grupo):
             return any(representation.get(campo) in [None, ""] for campo in grupo)
         
-        # Si el grupo de riego está incompleto, eliminar sus campos
         if grupo_incompleto(grupo_riego):
             for campo in grupo_riego:
                 representation.pop(campo, None)
         
-        # Si el grupo de fertilizante está incompleto, eliminar sus campos
         if grupo_incompleto(grupo_fertilizante):
             for campo in grupo_fertilizante:
                 representation.pop(campo, None)
@@ -52,30 +48,27 @@ class MantenimientoMonitoreoSerializer(serializers.ModelSerializer):
         fields = (
             'idPlantacion',
             'guadana',
-            'necesidadArboles',
+            'metodoAplicacionFumigacion',
             'tipoTratamiento',
             'fechaAplicacionTratamiento',
+            'nombreTratamiento',
+            'cantidadTratamiento',
+            'medidaTratamiento',
         )
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         
-        # Definir los grupos:
-        # Grupo 1: guadana
         grupo_guadana = ['guadana']
-        # Grupo 2: el resto de los campos
-        grupo_resto = ['necesidadArboles', 'tipoTratamiento', 'fechaAplicacionTratamiento']
+        grupo_resto = ['metodoAplicacionFumigacion', 'tipoTratamiento', 'fechaAplicacionTratamiento','nombreTratamiento','cantidadTratamiento','medidaTratamiento']
         
-        # Función auxiliar que verifica si algún campo del grupo es inválido (None o cadena vacía)
         def grupo_incompleto(grupo):
             return any(representation.get(campo) in [None, ""] for campo in grupo)
         
-        # Si el grupo de guadana está incompleto, se elimina el campo
         if grupo_incompleto(grupo_guadana):
             for campo in grupo_guadana:
                 representation.pop(campo, None)
         
-        # Si el grupo del resto de campos está incompleto, se eliminan todos los campos del grupo
         if grupo_incompleto(grupo_resto):
             for campo in grupo_resto:
                 representation.pop(campo, None)
