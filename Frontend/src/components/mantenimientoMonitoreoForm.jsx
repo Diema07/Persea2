@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  getMantenimientoByPlantacionId,
-  postMantenimientoMonitoreo,
-} from '../api/mantenimientoMonitoreo.api';
+import { postMantenimientoMonitoreo } from '../api/mantenimientoMonitoreo.api';
 
 export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   const {
@@ -15,59 +12,25 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
     formState: { errors },
   } = useForm();
 
-  // Estado para controlar si los checkboxes están deshabilitados
-  const [isCheckboxDisabled, setIsCheckboxDisabled] = useState({
-    guadana: false,
-    aplicacion: false,
-  });
+  // Estado para controlar qué checkbox está seleccionado
+  const [selectedOption, setSelectedOption] = useState(null);
 
   // Observar checkboxes
   const watchCheckGuadana = watch('checkGuadana');
   const watchCheckAplicacion = watch('checkAplicacion');
 
-  // Efecto para deshabilitar el otro checkbox cuando uno está seleccionado
+  // Efecto para manejar la selección de un solo checkbox
   useEffect(() => {
     if (watchCheckGuadana) {
-      setIsCheckboxDisabled((prev) => ({ ...prev, aplicacion: true }));
+      setSelectedOption('guadana');
+      setValue('checkAplicacion', false); // Desmarcar el otro checkbox
     } else if (watchCheckAplicacion) {
-      setIsCheckboxDisabled((prev) => ({ ...prev, guadana: true }));
+      setSelectedOption('fumigacion');
+      setValue('checkGuadana', false); // Desmarcar el otro checkbox
     } else {
-      setIsCheckboxDisabled({ guadana: false, aplicacion: false });
+      setSelectedOption(null);
     }
-  }, [watchCheckGuadana, watchCheckAplicacion]);
-
-  // Cargar datos existentes al montar el componente
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const plantacionIdNumber = Number(plantacionId);
-        if (isNaN(plantacionIdNumber)) {
-          throw new Error("plantacionId debe ser un número");
-        }
-
-        const data = await getMantenimientoByPlantacionId(plantacionIdNumber);
-
-        if (data && data.length > 0) {
-          const mantenimiento = data[0];
-
-          setValue('checkGuadana', !!mantenimiento.guadana);
-          setValue('checkAplicacion', !!mantenimiento.fechaAplicacionTratamiento);
-
-          setIsCheckboxDisabled({
-            guadana: !!mantenimiento.guadana,
-            aplicacion: !!mantenimiento.fechaAplicacionTratamiento,
-          });
-
-          setValue('necesidadArboles', mantenimiento.necesidadArboles || '');
-          setValue('tipoTratamiento', mantenimiento.tipoTratamiento || '');
-          setValue('nombreTratamiento', mantenimiento.nombreTratamiento || '');
-        }
-      } catch (error) {
-        console.error('Error al cargar el mantenimiento/monitoreo:', error);
-      }
-    }
-    fetchData();
-  }, [plantacionId, setValue]);
+  }, [watchCheckGuadana, watchCheckAplicacion, setValue]);
 
   // Asignar fecha de hoy si el checkbox está marcado
   useEffect(() => {
@@ -89,31 +52,31 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const datosParaEnviar = {};
+      const datosParaEnviar = {
+        idPlantacion: Number(plantacionId),
+      };
 
       if (data.checkGuadana) {
         datosParaEnviar.guadana = data.guadana;
-      } else {
-        datosParaEnviar.guadana = null;
-      }
-
-      if (data.checkAplicacion) {
-        datosParaEnviar.fechaAplicacionTratamiento = data.fechaAplicacionTratamiento;
-        datosParaEnviar.necesidadArboles = data.necesidadArboles;
-        datosParaEnviar.tipoTratamiento = data.tipoTratamiento;
-        datosParaEnviar.nombreTratamiento = data.nombreTratamiento;
-        datosParaEnviar.cantidadTratamiento = data.cantidadTratamiento;
-        datosParaEnviar.medidaTratamiento = data.medidaTratamiento;
-      } else {
+        // Limpiar campos de fumigación
         datosParaEnviar.fechaAplicacionTratamiento = null;
-        datosParaEnviar.necesidadArboles = null;
+        datosParaEnviar.metodoAplicacionFumigacion = null;
         datosParaEnviar.tipoTratamiento = null;
         datosParaEnviar.nombreTratamiento = null;
         datosParaEnviar.cantidadTratamiento = null;
         datosParaEnviar.medidaTratamiento = null;
+      } else if (data.checkAplicacion) {
+        datosParaEnviar.fechaAplicacionTratamiento = data.fechaAplicacionTratamiento;
+        datosParaEnviar.metodoAplicacionFumigacion = data.metodoAplicacionFumigacion;
+        datosParaEnviar.tipoTratamiento = data.tipoTratamiento;
+        datosParaEnviar.nombreTratamiento = data.nombreTratamiento;
+        datosParaEnviar.cantidadTratamiento = data.cantidadTratamiento;
+        datosParaEnviar.medidaTratamiento = data.medidaTratamiento;
+        // Limpiar campo de guadaña
+        datosParaEnviar.guadana = null;
       }
 
-      datosParaEnviar.idPlantacion = Number(plantacionId);
+      console.log(data)
 
       await postMantenimientoMonitoreo(datosParaEnviar);
 
@@ -127,17 +90,15 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
         checkAplicacion: false,
         guadana: null,
         fechaAplicacionTratamiento: null,
-        necesidadArboles: '',
+        metodoAplicacionFumigacion: '',
         tipoTratamiento: '',
         nombreTratamiento: '',
         cantidadTratamiento: '',
         medidaTratamiento: '',
-        
       });
 
-      // Restablecer el estado de los checkboxes
-      setIsCheckboxDisabled({ guadana: false, aplicacion: false });
-
+      // Restablecer el estado de selección
+      setSelectedOption(null);
     } catch (error) {
       console.error('Error al guardar el mantenimiento/monitoreo:', error);
     }
@@ -153,7 +114,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
             type="checkbox"
             className="form-checkbox"
             {...register('checkGuadana')}
-            disabled={isCheckboxDisabled.guadana}
+            disabled={selectedOption === 'fumigacion'}
           />
           <label className="form-label">Guadaña</label>
           {watchCheckGuadana && (
@@ -163,15 +124,15 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
           )}
         </div>
 
-        {/* FECHA DE APLICACIÓN DE TRATAMIENTO */}
+        {/* FUMIGACIÓN */}
         <div className="form-group">
           <input
             type="checkbox"
             className="form-checkbox"
             {...register('checkAplicacion')}
-            disabled={isCheckboxDisabled.aplicacion}
+            disabled={selectedOption === 'guadana'}
           />
-          <label className="form-label">Aplicación de Tratamiento</label>
+          <label className="form-label">Fumigación</label>
           {watchCheckAplicacion && (
             <span className="form-fecha">
               (Fecha: {watch('fechaAplicacionTratamiento')})
@@ -179,22 +140,23 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
           )}
         </div>
 
-        {/* Mostrar campos de aplicación de tratamiento solo si el checkbox está marcado */}
+        {/* Mostrar campos de fumigación solo si el checkbox está marcado */}
         {watchCheckAplicacion && (
           <>
             <div className="form-group">
-              <label className="form-label">Necesidad de Árboles:</label>
-              <input
-                type="text"
-                {...register('necesidadArboles', { required: true })}
+              <label className="form-label">Método de Aplicación:</label>
+              <select
+                {...register('metodoAplicacionFumigacion', { required: true })}
                 className="form-input"
-              />
-              {errors.necesidadArboles && (
-                <span className="form-error">Este campo es requerido</span>
+              >
+                <option value=""></option>
+                <option value="al suelo">Al suelo</option>
+                <option value="foliar">Foliar</option>
+              </select>
+              {errors.metodoAplicacionFumigacion && (
+                <span className="form-error">Requerido</span>
               )}
             </div>
-
-
 
             <div className="form-group">
               <label className="form-label">Tipo de Tratamiento:</label>
@@ -208,11 +170,9 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
                 <option value="herbicida">Herbicida</option>
               </select>
               {errors.tipoTratamiento && (
-                <span className="form-error">Este campo es requerido</span>
+                <span className="form-error">Requerido</span>
               )}
-              
             </div>
-
 
             <div className="form-group">
               <label className="form-label">Nombre de Tratamiento:</label>
@@ -221,43 +181,46 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
                 {...register('nombreTratamiento', { required: true })}
                 className="form-input"
               />
-             {errors.nombreTratamiento && (
-                <span className="form-error">Este campo es requerido</span>
+              {errors.nombreTratamiento && (
+                <span className="form-error">Requerido</span>
               )}
             </div>
-
 
             <div className="form-group">
               <label className="form-label">Cantidad Tratamiento:</label>
               <input
-                type="text"
+                type="number"
                 {...register('cantidadTratamiento', { required: true })}
                 className="form-input"
               />
-             {errors.cantidadTratamiento && (
-                <span className="form-error">Este campo es requerido</span>
+              {errors.cantidadTratamiento && (
+                <span className="form-error">Requerido</span>
               )}
             </div>
 
-
             <div className="form-group">
-              <label className="form-label">Medida Tratamiento</label>
+              <label className="form-label">Medida Tratamiento:</label>
               <select
                 {...register('medidaTratamiento', { required: true })}
                 className="form-input"
               >
                 <option value=""></option>
                 <option value="kg">kg</option>
+                <option value="gr">gr</option>
+                <option value="ml">ml</option>
                 <option value="litros">litros</option>
-                <option value="toneladas">toneladas</option>
               </select>
-              {errors.medidaTratamiento && <span className="form-error"></span>}
+              {errors.medidaTratamiento && (
+                <span className="form-error">Requerido</span>
+              )}
             </div>
           </>
         )}
 
-        <button type="submit" className="form-button">Listo</button>
+        <button type="submit" className="form-button">
+          Listo
+        </button>
       </form>
     </div>
-);
+  );
 }

@@ -9,30 +9,36 @@ export function MantenimientoMonitoreoPage() {
   const { plantacionId } = useParams();
   const idPlantacion = Number(plantacionId);
   const [mantenimientos, setMantenimientos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Carga los mantenimientos existentes
+  // Carga los registros de Mantenimiento/Monitoreo existentes
   const loadMantenimientos = async () => {
     if (!idPlantacion) {
-      console.error("plantacionId es undefined o no es un número");
+      setError("plantacionId es undefined o no es un número");
       return;
     }
+    setLoading(true);
     try {
       const data = await getMantenimientoByPlantacionId(idPlantacion);
+      console.log("Datos recibidos en el frontend:", data); // 🔍 Agregar esta línea
       setMantenimientos(data || []);
+      setError(null);
     } catch (error) {
-      console.error('Error al obtener mantenimientos:', error);
+      console.error('Error al obtener Mantenimiento/Monitoreo:', error);
+      setError('Error al cargar los datos. Intente nuevamente.');
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Cargar datos al montar la página
   useEffect(() => {
     if (idPlantacion) {
       loadMantenimientos();
     }
   }, [idPlantacion]);
-
-  // Obtener el ID del primer mantenimiento (si existe)
-  const mantenimientoId = mantenimientos.length > 0 ? mantenimientos[0].id : null;
 
   // Botón para ir a Gestión de Tareas
   const handleRedirectToGestionTareas = () => {
@@ -41,48 +47,49 @@ export function MantenimientoMonitoreoPage() {
 
   return (
     <div className="riego-fertilizacion-container">
-      <button onClick={handleRedirectToGestionTareas} className="back-button">
+      <button onClick={handleRedirectToGestionTareas}>
         <img 
           src={atras} 
           alt="Flecha atras" 
-          className="back-icon" 
+          style={{ width: '35px', height: '35px' }} // Ajusta el tamaño de la flecha
         />
       </button>
 
       <h2>Mantenimiento/Monitoreo - Plantación {idPlantacion}</h2>
 
+      {error && <p className="error-message">{error}</p>}
+
       {/* Formulario para crear o editar mantenimientos */}
       <MantenimientoMonitoreoForm
         plantacionId={idPlantacion}
-        mantenimientoId={mantenimientoId}
         onCreated={loadMantenimientos}
       />
 
       {/* Historial de Mantenimientos */}
-      <h3 className='sub-titulo-form'>Historial de Mantenimientos:</h3>
-      {mantenimientos.length === 0 ? (
-        <p>No hay mantenimientos registrados.</p>
+      <h3 className='sub-titulo-form'>Historial de Mantenimiento/Monitoreo:</h3>
+      {loading ? (
+        <p>Cargando...</p>
+      ) : mantenimientos.length === 0 ? (
+        <p>No hay registros de Mantenimiento/Monitoreo.</p>
       ) : (
         <ul className="riego-list">
           {mantenimientos.map((m, index) => (
             <li key={`${m.id}-${index}`} className="riego-item">
-              {m.guadana && (
+              {/* Mostrar solo si es guadaña */}
+              {m.guadana && !m.fechaAplicacionTratamiento && (
                 <p><strong>Guadaña:</strong> {m.guadana}</p>
               )}
-              {m.necesidadArboles && (
-                <p><strong>Necesidad de Árboles:</strong> {m.necesidadArboles}</p>
+
+              {/* Mostrar solo si es fumigación */}
+              {m.fechaAplicacionTratamiento && !m.guadana && (
+                <>
+                  <p><strong>Fumigación:</strong> {m.fechaAplicacionTratamiento}</p>
+                  <p><strong>Método de Aplicación:</strong> {m.metodoAplicacionFumigacion}</p>
+                  <p><strong>Tipo de Tratamiento:</strong> {m.tipoTratamiento}</p>
+                  <p><strong>Nombre de Tratamiento:</strong> {m.nombreTratamiento}</p>
+                  <p><strong>Cantidad:</strong> {m.cantidadTratamiento} {m.medidaTratamiento}</p>
+                </>
               )}
-              {m.tipoTratamiento && (
-                <p><strong>Tipo Tratamiento:</strong> {m.tipoTratamiento}</p>
-              )}
-              {m.nombreTratamiento && (
-                <p><strong>Nombre de Tratamiento</strong> {m.nombreTratamiento}</p>
-              )}
-              {m.fechaAplicacionTratamiento && (
-                <p><strong>Fecha Aplicación:</strong> {m.fechaAplicacionTratamiento}</p>
-              )}
-             
-              
             </li>
           ))}
         </ul>

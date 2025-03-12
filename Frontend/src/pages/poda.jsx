@@ -72,10 +72,10 @@ export function PodaPage() {
           <ul className="riego-list"> 
             {podas.map((p) => (
               <li key={p.id} className="riego-item"> 
+                <p><strong>Fecha de Poda:</strong> {p.fechaPoda || '---'}</p>
                 <p><strong>Tipo de Poda:</strong> {p.tipoPoda === 'formacion' ? 'Formación' : p.tipoPoda === 'mantenimiento' ? 'Mantenimiento' : 'Sanitaria'}</p>
                 <p><strong>Herramientas Usadas:</strong> {p.herramientasUsadas === 'tijeras' ? 'Tijeras' : p.herramientasUsadas === 'serrucho' ? 'Serrucho' : 'Motosierra'}</p>
                 <p><strong>Técnicas Usadas:</strong> {p.tecnicasUsadas === 'ralo' ? 'Raleo' : p.tecnicasUsadas === 'deschuponado' ? 'Deschuponado' : 'Rebaje'}</p>
-                <p><strong>Fecha de Poda:</strong> {p.fechaPoda || '---'}</p>
                 
               </li>
             ))}

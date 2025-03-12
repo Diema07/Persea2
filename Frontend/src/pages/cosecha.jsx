@@ -67,9 +67,9 @@ export function CosechaPage() {
           {cosechas.map((c) => (
             <li key={c.id} className="riego-item"> {/* Reutiliza la clase riego-item */}
               <p><strong>Fecha de Cosecha:</strong> {c.fechaCosecha || '---'}</p>
-              <p><strong>Cantidad Alta Calidad:</strong> {c.cantidadAltaCalidad || 0} kg</p>
-              <p><strong>Cantidad Mediana Calidad:</strong> {c.cantidadMedianaCalidad || 0} kg</p>
-              <p><strong>Cantidad Baja Calidad:</strong> {c.cantidadBajaCalidad || 0} kg</p>
+              <p><strong>Calidad Alta:</strong> {c.cantidadAltaCalidad || 0} kg</p>
+              <p><strong>Calidad Media:</strong> {c.cantidadMedianaCalidad || 0} kg</p>
+              <p><strong>Calidad Baja:</strong> {c.cantidadBajaCalidad || 0} kg</p>
               <p><strong>Total Cantidad:</strong> {c.cantidadTotal || 0} kg</p>
               
             </li>

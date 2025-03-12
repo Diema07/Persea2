@@ -1,61 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { getPodaByPlantacionId, postPoda } from '../api/poda.api';
+import { postPoda } from '../api/poda.api';
 
 export function PodaForm({ plantacionId, onCreated }) {
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     reset,
     formState: { errors },
   } = useForm();
 
-  const [isCheckboxDisabled, setIsCheckboxDisabled] = useState({
-    fechaPoda: false,
-  });
-
-  const watchCheckFechaPoda = watch('checkFechaPoda');
 
   // Cargar datos existentes al montar el componente
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const plantacionIdNumber = Number(plantacionId);
-        if (isNaN(plantacionIdNumber)) {
-          throw new Error("plantacionId debe ser un número");
-        }
-        const data = await getPodaByPlantacionId(plantacionIdNumber);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const plantacionIdNumber = Number(plantacionId);
+  //       if (isNaN(plantacionIdNumber)) {
+  //         throw new Error("plantacionId debe ser un número");
+  //       }
+  //       const data = await getPodaByPlantacionId(plantacionIdNumber);
 
-        if (data && data.length > 0) {
-          const Poda = data[0];
+  //       if (data && data.length > 0) {
+  //         const Poda = data[0];
 
-          setValue('checkFechaPoda', !!Poda.fechaPoda);
+  //         setValue('checkFechaPoda', !!Poda.fechaPoda);
 
-          setIsCheckboxDisabled({
-            Poda: !!Poda.fechaPoda,
-          });
+  //         setIsCheckboxDisabled({
+  //           Poda: !!Poda.fechaPoda,
+  //         });
 
-          setValue('tipoPoda', Poda.tipoPoda || '');
-          setValue('herramientasUsadas', Poda.herramientasUsadas || '');
-          setValue('tecnicasUsadas', Poda.tecnicasUsadas || '');
-        }
-      } catch (error) {
-        console.error('Error al cargar Poda:', error);
-      }
-    }
-    fetchData();
-  }, [plantacionId, setValue]);
-
-  // Asignar fecha de hoy si el checkbox está marcado
-  useEffect(() => {
-    if (watchCheckFechaPoda) {
-      setValue('fechaPoda', new Date().toISOString().split('T')[0]);
-    } else {
-      setValue('fechaPoda', null);
-    }
-  }, [watchCheckFechaPoda, setValue]);
+  //         setValue('tipoPoda', Poda.tipoPoda || '');
+  //         setValue('herramientasUsadas', Poda.herramientasUsadas || '');
+  //         setValue('tecnicasUsadas', Poda.tecnicasUsadas || '');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error al cargar Poda:', error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [plantacionId, setValue]);
 
   // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
@@ -72,10 +56,6 @@ export function PodaForm({ plantacionId, onCreated }) {
 
       if (data.tecnicasUsadas) {
         datosParaEnviar.tecnicasUsadas = data.tecnicasUsadas;
-      }
-
-      if (data.fechaPoda) {
-        datosParaEnviar.fechaPoda = data.fechaPoda;
       }
 
       datosParaEnviar.idPlantacion = Number(plantacionId);
@@ -138,21 +118,6 @@ export function PodaForm({ plantacionId, onCreated }) {
             <option value="rebaje">Rebaje</option>
           </select>
           {errors.tecnicasUsadas && <span className="form-error">Requerido</span>}
-        </div>
-
-        {/* Fecha de Poda */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            className="form-checkbox"
-            {...register('checkFechaPoda')}
-          />
-          <label className="form-label">Fecha de Poda</label>
-          {watchCheckFechaPoda && (
-            <span className="form-fecha">
-              (Fecha: {watch('fechaPoda')})
-            </span>
-          )}
         </div>
 
         <button className="form-button">Guardar</button>
