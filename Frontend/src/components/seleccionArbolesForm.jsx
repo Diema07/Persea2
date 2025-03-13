@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getSeleccionByPlantacionId, patchSeleccion } from '../api/seleccionArboles.api';
 import '../styles/formulario.css';
@@ -9,8 +10,9 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
 
   // Estado para controlar si los checkboxes están deshabilitados
   const [isCheckboxDisabled, setIsCheckboxDisabled] = useState({
@@ -152,6 +154,9 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
 
       // Asegúrate de enviar el ID correcto para el PATCH
       await patchSeleccion(seleccionIdNumber, datosParaEnviar);
+
+      navigate(`/gestionTareas/${plantacionId}`);
+
       window.location.reload(); // Recargar la página después de la actualización
     } catch (error) {
       console.error('Error al actualizar la selección de árboles:', error);

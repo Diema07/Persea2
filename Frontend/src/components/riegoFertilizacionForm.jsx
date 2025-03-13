@@ -87,6 +87,12 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
 
   // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
+
+    if (!data.checkRiego && !data.checkFertilizante) {
+      alert("Debe seleccionar una opción: Riego o Fertilización.");
+      return;
+    }
+
     try {
       const datosParaEnviar = {};
 

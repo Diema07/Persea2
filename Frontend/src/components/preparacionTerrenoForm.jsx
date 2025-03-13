@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getPreparacionByPlantacionId, patchPreparacion } from '../api/preparacionTerreno.api';
 import '../styles/historial.css';
 import '../styles/formulario.css';
-
 
 export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
   const {
@@ -20,7 +20,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
     analisis: false,
     correcion: false,
     labranza: false,
-    delimitacionParcela: false
+    delimitacionParcela: false,
   });
 
   const [arbolesSugeridos, setArbolesSugeridos] = useState({
@@ -29,6 +29,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
     papelillo: [0, 0],
   });
 
+  const navigate = useNavigate();
 
   // Observar checkboxes
   const watchCheckLimpieza = watch('checkLimpieza');
@@ -43,7 +44,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
       try {
         const plantacionIdNumber = Number(plantacionId);
         if (isNaN(plantacionIdNumber)) {
-          throw new Error("plantacionId debe ser un número");
+          throw new Error('plantacionId debe ser un número');
         }
 
         const data = await getPreparacionByPlantacionId(plantacionIdNumber);
@@ -74,87 +75,79 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
     fetchData();
   }, [plantacionId, setValue]);
 
-  // Cada vez que cambie un checkbox, actualizamos el valor de la fecha
+  // Actualizar fechas cuando los checkboxes cambian
   useEffect(() => {
-    if (watchCheckLimpieza) {
-      setValue('limpiezaTerreno', new Date().toISOString().split('T')[0]);
-    } else {
-      setValue('limpiezaTerreno', null);
-    }
+    const fechaActual = new Date().toISOString().split('T')[0];
+    if (watchCheckLimpieza) setValue('limpiezaTerreno', fechaActual);
+    else setValue('limpiezaTerreno', null);
   }, [watchCheckLimpieza, setValue]);
 
   useEffect(() => {
-    if (watchCheckAnalisis) {
-      setValue('analisisSuelo', new Date().toISOString().split('T')[0]);
-    } else {
-      setValue('analisisSuelo', null);
-    }
+    const fechaActual = new Date().toISOString().split('T')[0];
+    if (watchCheckAnalisis) setValue('analisisSuelo', fechaActual);
+    else setValue('analisisSuelo', null);
   }, [watchCheckAnalisis, setValue]);
 
   useEffect(() => {
-    if (watchCheckCorrecion) {
-      setValue('correcionSuelo', new Date().toISOString().split('T')[0]);
-    } else {
-      setValue('correcionSuelo', null);
-    }
+    const fechaActual = new Date().toISOString().split('T')[0];
+    if (watchCheckCorrecion) setValue('correcionSuelo', fechaActual);
+    else setValue('correcionSuelo', null);
   }, [watchCheckCorrecion, setValue]);
 
   useEffect(() => {
-    if (watchCheckLabranza) {
-      setValue('labranza', new Date().toISOString().split('T')[0]);
-    } else {
-      setValue('labranza', null);
-    }
+    const fechaActual = new Date().toISOString().split('T')[0];
+    if (watchCheckLabranza) setValue('labranza', fechaActual);
+    else setValue('labranza', null);
   }, [watchCheckLabranza, setValue]);
 
+  // Distancias de siembra
   const distanciasSiembra = {
-    hass: [{ x: 6, y: 5 }, { x: 7, y: 5 }],  // 30m² o 35m² por árbol
-    criollo: [{ x: 8, y: 8 }, { x: 10, y: 10 }], // 64m² o 100m² por árbol
-    papelillo: [{ x: 7, y: 7 }, { x: 8, y: 6 }], // 49m² o 48m² por árbol
+    hass: [
+      { distancia: '6m x 5m', area: 30 },
+      { distancia: '7m x 5m', area: 35 },
+    ],
+    criollo: [
+      { distancia: '8m x 8m', area: 64 },
+      { distancia: '10m x 10m', area: 100 },
+    ],
+    papelillo: [
+      { distancia: '7m x 7m', area: 49 },
+      { distancia: '8m x 6m', area: 48 },
+    ],
   };
 
+  // Calcular árboles sugeridos cuando cambia la delimitación de parcela
   useEffect(() => {
     if (watchDelimitacionParcela) {
       const nuevosValores = {};
       Object.entries(distanciasSiembra).forEach(([variedad, opciones]) => {
         nuevosValores[variedad] = opciones.map((opcion) => {
-          const areaPorArbol = opcion.x * opcion.y;
-          return Math.floor(watchDelimitacionParcela / areaPorArbol); // Redondeamos hacia abajo
+          return Math.floor(watchDelimitacionParcela / opcion.area);
         });
       });
       setArbolesSugeridos(nuevosValores);
     } else {
       setArbolesSugeridos({ hass: [0, 0], criollo: [0, 0], papelillo: [0, 0] });
     }
-  }, [watchDelimitacionParcela]);
+  }, [watchDelimitacionParcela, distanciasSiembra]);
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       // Verifica que preparacionId sea un número
       const preparacionIdNumber = Number(preparacionId);
       if (isNaN(preparacionIdNumber)) {
-        throw new Error("preparacionId debe ser un número");
+        throw new Error('preparacionId debe ser un número');
       }
 
       // Filtrar los datos para enviar solo los campos relevantes
       const datosParaEnviar = {};
 
-      if (data.checkLimpieza) {
-        datosParaEnviar.limpiezaTerreno = data.limpiezaTerreno;
-      }
-      if (data.checkAnalisis) {
-        datosParaEnviar.analisisSuelo = data.analisisSuelo;
-      }
-      if (data.checkCorrecion) {
-        datosParaEnviar.correcionSuelo = data.correcionSuelo;
-      }
-      if (data.checkLabranza) {
-        datosParaEnviar.labranza = data.labranza;
-      }
-      if (data.delimitacionParcela) {
-        datosParaEnviar.delimitacionParcela = data.delimitacionParcela;
-      }
+      if (data.checkLimpieza) datosParaEnviar.limpiezaTerreno = data.limpiezaTerreno;
+      if (data.checkAnalisis) datosParaEnviar.analisisSuelo = data.analisisSuelo;
+      if (data.checkCorrecion) datosParaEnviar.correcionSuelo = data.correcionSuelo;
+      if (data.checkLabranza) datosParaEnviar.labranza = data.labranza;
+      if (data.delimitacionParcela) datosParaEnviar.delimitacionParcela = data.delimitacionParcela;
 
-      // ---- NUEVO: Lógica para completado ----
       // Revisamos si todos los campos están completos
       const limpiezaOk = !!datosParaEnviar.limpiezaTerreno;
       const analisisOk = !!datosParaEnviar.analisisSuelo;
@@ -162,11 +155,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
       const labranzaOk = !!datosParaEnviar.labranza;
       const delimOk = !!datosParaEnviar.delimitacionParcela;
 
-      if (limpiezaOk && analisisOk && correcionOk && labranzaOk && delimOk) {
-        datosParaEnviar.completado = true;
-      } else {
-        datosParaEnviar.completado = false;
-      }
+      datosParaEnviar.completado = limpiezaOk && analisisOk && correcionOk && labranzaOk && delimOk;
 
       // Asegúrate de enviar el ID correcto para el PATCH
       await patchPreparacion(preparacionIdNumber, datosParaEnviar);
@@ -177,11 +166,13 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
           delimitacionParcela: true,
         }));
       }
-      window.location.reload(); // Recargar la página después de la actualización
+
+      navigate(`/gestionTareas/${plantacionId}`);
     } catch (error) {
       console.error('Error al actualizar la preparación de terreno:', error);
     }
   });
+
   return (
     <div className="preparacion-terreno-container">
       <h3>Agregar Preparación de Terreno</h3>
@@ -199,7 +190,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
             <span className="form-fecha">(Fecha: {watch('limpiezaTerreno')})</span>
           )}
         </div>
-  
+
         {/* ANÁLISIS DE SUELO */}
         <div className="form-group">
           <input
@@ -213,7 +204,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
             <span className="form-fecha">(Fecha: {watch('analisisSuelo')})</span>
           )}
         </div>
-  
+
         {/* CORRECCIÓN DE SUELO */}
         <div className="form-group">
           <input
@@ -227,7 +218,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
             <span className="form-fecha">(Fecha: {watch('correcionSuelo')})</span>
           )}
         </div>
-  
+
         {/* LABRANZA */}
         <div className="form-group">
           <input
@@ -241,7 +232,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
             <span className="form-fecha">(Fecha: {watch('labranza')})</span>
           )}
         </div>
-  
+
         {/* DELIMITACIÓN DE PARCELA (FLOAT) */}
         <div className="form-group">
           <label className="form-label">Delimitación de parcela (m²):</label>
@@ -252,36 +243,27 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
             disabled={isCheckboxDisabled.delimitacionParcela}
             className="form-input"
           />
-          {errors.delimitacionParcela && (
-            <span className="form-error"></span>
-          )}
+          {errors.delimitacionParcela && <span className="form-error"></span>}
         </div>
 
-       {/* Sugerencia de árboles según la variedad */}
-       {watchDelimitacionParcela && (
+        {/* Sugerencia de árboles según la variedad */}
+        {watchDelimitacionParcela && (
           <div className="sugerencias">
-            <p className="sugerencia">
-              🌱 <strong>Hass:</strong> <br />
-              - En este terreno te caben aproximadamente {arbolesSugeridos.hass[0]} árboles con distancia 6 x 5 m.<br />
-              - En este terreno te caben aproximadamente {arbolesSugeridos.hass[1]} árboles con distancia 7 x 5 m.
-            </p>
-            <p className="sugerencia">
-              🌱 <strong>Criollo:</strong> <br />
-              - En este terreno te caben aproximadamente {arbolesSugeridos.criollo[0]} árboles con distancia 8 x 8 m.<br />
-              - En este terreno te caben aproximadamente {arbolesSugeridos.criollo[1]} árboles con distancia 10 x 10 m.
-            </p>
-            <p className="sugerencia">
-              🌱 <strong>Papelillo:</strong> <br />
-              - En este terreno te caben aproximadamente {arbolesSugeridos.papelillo[0]} árboles con distancia 7 x 7 m.<br />
-              - En este terreno te caben aproximadamente {arbolesSugeridos.papelillo[1]} árboles con distancia 8 x 6 m.
-            </p>
+            <h4>🌱 Sugerencias de siembra:</h4>
+            {Object.entries(arbolesSugeridos).map(([variedad, valores], index) => (
+              <p key={index} className="sugerencia">
+                <strong>{variedad.charAt(0).toUpperCase() + variedad.slice(1)}:</strong> <br />
+                - {valores[0]} árboles con distancia {distanciasSiembra[variedad][0].distancia}.<br />
+                - {valores[1]} árboles con distancia {distanciasSiembra[variedad][1].distancia}.
+              </p>
+            ))}
           </div>
         )}
-  
-        <button type="submit" className="form-button"> Guardar</button>
+
+        <button type="submit" className="form-button">
+          Guardar
+        </button>
       </form>
     </div>
   );
 }
-
-  

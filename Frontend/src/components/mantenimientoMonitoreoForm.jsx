@@ -51,6 +51,12 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
 
   // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
+
+    if (!data.checkGuadana && !data.checkAplicacion) {
+      alert("Debe seleccionar una opción: Guadaña o Fumigación.");
+      return;
+    }
+
     try {
       const datosParaEnviar = {
         idPlantacion: Number(plantacionId),
