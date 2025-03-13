@@ -50,7 +50,7 @@ export function PreparacionTerrenoPage() {
                 <img src={atras} alt="Eliminar" />
            </button>
 
-      <h2>Preparación de Terreno - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>Preparación de Terreno - Plantación {idPlantacion}</h2>
 
       {/* Formulario con checkboxes y fechas automáticas */}
       <PreparacionTerrenoForm

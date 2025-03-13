@@ -60,7 +60,7 @@ export function RiegoFertilizacionPage() {
            <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
                 <img src={atras} alt="Eliminar" />
            </button>
-      <h2>Riego y Fertilización - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>Riego y Fertilización - Plantación {idPlantacion}</h2>
 
       {error && <p className="error-message">{error}</p>}
 

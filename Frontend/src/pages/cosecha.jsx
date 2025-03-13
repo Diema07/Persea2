@@ -62,11 +62,11 @@ export function CosechaPage() {
 
 
       <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-           <img src={atras} alt="Eliminar" />
+           <img src={atras} alt="atras" />
       </button>
 
 
-      <h2>Cosecha - Plantación {plantacionId}</h2>
+      <h2 className='subtitulo-principal'>Cosecha - Plantación {plantacionId}</h2>
 
       {/* Formulario para crear/actualizar cosechas */}
       <CosechaForm

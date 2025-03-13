@@ -8,6 +8,7 @@ import logo3 from "../img/img3.png";
 import logo4 from "../img/img4.png";
 import logo5 from "../img/img5.png";
 import logo6 from "../img/img6.png";
+import logo7 from "../img/img7.png";
 import atras from "../img/atras.png";
 import advertencia from "../img/advertencia.png";
 
@@ -61,15 +62,12 @@ export function GestionTareasPage() {
   };
 
   return (
+    
     <>
       <div className="main-8">
-        <button onClick={handleRedirectToInicioPlantacion}>
-          <img
-            src={atras}
-            alt="Flecha atras"
-            style={{ width: "35px", height: "35px" }}
-          />
-        </button>
+       <button className="boton-volver" onClick={handleRedirectToInicioPlantacion}>
+                  <img src={atras} alt="Eliminar" />
+             </button>
 
         <div className="contenedor3">
           <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
@@ -134,12 +132,12 @@ export function GestionTareasPage() {
 
             {tareasDesbloqueadas ? (
               <Link to={`/informe-completo/${plantacionId}/`} className="grid-cuadro">
-                <img src={logo6} alt="Informe" className="icono" />
+                <img src={logo7} alt="Informe" className="icono" />
                 <p>Informe</p>
               </Link>
             ) : (
               <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-                <img src={logo6} alt="Informe" className="icono" />
+                <img src={logo7} alt="Informe" className="icono" />
                 <p>Informe</p>
               </div>
             )}

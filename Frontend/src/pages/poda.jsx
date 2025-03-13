@@ -5,6 +5,7 @@ import { getPodaByPlantacionId } from '../api/poda.api';
 import { PodaForm } from '../components/podaForm';
 import atras from "../img/atras.png";
 import '../styles/historial.css';
+import '../styles/stylee.css'
 
 export function PodaPage() {
   const { plantacionId } = useParams();
@@ -49,7 +50,7 @@ export function PodaPage() {
            <img src={atras} alt="Eliminar" />
       </button>
 
-      <h2>Poda - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>Poda - Plantación {idPlantacion}</h2>
 
       {/* Formulario */}
       <PodaForm

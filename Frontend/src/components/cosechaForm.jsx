@@ -83,8 +83,12 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
     }
   });
 
-  const handleCosechaTerminada = async () => {
+  const handleModalOpen =  () => {
     setIsModalOpen(true);
+    };
+
+  const handleCosechaTerminada = async () => {
+  
     try {
       await completarPlantacion(plantacionId);
       navigate(`/informe-completo/${plantacionId}`);
@@ -94,6 +98,7 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
     }
   };
 
+  
   return (
     <>
       <div className="preparacion-terreno-container">
@@ -136,12 +141,31 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
         </form>
 
 
-        <button onClick={handleCosechaTerminada} className="form-button" style={{ backgroundColor: '#ff4444' }}>
+        <button onClick={handleModalOpen} className="form-button" style={{ backgroundColor: '#ff4444' }}>
           Terminar Cosecha
         </button>
 
        
       </div>
+       {/* Modal de advertencia */}
+       {isModalOpen && (
+            <div className="modal-overlay-2">
+              <div className="modal-2">
+                <img src={advertencia} alt="Advertencia" className="img-advertencia" />
+                <h3>¿Terminar cosecha?</h3>
+                <p>
+                ¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción <strong>desactivará </strong>la cosecha y la plantación.
+                </p>
+                <button className="confirmar" onClick={(handleCosechaTerminada)}>
+                  Confirmar
+                </button>
+                
+                <button className="cancelar" onClick={() => setIsModalOpen(false)}>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )}
     </>
   );
 }

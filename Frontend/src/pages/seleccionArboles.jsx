@@ -50,7 +50,7 @@ export function SeleccionArbolesPage() {
                  <img src={atras} alt="Eliminar" />
             </button>
 
-      <h2>Selección de Árboles - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>Selección de Árboles - Plantación {idPlantacion}</h2>
 
       {/* Formulario con checkboxes y fechas automáticas */}
       <SeleccionArbolesForm

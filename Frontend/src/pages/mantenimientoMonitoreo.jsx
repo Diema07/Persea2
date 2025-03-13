@@ -53,7 +53,7 @@ export function MantenimientoMonitoreoPage() {
                  <img src={atras} alt="Eliminar" />
             </button>
 
-      <h2>Mantenimiento/Monitoreo - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>Mantenimiento/Monitoreo - Plantación {idPlantacion}</h2>
 
       {error && <p className="error-message">{error}</p>}
 
