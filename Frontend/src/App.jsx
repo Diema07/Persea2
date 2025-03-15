@@ -11,7 +11,7 @@ import { PodaPage } from '../src/pages/poda';
 import {GestionTareasPage} from '../src/pages/gestionTareas'
 import { CosechaPage } from './pages/cosecha';
 import { InformeCompletoPage } from './pages/informe';
-
+import { InformeGeneralPage } from './pages/informeGeneral';
 
 
 
@@ -32,6 +32,7 @@ function App() {
         <Route path="/poda/:plantacionId" element={<PodaPage />} />
         <Route path="/cosecha/:plantacionId" element={<CosechaPage />} />
         <Route path="/informe-completo/:plantacionId" element={<InformeCompletoPage />} />
+        <Route path="/informeGeneral" element={<InformeGeneralPage />} />
 
 
 

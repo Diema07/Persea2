@@ -5,6 +5,7 @@ from apps.plantaciones import views
 router = routers.DefaultRouter()
 router.register(r'Plantacion', views.PlantacionView, basename='Plantacion')
 router.register(r'PlantacionFiltrada', views.PlantacionFiltradaView, 'PlantacionFiltrada')
+router.register(r'completas', views.PlantacionesCompletasList, basename='plantacion-completa')
 
 
 urlpatterns =[

@@ -84,4 +84,13 @@ class PlantacionFiltradaView(viewsets.ReadOnlyModelViewSet):
             return Plantacion.objects.filter(idUsuario=self.request.user, estado='ACTIVA').order_by('-id')
         return Plantacion.objects.none()
     
-    
+
+   
+class PlantacionesCompletasList(viewsets.ReadOnlyModelViewSet):
+    serializer_class = PlantacionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Plantacion.objects.filter(estado="COMPLETA")
+        return Plantacion.objects.none()
