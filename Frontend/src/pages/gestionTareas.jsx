@@ -9,6 +9,7 @@ import logo4 from "../img/img4.png";
 import logo5 from "../img/img5.png";
 import logo6 from "../img/img6.png";
 import logo7 from "../img/img7.png";
+import logo8 from "../img/img8.png";
 import atras from "../img/atras.png";
 import advertencia from "../img/advertencia.png";
 
@@ -65,9 +66,7 @@ export function GestionTareasPage() {
     
     <>
       <div className="main-8">
-       <button className="boton-volver" onClick={handleRedirectToInicioPlantacion}>
-                  <img src={atras} alt="Eliminar" />
-             </button>
+       
 
         <div className="contenedor3">
           <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
@@ -91,8 +90,9 @@ export function GestionTareasPage() {
               <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
                 <img src={logo3} alt="Riego" className="icono" />
                 <p>Gestión de Riego</p>
-              </div>
+            </div>
             )}
+
 
             {tareasDesbloqueadas ? (
               <Link to={`/mantenimiento-monitoreo/${plantacionId}/`} className="grid-cuadro">
@@ -101,9 +101,9 @@ export function GestionTareasPage() {
               </Link>
             ) : (
               <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-                <img src={logo4} alt="Mantenimiento" className="icono" />
-                <p>Mantenimiento</p>
-              </div>
+              <img src={logo4} alt="Mantenimiento" className="icono" />
+              <p>Mantenimiento</p>
+            </div>
             )}
 
             {tareasDesbloqueadas ? (
@@ -113,9 +113,9 @@ export function GestionTareasPage() {
               </Link>
             ) : (
               <div className="grid-cuadro disabled" onClick={handleBlockedClick}>
-                <img src={logo5} alt="Poda" className="icono" />
-                <p>Poda</p>
-              </div>
+              <img src={logo5} alt="Poda" className="icono" />
+              <p>Poda</p>
+            </div>
             )}
 
             {tareasDesbloqueadas ? (
@@ -141,6 +141,14 @@ export function GestionTareasPage() {
                 <p>Informe</p>
               </div>
             )}
+
+            
+            {/*volver al inicio*/}
+            <Link to={`/inicio-plantacion`} className="grid-cuadro-volver">
+                <img src={logo8} alt="volver al inicio" className="icono" />
+                <p>Volver al inicio</p>
+              </Link>
+          
           </div>
         </div>
       </div>
