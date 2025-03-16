@@ -54,14 +54,14 @@ export function InformeCompletoPage() {
        <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
                  <img src={atras} alt="atras" />
             </button>
-
-      <h2>Informe Completo de Plantación {plantacionId}</h2>
-      <button onClick={handleDescargarPDF}>Descargar PDF</button>
+     
+      
       {/* Incrustar el HTML del informe dentro de un contenedor */}
       <div
         style={{ marginTop: '20px' }}
         dangerouslySetInnerHTML={{ __html: htmlInforme }}
       />
+      <button onClick={handleDescargarPDF}>Descargar PDF</button>
     </div>
   );
 }

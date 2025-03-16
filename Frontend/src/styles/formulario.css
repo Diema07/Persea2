@@ -67,6 +67,12 @@
   padding: 12px;
   border-radius: 8px;
   transition: background-color 0.3s ease;
+  flex:1;
+}
+
+.form-group-inline {
+  display: flex;
+  gap: 10px; /* Espacio entre los elementos */
 }
 
 .form-group:hover {

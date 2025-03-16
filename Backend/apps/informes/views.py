@@ -111,11 +111,16 @@ class InformeCompletoView(APIView):
         guadana_group = [m for m in processed_mantenimientos if "guadana" in m]
         mant_group = [m for m in processed_mantenimientos if "metodoAplicacionFumigacion" in m]
 
+        # Calcular la fecha más reciente de cosecha
+        fecha_reciente = Cosecha.objects.filter(idPlantacion=plantacion)\
+            .aggregate(fechaCosecha_max=Max('fechaCosecha'))['fechaCosecha_max'] or ''
+
         formato = request.query_params.get('formato', 'json').lower()
 
         if formato == 'pdf':
             context = {
                 "plantacion": plantacion,
+                "fecha_reciente": fecha_reciente,
                 "preparaciones": preparaciones,
                 "selecciones": selecciones,
                 "riego_group": riego_group,
@@ -138,6 +143,7 @@ class InformeCompletoView(APIView):
         elif formato == 'html':
             context = {
                 "plantacion": plantacion,
+                "fecha_reciente": fecha_reciente,
                 "preparaciones": preparaciones,
                 "selecciones": selecciones,
                 "riego_group": riego_group,

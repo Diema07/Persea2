@@ -73,7 +73,7 @@ export function InformeGeneralPage() {
 
   return (
     <div>
-      <h1>Informe Completo con Selección de Plantación</h1>
+      <h1>Informe cosechas terminadas</h1>
       {loadingPlantaciones && <p>Cargando plantaciones...</p>}
       {error && <p>{error}</p>}
       {!loadingPlantaciones && (
@@ -84,9 +84,6 @@ export function InformeGeneralPage() {
       )}
       {selectedPlantacionId && (
         <>
-          <div style={{ marginTop: '20px' }}>
-            <button onClick={handleDescargarPDF}>Descargar PDF</button>
-          </div>
           {loadingInforme ? (
             <p>Cargando informe...</p>
           ) : htmlInforme ? (
@@ -94,6 +91,9 @@ export function InformeGeneralPage() {
           ) : (
             <p>No hay datos de informe.</p>
           )}
+          <div style={{ marginTop: '20px' }}>
+            <button onClick={handleDescargarPDF}>Descargar PDF</button>
+          </div>
         </>
       )}
     </div>

@@ -242,30 +242,32 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
                 {errors.nombreFertilizante && <span className="form-error">Requerido</span>}
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Cantidad de Fertilizante:</label>
-                <input
-                  type="number"
-                  step="any"
-                  {...register('cantidadFertilizante', { required: true })}
-                  className="form-input"
-                />
-                {errors.cantidadFertilizante && <span className="form-error">Requerido</span>}
-              </div>
+              <div className="form-group-inline">
+                <div className="form-group">
+                  <label className="form-label">Cantidad de Fertilizante:</label>
+                  <input
+                    type="number"
+                    step="any"
+                    {...register('cantidadFertilizante', { required: true })}
+                    className="form-input"
+                  />
+                  {errors.cantidadFertilizante && <span className="form-error">Requerido</span>}
+                </div>
 
-              <div className="form-group">
-                <label className="form-label">Medida del Fertilizante:</label>
-                <select
-                  {...register('medidaFertilizante', { required: true })}
-                  className="form-input"
-                >
-                  <option value=""></option>
-                  <option value="kg">kg</option>
-                  <option value="litros">litros</option>
-                  <option value="toneladas">toneladas</option>
-                </select>
-                {errors.medidaFertilizante && <span className="form-error">Requerido</span>}
-              </div>
+                <div className="form-group">
+                  <label className="form-label"></label>
+                  <select
+                    {...register('medidaFertilizante', { required: true })}
+                    className="form-input"
+                  >
+                    <option value="kg">kg</option>
+                    <option value="g">g</option>
+                    <option value="l">l</option>
+                    <option value="ml">ml</option>
+                  </select>
+                  {errors.medidaFertilizante && <span className="form-error">Requerido</span>}
+                </div>
+              </div> 
             </>
           )}
             <button className="form-button">Guardar</button>
