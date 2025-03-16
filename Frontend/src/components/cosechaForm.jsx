@@ -149,7 +149,7 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
                 <img src={advertencia} alt="Advertencia" className="img-advertencia" />
                 <h3>¿Terminar cosecha?</h3>
                 <p>
-                ¿Estás seguro de que deseas marcar la cosecha como terminada? Esta acción <strong>desactivará </strong>la cosecha y la plantación.
+                Esta acción <strong>Terminará </strong>el ciclo de la cosecha y se empezará uno nuevo sin los registros anteriores.
                 </p>
                 <button className="confirmar" onClick={(handleCosechaTerminada)}>
                   Confirmar
