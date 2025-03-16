@@ -8,7 +8,7 @@ import { SeleccionArbolesPage } from './pages/seleccionArboles';
 import { RiegoFertilizacionPage} from './pages/riegoFertilizacion';
 import { MantenimientoMonitoreoPage } from '../src/pages/mantenimientoMonitoreo';
 import { PodaPage } from '../src/pages/poda';
-import {GestionTareasPage} from '../src/pages/gestionTareas'
+import { GestionTareasPage } from '../src/pages/gestionTareas'
 import { CosechaPage } from './pages/cosecha';
 import { InformeCompletoPage } from './pages/informe';
 import { InformeGeneralPage } from './pages/informeGeneral';

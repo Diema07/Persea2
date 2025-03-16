@@ -101,7 +101,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
   }, [watchCheckLabranza, setValue]);
 
   // Distancias de siembra
-  const distanciasSiembra = {
+  const distanciasSiembra = React.useMemo(() => ({
     hass: [
       { distancia: '6m x 5m', area: 30 },
       { distancia: '7m x 5m', area: 35 },
@@ -114,7 +114,7 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
       { distancia: '7m x 7m', area: 49 },
       { distancia: '8m x 6m', area: 48 },
     ],
-  };
+  }), []);
 
   // Calcular árboles sugeridos cuando cambia la delimitación de parcela
   useEffect(() => {
