@@ -1,7 +1,7 @@
 import '../styles/header.css'
 import salir from '../img/img8.png'
 
-const Header = () => {
+export const Header = () => {
     return (
       <header>
         

@@ -1,5 +1,6 @@
 // src/components/informeGeneralSelect.jsx
 import React, { useState } from 'react';
+import { Header } from './Header'
 
 const PlantacionCompletasSelect = ({ plantaciones, onSelect }) => {
   const [selectedPlantacionId, setSelectedPlantacionId] = useState('');
@@ -18,6 +19,8 @@ const PlantacionCompletasSelect = ({ plantaciones, onSelect }) => {
   };
 
   return (
+    <>
+    <Header/>
     <div>
       <select onChange={handleChange} value={selectedPlantacionId}>
         <option value="">Seleccione una plantación</option>
@@ -28,7 +31,9 @@ const PlantacionCompletasSelect = ({ plantaciones, onSelect }) => {
         ))}
       </select>
     </div>
+    </>
   );
+  
 };
 
 export default PlantacionCompletasSelect;

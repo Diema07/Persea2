@@ -1,7 +1,7 @@
 import '../styles/plantacion-inicio.css';
 import '../styles/modalCrear.css'; 
 import React, { useEffect, useState } from 'react';
-import { getAllTasks, getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
+import {  getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
 import { Taskcard } from './plantacion-crear'; 
 import { useForm } from 'react-hook-form';
 import { createTask } from '../api/plantaciones.api';
@@ -48,6 +48,7 @@ export function PlantacionInicio() {
         setPlantacionSeleccionada(plantacion);  // Guardamos la plantación seleccionada
         setIsModalOpenEliminar(true);
     };
+    
     const closeModalEliminar = () => setIsModalOpenEliminar(false);
 
     // Lógica del formulario

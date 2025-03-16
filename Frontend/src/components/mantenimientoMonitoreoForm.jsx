@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { postMantenimientoMonitoreo } from '../api/mantenimientoMonitoreo.api';
+import advertencia from '../img/advertencia.png'
 
 export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   const {
@@ -18,6 +19,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   // Observar checkboxes
   const watchCheckGuadana = watch('checkGuadana');
   const watchCheckAplicacion = watch('checkAplicacion');
+    const [IsModalOpenAdvertencia, setIsModalOpenAdvertencia] = useState(false); 
 
   // Efecto para manejar la selección de un solo checkbox
   useEffect(() => {
@@ -53,7 +55,8 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   const onSubmit = handleSubmit(async (data) => {
 
     if (!data.checkGuadana && !data.checkAplicacion) {
-      alert("Debe seleccionar una opción: Guadaña o Fumigación.");
+      setIsModalOpenAdvertencia(true)
+      
       return;
     }
 
@@ -111,6 +114,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   });
 
   return (
+    <>
     <div className="contenedor-principal">
 
         {/* Formulario */}
@@ -268,5 +272,18 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
             </div>
           )}
     </div>
+
+     {IsModalOpenAdvertencia &&  (
+                            <div className="modal-overlay-2">
+                                <div className="modal-2">
+                                    <img src={advertencia} alt="Advertencia" className='img-advertencia' />
+                                    <p>Debe seleccionar una opción: <strong> Guadaña o Fumigación.</strong></p>
+        
+                                    <button className="confirmar" onClick={() => setIsModalOpenAdvertencia(false)}>Entiendo</button>
+                                    
+                                </div>
+                            </div>
+                        )}
+        </>
   );
 }

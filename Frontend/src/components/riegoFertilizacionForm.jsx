@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {postRiegoFertilizacion,} from '../api/riegoFertilizacion.api';
 import '../styles/formulario.css';
+import advertencia from '../img/advertencia.png'
 
 export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
   const {
@@ -20,6 +21,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
 
   const watchCheckRiego = watch('checkRiego');
   const watchCheckFertilizante = watch('checkFertilizante');
+  const [IsModalOpenAdvertencia, setIsModalOpenAdvertencia] = useState(false); 
 
   // Efecto para deshabilitar el otro checkbox cuando uno está seleccionado
   useEffect(() => {
@@ -85,11 +87,14 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
     }
   }, [watchCheckFertilizante, setValue]);
 
+
+
+
   // Manejo del submit
   const onSubmit = handleSubmit(async (data) => {
 
     if (!data.checkRiego && !data.checkFertilizante) {
-      alert("Debe seleccionar una opción: Riego o Fertilización.");
+      setIsModalOpenAdvertencia(true);
       return;
     }
 
@@ -145,7 +150,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
   });
 
   return (
-
+<>
     <div className='contenedor-principal'>
       <div className="preparacion-terreno-container">
         <h3>Agregar Riego/Fertilización</h3>
@@ -313,8 +318,25 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
               </ul>
             </div>
           )}
+          {/* 📌 Sugerencias dinámicas según la variedad */}
+      
         
     </div>
+   
+     {IsModalOpenAdvertencia &&  (
+                        <div className="modal-overlay-2">
+                            <div className="modal-2">
+                                <img src={advertencia} alt="Advertencia" className='img-advertencia' />
+                                <p>Debe seleccionar una opción: <strong> Riego o Fertilización.</strong></p>
+    
+                                <button className="confirmar" onClick={() => setIsModalOpenAdvertencia(false)}>Entiendo</button>
+                                
+                            </div>
+                        </div>
+                    )}
+    </>
+
+       
 );
   
 }
