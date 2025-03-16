@@ -17,7 +17,7 @@ export function Taskcard({ task, onDelete }) {
                     <img src={plantaIcon} alt="Planta" />
                 </div>
 
-                <h2 className="titulo">{task.nombreParcela}</h2>
+                <h2 className="tituloParcela">{task.nombreParcela}</h2>
                 <p className="parrafo">Para lograr una buena cosecha, se deben tener en cuenta algunos aspectos clave.</p>
                 <Link to={`/gestionTareas/${task.id}`} className="boton-ver-mas">Ver más</Link>
 

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
 import advertencia from '../img/advertencia.png'
+import iconoPlantacion from '../img/icono-plantacion.png'
 
 
 // Importaciones de Swiper
@@ -80,9 +81,12 @@ export function PlantacionInicio() {
         
             <div className='main'>
                 <div className='orden'>
-                    <h2>Mis Plantaciones</h2>
                     
-                    <button onClick={openModalCrear} className="button">Crear Plantación</button>
+                    <h2>Mis Plantaciones</h2>
+                    <div className='union'>
+                        <img src={iconoPlantacion} alt="Planta" />
+                        <button onClick={openModalCrear} className="button">Crear Plantación</button>
+                    </div>
                 </div>
 
                 {/* Swiper envuelve las plantaciones */}

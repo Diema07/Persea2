@@ -69,7 +69,7 @@ export function GestionTareasPage() {
        
 
         <div className="contenedor3">
-          <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
+          <h2 className="titulo-gestion">Gestión de Tareas - {nombreParcela}</h2>
           <div className="grid-contenedor">
             <Link to={`/preparacion/${plantacionId}/`} className="grid-cuadro">
               <img src={logo1} alt="Preparación" className="icono" />
