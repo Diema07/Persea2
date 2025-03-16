@@ -174,97 +174,99 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
   });
 
   return (
-    <div className="preparacion-terreno-container">
-      <h3>Agregar Preparación de Terreno</h3>
-      <form onSubmit={onSubmit} className="preparacion-form">
-        {/* LIMPIEZA DEL TERRENO */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            {...register('checkLimpieza')}
-            disabled={isCheckboxDisabled.limpieza}
-            className="form-checkbox"
-          />
-          <label className="form-label">Limpieza del terreno</label>
-          {watchCheckLimpieza && (
-            <span className="form-fecha">(Fecha: {watch('limpiezaTerreno')})</span>
-          )}
-        </div>
-
-        {/* ANÁLISIS DE SUELO */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            {...register('checkAnalisis')}
-            disabled={isCheckboxDisabled.analisis}
-            className="form-checkbox"
-          />
-          <label className="form-label">Análisis de suelo</label>
-          {watchCheckAnalisis && (
-            <span className="form-fecha">(Fecha: {watch('analisisSuelo')})</span>
-          )}
-        </div>
-
-        {/* CORRECCIÓN DE SUELO */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            {...register('checkCorrecion')}
-            disabled={isCheckboxDisabled.correcion}
-            className="form-checkbox"
-          />
-          <label className="form-label">Corrección de suelo</label>
-          {watchCheckCorrecion && (
-            <span className="form-fecha">(Fecha: {watch('correcionSuelo')})</span>
-          )}
-        </div>
-
-        {/* LABRANZA */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            {...register('checkLabranza')}
-            disabled={isCheckboxDisabled.labranza}
-            className="form-checkbox"
-          />
-          <label className="form-label">Labranza</label>
-          {watchCheckLabranza && (
-            <span className="form-fecha">(Fecha: {watch('labranza')})</span>
-          )}
-        </div>
-
-        {/* DELIMITACIÓN DE PARCELA (FLOAT) */}
-        <div className="form-group">
-          <label className="form-label">Delimitación de parcela (m²):</label>
-          <input
-            type="number"
-            step="any"
-            {...register('delimitacionParcela', { required: false })}
-            disabled={isCheckboxDisabled.delimitacionParcela}
-            className="form-input"
-          />
-          {errors.delimitacionParcela && <span className="form-error"></span>}
-        </div>
-
-        {/* Sugerencia de árboles según la variedad */}
-        {watchDelimitacionParcela && (
-          <div className="sugerencias">
-            <h4>🌱 Sugerencias de siembra:</h4>
-            {Object.entries(arbolesSugeridos).map(([variedad, valores], index) => (
-              <p key={index} className="sugerencia">
-                <strong>{variedad.charAt(0).toUpperCase() + variedad.slice(1)}:</strong> <br />
-                - {valores[0]} árboles con distancia {distanciasSiembra[variedad][0].distancia}.<br />
-                - {valores[1]} árboles con distancia {distanciasSiembra[variedad][1].distancia}.
-              </p>
-            ))}
+    <div className="contenedor-principal">
+      {/* Formulario */}
+      <div className="preparacion-terreno-container">
+        <h3>Agregar Preparación de Terreno</h3>
+        <form onSubmit={onSubmit} className="preparacion-form">
+          {/* LIMPIEZA DEL TERRENO */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              {...register('checkLimpieza')}
+              disabled={isCheckboxDisabled.limpieza}
+              className="form-checkbox"
+            />
+            <label className="form-label">Limpieza del terreno</label>
+            {watchCheckLimpieza && (
+              <span className="form-fecha">(Fecha: {watch('limpiezaTerreno')})</span>
+            )}
           </div>
-        )}
-
-        <button type="submit" className="form-button">
-          
-          Guardar
-        </button>
-      </form>
+  
+          {/* ANÁLISIS DE SUELO */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              {...register('checkAnalisis')}
+              disabled={isCheckboxDisabled.analisis}
+              className="form-checkbox"
+            />
+            <label className="form-label">Análisis de suelo</label>
+            {watchCheckAnalisis && (
+              <span className="form-fecha">(Fecha: {watch('analisisSuelo')})</span>
+            )}
+          </div>
+  
+          {/* CORRECCIÓN DE SUELO */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              {...register('checkCorrecion')}
+              disabled={isCheckboxDisabled.correcion}
+              className="form-checkbox"
+            />
+            <label className="form-label">Corrección de suelo</label>
+            {watchCheckCorrecion && (
+              <span className="form-fecha">(Fecha: {watch('correcionSuelo')})</span>
+            )}
+          </div>
+  
+          {/* LABRANZA */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              {...register('checkLabranza')}
+              disabled={isCheckboxDisabled.labranza}
+              className="form-checkbox"
+            />
+            <label className="form-label">Labranza</label>
+            {watchCheckLabranza && (
+              <span className="form-fecha">(Fecha: {watch('labranza')})</span>
+            )}
+          </div>
+  
+          {/* DELIMITACIÓN DE PARCELA (FLOAT) */}
+          <div className="form-group">
+            <label className="form-label">Delimitación de parcela (m²):</label>
+            <input
+              type="number"
+              step="any"
+              {...register('delimitacionParcela', { required: false })}
+              disabled={isCheckboxDisabled.delimitacionParcela}
+              className="form-input"
+            />
+            {errors.delimitacionParcela && <span className="form-error"></span>}
+          </div>
+  
+          <button type="submit" className="form-button">
+            Guardar
+          </button>
+        </form>
+      </div>
+  
+      {/* Sugerencias */}
+      {watchDelimitacionParcela && (
+        <div className="sugerencias">
+          <h4>🌱 Sugerencias de siembra:</h4>
+          {Object.entries(arbolesSugeridos).map(([variedad, valores], index) => (
+            <p key={index} className="sugerencia">
+              <strong>{variedad.charAt(0).toUpperCase() + variedad.slice(1)}:</strong> <br />
+              - {valores[0]} árboles con distancia {distanciasSiembra[variedad][0].distancia}.<br />
+              - {valores[1]} árboles con distancia {distanciasSiembra[variedad][1].distancia}.
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

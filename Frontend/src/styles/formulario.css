@@ -1,3 +1,13 @@
+
+.contenedor-principal {
+  display: flex;
+  gap: 40px; 
+  align-items: center;
+  max-width: 1100px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  transition: all 0.3s ease-in-out; /* Transición suave */
+}
 .subtitulo-principal {
   text-align: center; 
   font-size: 28px;
@@ -28,6 +38,8 @@
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: margin 1s ease-in-out; /* Transición suave para el margen */
+
 }
 
 
@@ -130,6 +142,22 @@
   align-self: center; 
 }
 
+.form-button-terminar{
+  background-color: #ff4444;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: auto;
+  align-self: center; 
+
+}
+
 .form-button:hover {
   background-color: #45a049;
   transform: scale(1.05); 
@@ -167,6 +195,21 @@
   }
 }
 
+
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+
 /*sugerenciaas */
 .sugerencias {
 margin-top: 20px;
@@ -175,7 +218,12 @@ background-color: #f9f9f9;
 border-radius: 8px;
 border-left: 5px solid #4CAF50; /* Línea vertical verde */
 outline: 1px solid #e0e0e0; 
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+flex: 1; /* Ocupa el espacio disponible */
+max-width: 400px; /* Ancho máximo de las sugerencias */
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+animation: slideLeft 0.5s ease-in-out;
+
+
 }
 
 
@@ -204,37 +252,16 @@ font-size: 16px;
 margin-right: 5px;
 }
 
-/* Contenedor principal flexible */
 .contenedor-principal {
 display: flex;
-gap: 40px; /* Espacio entre el formulario y las sugerencias */
-align-items: flex-start; /* Alinea los elementos en la parte superior */
-max-width: 1100px; /* Ancho máximo del contenedor principal */
-margin: 0 auto; /* Centrar el contenedor en la pantalla */
-padding: 20px; /* Espaciado interno */
+gap: 40px; 
+align-items: flex-start; 
+max-width: 1100px; 
+margin: 0 auto; 
+padding: 20px; 
 }
 
-/* Estilos para el contenedor del formulario */
-.preparacion-terreno-container {
-flex: 1; /* Ocupa el espacio disponible */
-max-width: 600px; /* Ancho máximo del formulario */
-padding: 20px;
-background-color: #ffffff;
-border-radius: 12px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-/* Estilos para las sugerencias */
-.sugerencias {
-flex: 1; /* Ocupa el espacio disponible */
-max-width: 400px; /* Ancho máximo de las sugerencias */
-padding: 15px;
-background-color: #f9f9f9;
-border-radius: 8px;
-border-left: 5px solid #4CAF50; /* Línea vertical verde */
-outline: 1px solid #e0e0e0;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
@@ -246,4 +273,31 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 .sugerencias {
   max-width: 100%; /* Ocupa todo el ancho en móviles */
 }
+}
+
+
+
+
+/* Estilos para el contenedor del formulario */
+.preparacion-terreno-container {
+  flex: 1; /* Ocupa el espacio disponible */
+  max-width: 600px; /* Ancho máximo del formulario */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .contenedor-principal {
+    flex-direction: column; /* Cambia a una columna en móviles */
+    gap: 20px; /* Reduce el espacio entre elementos en móviles */
+  }
+
+  .sugerencias {
+    max-width: 100%; /* Ocupa todo el ancho en móviles */
+  }
 }

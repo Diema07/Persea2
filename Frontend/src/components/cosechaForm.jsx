@@ -101,6 +101,9 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
   
   return (
     <>
+     <div className="contenedor-principal">
+      
+      {/* Formulario */}
       <div className="preparacion-terreno-container">
         <h3>Agregar Cosecha</h3>
         <form className="preparacion-form" onSubmit={onSubmit}>
@@ -127,21 +130,13 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
             <input type="number" step="any" value={cantidadTotal} readOnly className='form-input' />
           </div>
 
-            {/* 📌 Sugerencias dinámicas según la variedad */}
-         {sugerencia && (
-          <div className="sugerencias">
-            <h4>🌱 Cosecha {variedad.charAt(0).toUpperCase() + variedad.slice(1)}</h4>
-            <p><strong>🔹 Rendimiento esperado:</strong> {sugerencia.rendimientoEsperado}</p>
-            <p><strong>📦 Almacenamiento:</strong> {sugerencia.almacenamiento}</p>
-            <p><strong>📈 Comercialización:</strong> {sugerencia.comercializacion}</p>
-          </div>
-        )}
+            
 
           <button className="form-button">Guardar</button>
         </form>
 
 
-        <button onClick={handleModalOpen} className="form-button" style={{ backgroundColor: '#ff4444' }}>
+        <button onClick={handleModalOpen} className="form-button-terminar" style={{ backgroundColor: '#ff4444' }}>
           Terminar Cosecha
         </button>
 
@@ -166,6 +161,17 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {  // Añadir
               </div>
             </div>
           )}
+
+          {/* 📌 Sugerencias dinámicas según la variedad */}
+         {sugerencia && (
+          <div className="sugerencias">
+            <h4>🌱 Cosecha {variedad.charAt(0).toUpperCase() + variedad.slice(1)}</h4>
+            <p><strong>🔹 Rendimiento esperado:</strong> {sugerencia.rendimientoEsperado}</p>
+            <p><strong>📦 Almacenamiento:</strong> {sugerencia.almacenamiento}</p>
+            <p><strong>📈 Comercialización:</strong> {sugerencia.comercializacion}</p>
+          </div>
+        )}
+    </div>
     </>
   );
 }

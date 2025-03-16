@@ -145,171 +145,175 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
   });
 
   return (
-    <div className="preparacion-terreno-container">
-      <h3>Agregar Riego/Fertilización</h3>
-      <form className="preparacion-form" onSubmit={onSubmit}>
-        {/* RIEGO */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            className="form-checkbox"
-            {...register('checkRiego')}
-            disabled={isCheckboxDisabled.riego}
-          />
-          <label className="form-label">Riego</label>
-          {watchCheckRiego && (
-            <span className="form-fecha">
-              (Fecha: {watch('fechaRiego')})
-            </span>
-          )}
-        </div>
 
-        {/* Mostrar campos de riego solo si el checkbox de riego está marcado */}
-        {watchCheckRiego && (
+    <div className='contenedor-principal'>
+      <div className="preparacion-terreno-container">
+        <h3>Agregar Riego/Fertilización</h3>
+        <form className="preparacion-form" onSubmit={onSubmit}>
+          {/* RIEGO */}
           <div className="form-group">
-            <label className="form-label">Tipo de Riego:</label>
-            <select
-              {...register('tipoRiego', { required: true })}
-              className="form-input"
-            >
-              <option value=""></option>
-              <option value="aspersión">Aspersión</option>
-              <option value="goteo">Goteo</option>
-              <option value="gravedad">Gravedad</option>
-            </select>
-            {errors.tipoRiego && <span className="form-error"></span>}
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              {...register('checkRiego')}
+              disabled={isCheckboxDisabled.riego}
+            />
+            <label className="form-label">Riego</label>
+            {watchCheckRiego && (
+              <span className="form-fecha">
+                (Fecha: {watch('fechaRiego')})
+              </span>
+            )}
           </div>
-        )}
 
-         {/* Sugerencias para Riego */}
-         {watchCheckRiego && (
-          <div className="sugerencias">
-            <h4>🌊 Programa de Riego Sugerido</h4>
-            <p><strong>Árboles jóvenes (1-3 años):</strong></p>
-            <ul>
-              <li><strong>Primavera-Verano:</strong> Cada 7-10 días (Aumenta en climas cálidos).</li>
-              <li><strong>Otoño-Invierno:</strong> Cada 10-15 días (Reduce en climas fríos o lluviosos).</li>
-            </ul>
-            <p><strong>Árboles en producción (4+ años):</strong></p>
-            <ul>
-              <li><strong>Floración:</strong> Cada 7-10 días (Mantener suelo húmedo).</li>
-              <li><strong>Cuajado de frutos:</strong> Cada 7-10 días (Suministro constante).</li>
-              <li><strong>Post-cosecha:</strong> Cada 10-15 días (Reducir gradualmente).</li>
-            </ul>
-          </div>
-        )}
-
-
-        {/* FERTILIZACIÓN */}
-        <div className="form-group">
-          <input
-            type="checkbox"
-            className="form-checkbox"
-            {...register('checkFertilizante')}
-            disabled={isCheckboxDisabled.fertilizante}
-          />
-          <label className="form-label">Fertilización</label>
-          {watchCheckFertilizante && (
-            <span className="form-fecha">
-              (Fecha: {watch('fechaFertilizante')})
-            </span>
+          {/* Mostrar campos de riego solo si el checkbox de riego está marcado */}
+          {watchCheckRiego && (
+            <div className="form-group">
+              <label className="form-label">Tipo de Riego:</label>
+              <select
+                {...register('tipoRiego', { required: true })}
+                className="form-input"
+              >
+                <option value=""></option>
+                <option value="aspersión">Aspersión</option>
+                <option value="goteo">Goteo</option>
+                <option value="gravedad">Gravedad</option>
+              </select>
+              {errors.tipoRiego && <span className="form-error"></span>}
+            </div>
           )}
-        </div>
 
-        {/* Mostrar campos de fertilización solo si el checkbox de fertilización está marcado */}
-        {watchCheckFertilizante && (
-          <>
-            <div className="form-group">
-              <label className="form-label">Método de Aplicación:</label>
-              <select
-                {...register('metodoAplicacionFertilizante', { required: true })}
-                className="form-input"
-              >
-                <option value=""></option>
-                <option value="al suelo">Al suelo</option>
-                <option value="foliar">Foliar</option>
-                <option value="fertirriego">Fertirriego</option>
-              </select>
-              {errors.metodoAplicacionFertilizante && <span className="form-error">Requerido</span>}
-            </div>
+      
 
-            <div className="form-group">
-              <label className="form-label">Tipo de Fertilizante:</label>
-              <select
-                {...register('tipoFertilizante', { required: true })}
-                className="form-input"
-              >
-                <option value=""></option>
-                <option value="orgánico">Orgánico</option>
-                <option value="químico">Químico</option>
-                <option value="mixto">Mixto</option>
-              </select>
-              {errors.tipoFertilizante && <span className="form-error">Requerido</span>}
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Nombre del Fertilizante:</label>
-              <input
-                type="text"
-                {...register('nombreFertilizante', { required: true })}
-                className="form-input"
-              />
-              {errors.nombreFertilizante && <span className="form-error">Requerido</span>}
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Cantidad de Fertilizante:</label>
-              <input
-                type="number"
-                step="any"
-                {...register('cantidadFertilizante', { required: true })}
-                className="form-input"
-              />
-              {errors.cantidadFertilizante && <span className="form-error">Requerido</span>}
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Medida del Fertilizante:</label>
-              <select
-                {...register('medidaFertilizante', { required: true })}
-                className="form-input"
-              >
-                <option value=""></option>
-                <option value="kg">kg</option>
-                <option value="litros">litros</option>
-                <option value="toneladas">toneladas</option>
-              </select>
-              {errors.medidaFertilizante && <span className="form-error">Requerido</span>}
-            </div>
-          </>
-        )}
-
-        {/* Sugerencias para Fertilización */}
-        {watchCheckFertilizante && (
-          <div className="sugerencias">
-            <h4>🌿 Recomendaciones de Fertilización</h4>
-            <p><strong>Árboles jóvenes (1-3 años):</strong></p>
-            <ul>
-              <li><strong>Frecuencia:</strong> Cada 2-3 meses.</li>
-              <li><strong>Objetivo:</strong> Promover crecimiento vegetativo.</li>
-              <li><strong>Recomendación:</strong> Fertilizantes ricos en N, P y K en proporción equilibrada.</li>
-            </ul>
-            <p><strong>Árboles en producción (4+ años):</strong></p>
-            <ul>
-              <li><strong>Frecuencia:</strong> 3-4 veces al año.</li>
-              <li><strong>Objetivo:</strong> Mantener equilibrio nutricional.</li>
-            </ul>
-            <h5>Etapas clave:</h5>
-            <ul>
-              <li><strong>Antes de la floración:</strong> Fertilizantes ricos en P y K.</li>
-              <li><strong>Durante el desarrollo de frutos:</strong> Aumentar potasio (K).</li>
-              <li><strong>Después de la cosecha:</strong> Aplicar nitrógeno (N).</li>
-            </ul>
+          {/* FERTILIZACIÓN */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              {...register('checkFertilizante')}
+              disabled={isCheckboxDisabled.fertilizante}
+            />
+            <label className="form-label">Fertilización</label>
+            {watchCheckFertilizante && (
+              <span className="form-fecha">
+                (Fecha: {watch('fechaFertilizante')})
+              </span>
+            )}
           </div>
-        )}
 
-        <button className="form-button">Guardar</button>
-      </form>
+          {/* Mostrar campos de fertilización solo si el checkbox de fertilización está marcado */}
+          {watchCheckFertilizante && (
+            <>
+              <div className="form-group">
+                <label className="form-label">Método de Aplicación:</label>
+                <select
+                  {...register('metodoAplicacionFertilizante', { required: true })}
+                  className="form-input"
+                >
+                  <option value=""></option>
+                  <option value="al suelo">Al suelo</option>
+                  <option value="foliar">Foliar</option>
+                  <option value="fertirriego">Fertirriego</option>
+                </select>
+                {errors.metodoAplicacionFertilizante && <span className="form-error">Requerido</span>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Tipo de Fertilizante:</label>
+                <select
+                  {...register('tipoFertilizante', { required: true })}
+                  className="form-input"
+                >
+                  <option value=""></option>
+                  <option value="orgánico">Orgánico</option>
+                  <option value="químico">Químico</option>
+                  <option value="mixto">Mixto</option>
+                </select>
+                {errors.tipoFertilizante && <span className="form-error">Requerido</span>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Nombre del Fertilizante:</label>
+                <input
+                  type="text"
+                  {...register('nombreFertilizante', { required: true })}
+                  className="form-input"
+                />
+                {errors.nombreFertilizante && <span className="form-error">Requerido</span>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Cantidad de Fertilizante:</label>
+                <input
+                  type="number"
+                  step="any"
+                  {...register('cantidadFertilizante', { required: true })}
+                  className="form-input"
+                />
+                {errors.cantidadFertilizante && <span className="form-error">Requerido</span>}
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Medida del Fertilizante:</label>
+                <select
+                  {...register('medidaFertilizante', { required: true })}
+                  className="form-input"
+                >
+                  <option value=""></option>
+                  <option value="kg">kg</option>
+                  <option value="litros">litros</option>
+                  <option value="toneladas">toneladas</option>
+                </select>
+                {errors.medidaFertilizante && <span className="form-error">Requerido</span>}
+              </div>
+            </>
+          )}
+            <button className="form-button">Guardar</button>
+            </form>
+        </div>
+            {/* Sugerencias para Riego */}
+            {watchCheckRiego && (
+            <div className="sugerencias">
+              <h4>🌊 Programa de Riego Sugerido</h4>
+              <p><strong>Árboles jóvenes (1-3 años):</strong></p>
+              <ul>
+                <li><strong>Primavera-Verano:</strong> Cada 7-10 días (Aumenta en climas cálidos).</li>
+                <li><strong>Otoño-Invierno:</strong> Cada 10-15 días (Reduce en climas fríos o lluviosos).</li>
+              </ul>
+              <p><strong>Árboles en producción (4+ años):</strong></p>
+              <ul>
+                <li><strong>Floración:</strong> Cada 7-10 días (Mantener suelo húmedo).</li>
+                <li><strong>Cuajado de frutos:</strong> Cada 7-10 días (Suministro constante).</li>
+                <li><strong>Post-cosecha:</strong> Cada 10-15 días (Reducir gradualmente).</li>
+              </ul>
+            </div>
+          )}
+
+
+          {/* Sugerencias para Fertilización */}
+          {watchCheckFertilizante && (
+            <div className="sugerencias">
+              <h4>🌿 Recomendaciones de Fertilización</h4>
+              <p><strong>Árboles jóvenes (1-3 años):</strong></p>
+              <ul>
+                <li><strong>Frecuencia:</strong> Cada 2-3 meses.</li>
+                <li><strong>Objetivo:</strong> Promover crecimiento vegetativo.</li>
+                <li><strong>Recomendación:</strong> Fertilizantes ricos en N, P y K en proporción equilibrada.</li>
+              </ul>
+              <p><strong>Árboles en producción (4+ años):</strong></p>
+              <ul>
+                <li><strong>Frecuencia:</strong> 3-4 veces al año.</li>
+                <li><strong>Objetivo:</strong> Mantener equilibrio nutricional.</li>
+              </ul>
+              <h5>Etapas clave:</h5>
+              <ul>
+                <li><strong>Antes de la floración:</strong> Fertilizantes ricos en P y K.</li>
+                <li><strong>Durante el desarrollo de frutos:</strong> Aumentar potasio (K).</li>
+                <li><strong>Después de la cosecha:</strong> Aplicar nitrógeno (N).</li>
+              </ul>
+            </div>
+          )}
+        
     </div>
 );
   

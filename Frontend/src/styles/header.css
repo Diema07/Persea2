@@ -14,7 +14,12 @@ header {
 
 
 
-
+.atrasLogin{
+  width: 40px;
+  height: 40px;
+  background-color: #ecf0f1;
+  border-radius: 100%;
+}
 
 nav ul {
   list-style: none; 

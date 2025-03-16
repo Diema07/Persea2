@@ -82,10 +82,11 @@ export function PlantacionInicio() {
             <div className='main'>
                 <div className='orden'>
                     
-                    <h2>Mis Plantaciones</h2>
+                    <h2 className='tituloPlantacion'>Mis Plantaciones</h2>
                     <div className='union'>
                         <img src={iconoPlantacion} alt="Planta" />
                         <button onClick={openModalCrear} className="button">Crear Plantación</button>
+                        
                     </div>
                 </div>
 
