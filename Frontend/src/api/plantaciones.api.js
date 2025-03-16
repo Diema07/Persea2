@@ -21,10 +21,6 @@ export const getFilteredTasks = () =>
     axios.get('http://localhost:8000/plantaciones/api/v1/PlantacionFiltrada/', { withCredentials: true });
 
 
-// **Nueva función para obtener plantaciones completas (estado = Completa)**
-export const getPlantacionesCompletas = () =>
-    axios.get('http://localhost:8000/plantaciones/api/v1/completas/', { withCredentials: true });
-
 
 // Crear una nueva plantación
 export const createTask = async (task) => {

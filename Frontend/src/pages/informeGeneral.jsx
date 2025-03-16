@@ -1,60 +1,101 @@
 // src/pages/informeGeneral.jsx
 import React, { useEffect, useState } from 'react';
-import { getPlantacionesCompletas } from '../api/plantaciones.api';
+import { useNavigate } from 'react-router-dom';
+import { getPlantacionesCosechaReciente } from '../api/informeGeneral.api';
+import { descargarInformeCompletoPDF } from '../api/informe.api';
 import PlantacionCompletasSelect from '../components/informeGeneralSelect';
 
-export const InformeGeneralPage = () => {
-  // Obtenemos el id del usuario desde localStorage
-  const userId = localStorage.getItem('userId');
+export function InformeGeneralPage() {
   const [plantaciones, setPlantaciones] = useState([]);
   const [selectedPlantacionId, setSelectedPlantacionId] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [htmlInforme, setHtmlInforme] = useState('');
+  const [loadingPlantaciones, setLoadingPlantaciones] = useState(false);
+  const [loadingInforme, setLoadingInforme] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedSubOption, setSelectedSubOption] = useState('');
+  const navigate = useNavigate();
 
+  // Cargar la lista de plantaciones
   useEffect(() => {
     const fetchPlantaciones = async () => {
-      setLoading(true);
+      setLoadingPlantaciones(true);
       try {
-        const response = await getPlantacionesCompletas();
-        setPlantaciones(response.data);
+        const response = await getPlantacionesCosechaReciente();
+        setPlantaciones(response);
       } catch (err) {
-        setError('Error al cargar las plantaciones completas');
+        setError('Error al cargar las plantaciones');
       } finally {
-        setLoading(false);
+        setLoadingPlantaciones(false);
       }
     };
     fetchPlantaciones();
   }, []);
 
+  // Cada vez que se selecciona una plantación, cargar su informe en HTML
+  useEffect(() => {
+    if (selectedPlantacionId) {
+      const fetchInformeHtml = async () => {
+        setLoadingInforme(true);
+        try {
+          const response = await fetch(
+            `http://localhost:8000/informes/informe-completo/${selectedPlantacionId}/?formato=html`,
+            {
+              credentials: 'include',
+              headers: { 'Content-Type': 'text/html' },
+            }
+          );
+          const html = await response.text();
+          setHtmlInforme(html);
+        } catch (err) {
+          setError('Error al cargar el informe');
+        } finally {
+          setLoadingInforme(false);
+        }
+      };
+      fetchInformeHtml();
+    } else {
+      setHtmlInforme('');
+    }
+  }, [selectedPlantacionId]);
+
+  // Maneja la selección en el select
   const handleSelect = (plantacionId) => {
     setSelectedPlantacionId(plantacionId);
   };
 
-  const handleSubSelect = (option) => {
-    setSelectedSubOption(option);
+  // Descargar el informe en PDF
+  const handleDescargarPDF = () => {
+    if (selectedPlantacionId) {
+      descargarInformeCompletoPDF(selectedPlantacionId);
+    }
   };
+
+  
 
   return (
     <div>
-      <h1>Informe de Plantaciones Completas para el Usuario {userId}</h1>
-      {loading && <p>Cargando plantaciones...</p>}
+      <h1>Informe Completo con Selección de Plantación</h1>
+      {loadingPlantaciones && <p>Cargando plantaciones...</p>}
       {error && <p>{error}</p>}
-      {!loading && !error && (
+      {!loadingPlantaciones && (
         <PlantacionCompletasSelect 
           plantaciones={plantaciones}
           onSelect={handleSelect}
-          onSubSelect={handleSubSelect}
         />
       )}
       {selectedPlantacionId && (
-        <div style={{ marginTop: '20px' }}>
-          <p>Plantación seleccionada: {selectedPlantacionId}</p>
-          {selectedSubOption && (
-            <p>Opción adicional seleccionada: {selectedSubOption}</p>
+        <>
+          <div style={{ marginTop: '20px' }}>
+            <button onClick={handleDescargarPDF}>Descargar PDF</button>
+          </div>
+          {loadingInforme ? (
+            <p>Cargando informe...</p>
+          ) : htmlInforme ? (
+            <div style={{ marginTop: '20px' }} dangerouslySetInnerHTML={{ __html: htmlInforme }} />
+          ) : (
+            <p>No hay datos de informe.</p>
           )}
-        </div>
+        </>
       )}
     </div>
   );
-};
+}
