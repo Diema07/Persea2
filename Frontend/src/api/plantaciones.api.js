@@ -67,3 +67,4 @@ export const getEstadoTareas = async (plantacionId) => {
         throw error;  // Relanza el error para que pueda ser manejado en el componente
     }
 }
+

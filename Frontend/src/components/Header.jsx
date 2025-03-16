@@ -10,7 +10,7 @@ export const Header = () => {
             <li><a href="/informeGeneral">Informe</a></li>
             <li><a href='/inicio-plantacion'>Plantaciones</a></li>
             <li>
-            <a href="http://localhost:3000/Login" >
+            <a href="http://localhost:8000/accounts/logout/">
               <img src={salir} alt="salir" className='atrasLogin'/>
             </a>
           </li>

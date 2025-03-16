@@ -1,10 +1,12 @@
+// MantenimientoMonitoreoPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMantenimientoByPlantacionId } from '../api/mantenimientoMonitoreo.api';
+import { getPlantacionById } from '../api/plantaciones.api';
 import { MantenimientoMonitoreoForm } from '../components/mantenimientoMonitoreoForm';
 import atras from "../img/atras.png";
 import '../styles/historial.css';
-import '../styles/formulario.css'
+import '../styles/formulario.css';
 
 export function MantenimientoMonitoreoPage() {
   const { plantacionId } = useParams();
@@ -12,6 +14,7 @@ export function MantenimientoMonitoreoPage() {
   const [mantenimientos, setMantenimientos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [nombreParcela, setNombreParcela] = useState('');
   const navigate = useNavigate();
 
   // Carga los registros de Mantenimiento/Monitoreo existentes
@@ -23,7 +26,7 @@ export function MantenimientoMonitoreoPage() {
     setLoading(true);
     try {
       const data = await getMantenimientoByPlantacionId(idPlantacion);
-      console.log("Datos recibidos en el frontend:", data); // 🔍 Agregar esta línea
+      console.log("Datos recibidos en el frontend:", data);
       setMantenimientos(data || []);
       setError(null);
     } catch (error) {
@@ -34,10 +37,27 @@ export function MantenimientoMonitoreoPage() {
     }
   };
 
+  // Cargar datos de la plantación (nombreParcela)
+  const loadPlantacion = async () => {
+    try {
+      const response = await getPlantacionById(idPlantacion);
+      // Si la respuesta contiene "data", la usamos; de lo contrario, usamos la respuesta directamente.
+      const plantacion = response && response.data ? response.data : response;
+      if (plantacion && plantacion.nombreParcela) {
+        setNombreParcela(plantacion.nombreParcela);
+      } else {
+        console.warn('La propiedad nombreParcela no se encontró en la respuesta.');
+      }
+    } catch (error) {
+      console.error('Error al obtener datos de la plantación:', error);
+    }
+  };
+
   // Cargar datos al montar la página
   useEffect(() => {
     if (idPlantacion) {
       loadMantenimientos();
+      loadPlantacion();
     }
   }, [idPlantacion]);
 
@@ -48,12 +68,13 @@ export function MantenimientoMonitoreoPage() {
 
   return (
     <div className="riego-fertilizacion-container">
-      
-            <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-                 <img src={atras} alt="Eliminar" />
-            </button>
+      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+        <img src={atras} alt="Eliminar" />
+      </button>
 
-      <h2 className='subtitulo-principal'>Mantenimiento/Monitoreo - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>
+        Mantenimiento/Monitoreo - Plantación {nombreParcela || idPlantacion}
+      </h2>
 
       {error && <p className="error-message">{error}</p>}
 

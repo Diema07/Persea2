@@ -60,17 +60,20 @@ AUTHENTICATION_BACKENDS = (
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['email'],
-        'AUTH_PARAMS': {'access_type': 'online'},
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+            'prompt': 'select_account'
+        },
         'OAUTH_PKCE_ENABLED': True,
     }
 }
-
 # Redirección después del login
 LOGIN_REDIRECT_URL = 'http://localhost:3000/inicio-plantacion'
 LOGOUT_REDIRECT_URL = 'http://localhost:3000/Login'
 
 #Inicio de sesion
 SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_LOGOUT_ON_GET = True
 
 # Configuración de CORS
 CORS_ALLOW_ALL_ORIGINS = True 

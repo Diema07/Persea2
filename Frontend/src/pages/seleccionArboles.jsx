@@ -1,17 +1,17 @@
+// seleccionArboles.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSeleccionByPlantacionId } from '../api/seleccionArboles.api';
+import { getPlantacionById } from '../api/plantaciones.api'; // Importa la función para obtener la plantación
 import { SeleccionArbolesForm } from '../components/seleccionArbolesForm';
 import atras from "../img/atras.png";
-import '../styles/formulario.css'
-
-
+import '../styles/formulario.css';
 
 export function SeleccionArbolesPage() {
   const { plantacionId } = useParams(); // /seleccion-arboles/:plantacionId
   const idPlantacion = Number(plantacionId); // Convierte plantacionId a número
-  // console.log("plantacionId:", idPlantacion); // Verifica que sea un número
   const [selecciones, setSelecciones] = useState([]);
+  const [nombreParcela, setNombreParcela] = useState('');
   const navigate = useNavigate();
 
   // Cargar las selecciones existentes
@@ -28,29 +28,46 @@ export function SeleccionArbolesPage() {
     }
   };
 
+  // Cargar datos de la plantación (nombreParcela)
+  const loadPlantacion = async () => {
+    try {
+      const response = await getPlantacionById(idPlantacion);
+      // Si la respuesta contiene la propiedad "data", la usamos; de lo contrario, usamos la respuesta directamente.
+      const plantacion = response && response.data ? response.data : response;
+      if (plantacion && plantacion.nombreParcela) {
+        setNombreParcela(plantacion.nombreParcela);
+      } else {
+        console.warn('La propiedad nombreParcela no se encontró en la respuesta.');
+      }
+    } catch (error) {
+      console.error('Error al obtener datos de la plantación:', error);
+    }
+  };
+
   useEffect(() => {
     if (idPlantacion) {
       loadSelecciones();
+      loadPlantacion();
     }
   }, [idPlantacion]);
 
   // Obtener el ID de la primera selección (si existe)
   const seleccionId = selecciones.length > 0 ? selecciones[0].id : null;
 
-  // Botón para ir a Preparacion terreno 
+  // Botón para ir a Gestión de Tareas (o Preparación Terreno)
   const handleRedirectToGestionTareas = () => {
     navigate(`/gestionTareas/${idPlantacion}`);
   };
 
   return (
     <div>
-
-      
       <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-                 <img src={atras} alt="Eliminar" />
-            </button>
+        <img src={atras} alt="Eliminar" />
+      </button>
 
-      <h2 className='subtitulo-principal'>Selección de Árboles - Plantación {idPlantacion}</h2>
+      <h2 className='subtitulo-principal'>
+        Selección de Árboles - Plantación {nombreParcela || idPlantacion}
+      </h2>
 
       {/* Formulario con checkboxes y fechas automáticas */}
       <SeleccionArbolesForm
@@ -59,8 +76,7 @@ export function SeleccionArbolesPage() {
         onCreated={loadSelecciones}
       />
 
-
-      {/* Listado de selecciones (historial)
+      {/*
       <h3>Historial de Selecciones:</h3>
       {selecciones.length === 0 ? (
         <p>No hay selecciones registradas.</p>
@@ -77,7 +93,8 @@ export function SeleccionArbolesPage() {
             </li>
           ))}
         </ul>
-      )} */}
+      )}
+      */}
     </div>
   );
 }

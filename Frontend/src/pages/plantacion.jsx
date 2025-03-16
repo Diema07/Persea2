@@ -21,7 +21,7 @@ export function Taskform() {
                 <h2>Nombre de tu parcela</h2>
                 <input
                     type="text"
-                    placeholder="nombre"
+                    placeholder="Nombre"
                     {...register("nombreParcela", { required: true })}
                 />
                 {errors.nombre && <span>Requerido</span>}
