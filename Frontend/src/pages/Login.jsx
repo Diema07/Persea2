@@ -28,7 +28,7 @@ export function Login() {
   }, []);
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8000/accounts/google/login/';
+    window.location.href = 'http://localhost:8000/api/usuarios/login-google/';
   };
 
   return (

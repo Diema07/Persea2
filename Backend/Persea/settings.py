@@ -69,6 +69,9 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = 'http://localhost:3000/inicio-plantacion'
 LOGOUT_REDIRECT_URL = 'http://localhost:3000/Login'
 
+#Inicio de sesion
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
 # Configuración de CORS
 CORS_ALLOW_ALL_ORIGINS = True 
 CORS_ALLOWED_ORIGINS = [
