@@ -257,7 +257,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
                     className="form-input"
                   />
                   {errors.cantidadFertilizante && <span className="form-error">Requerido</span>}
-                </div>
+                
 
                 <div className="form-group">
                   <label className="form-label"></label>
@@ -271,6 +271,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
                     <option value="ml">ml</option>
                   </select>
                   {errors.medidaFertilizante && <span className="form-error">Requerido</span>}
+                </div>
                 </div>
               </div> 
             </>

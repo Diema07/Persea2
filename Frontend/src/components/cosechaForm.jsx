@@ -139,7 +139,7 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {
             <button className="form-button">Guardar</button>
           </form>
 
-          <button onClick={handleModalOpen} className="form-button-terminar" style={{ backgroundColor: '#ff4444' }}>
+          <button onClick={handleModalOpen} className="form-button-terminar" >
             Terminar Cosecha
           </button>
         </div>

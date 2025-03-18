@@ -1,6 +1,7 @@
 // src/components/informeGeneralSelect.jsx
 import React, { useState } from 'react';
-import { Header } from './Header'
+import '../styles/infoGeneral.css'
+
 
 const PlantacionCompletasSelect = ({ plantaciones, onSelect }) => {
   const [selectedPlantacionId, setSelectedPlantacionId] = useState('');
@@ -19,19 +20,19 @@ const PlantacionCompletasSelect = ({ plantaciones, onSelect }) => {
   };
 
   return (
-    <>
-    <Header/>
-    <div>
-      <select onChange={handleChange} value={selectedPlantacionId}>
-        <option value="">Seleccione una plantación</option>
-        {sortedPlantaciones.map((plantacion) => (
-          <option key={plantacion.id} value={plantacion.id}>
-            {plantacion.nombreParcela} - {plantacion.fechaCosecha || 'Sin fecha'}
-          </option>
-        ))}
-      </select>
-    </div>
-    </>
+  
+    <div className="select-container">
+      
+  <select onChange={handleChange} value={selectedPlantacionId} className="custom-select">
+    <option value="" className="informeSelec">Seleccione una plantación</option>
+    {sortedPlantaciones.map((plantacion) => (
+      <option key={plantacion.id} value={plantacion.id}>
+        {plantacion.nombreParcela} - {plantacion.fechaCosecha || 'Sin fecha'}
+      </option>
+    ))}
+  </select>
+</div>
+ 
   );
   
 };

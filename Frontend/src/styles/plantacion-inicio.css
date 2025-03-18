@@ -3,33 +3,30 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    min-height: 100vh;
-    margin-top: 0;
+    height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 20px;
     overflow: hidden; /* Evita el scroll */
 }
 
 .orden {
-    margin-top: 10%;
+    margin-top: 5%;
     margin-bottom: 5%; 
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
-.union img{
+
+.union img {
     width: 50px;
     height: 50px;
-    position:absolute;
+    position: absolute;
     margin-top: 8px;
     margin-left: -40px;
-
 }
 
-.orden h2{
+.orden h2 {
     color: #1e7c2b;
     margin-bottom: 20px; 
     font-size: 60px;
@@ -50,7 +47,6 @@
     transition: background 0.3s;
     border: none; 
 }
-
 
 .button:hover {
     background-color: #196623;
@@ -73,8 +69,6 @@
     transform: translateY(-50%);
 }
 
-
-
 .swiper-pagination-bullet-active {
     background-color: #107a14 !important;
 }
@@ -92,6 +86,10 @@
 
 /* Ajustes para móviles */
 @media (max-width: 768px) {
+    .main {
+        padding-top: 60px; /* Menos espacio para el header en móviles */
+    }
+
     .orden {
         margin: 10px;
     }
@@ -107,4 +105,3 @@
         font-size: 24px;
     }
 }
-

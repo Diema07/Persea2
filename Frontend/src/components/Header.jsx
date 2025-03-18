@@ -1,23 +1,26 @@
-import '../styles/header.css'
-import salir from '../img/img8.png'
+import '../styles/header.css';
+import salir1 from '../img/salir-1.png'; // Importa la imagen
 
 export const Header = () => {
-    return (
-      <header>
-        
-        <nav>
-          <ul>
-            <li><a href="/informeGeneral">Informe</a></li>
+  return (
+    <header className="header">
+      <nav>
+        <ul className="nav-list">
+          <div className="left-group">
             <li><a href='/inicio-plantacion'>Plantaciones</a></li>
-            <li>
+            <li><a href="/informeGeneral">Informe</a></li>
+          </div>
+          <li className="cerrar-sesion"> 
             <a href="http://localhost:8000/accounts/logout/">
-              <img src={salir} alt="salir" className='atrasLogin'/>
+              
+              Cerrar sesión
+              <img src={salir1} alt="Cerrar sesión" className="logout-icon" /> {/* Agrega la imagen */}
             </a>
           </li>
-          </ul>
-        </nav>
-      </header>
-    );
-  };
-  
-  export default Header;
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;

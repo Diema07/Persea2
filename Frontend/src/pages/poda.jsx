@@ -4,7 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPodaByPlantacionId } from '../api/poda.api';
 import { getPlantacionById } from '../api/plantaciones.api';
 import { PodaForm } from '../components/podaForm';
-import atras from "../img/atras.png";
+
+import logo8 from "../img/img8.png";
 import '../styles/historial.css';
 import '../styles/stylee.css';
 
@@ -61,23 +62,27 @@ export function PodaPage() {
   };
 
   return (
-    <div>
+  <div className="page-background">
+    <div className="page-content">
+      {/* Botón de volver */}
       <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-        <img src={atras} alt="Eliminar" />
+        <img src={logo8} alt="Eliminar" />
+        <p className='parrafo-volver'>volver</p>
       </button>
 
+      {/* Título principal */}
       <h2 className='subtitulo-principal'>
         Poda - Plantación {nombreParcela || idPlantacion}
       </h2>
 
-      {/* Formulario */}
+      {/* Componente del formulario de poda */}
       <PodaForm
         plantacionId={idPlantacion}
         podaId={podaId}
         onCreated={loadPodas}
       />
 
-      {/* Historial de Podas */}
+      {/* Historial de podas */}
       <h3 className='sub-titulo-form'>Historial de Podas:</h3>
       {podas.length === 0 ? (
         <p>No hay registros de poda.</p>
@@ -114,5 +119,6 @@ export function PodaPage() {
         </ul>
       )}
     </div>
-  );
+  </div>
+);
 }

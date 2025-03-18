@@ -1,17 +1,23 @@
 body {
     background-size: cover;
     background-position: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 .main1 {
-    margin:  5%; 
+    margin: 5%;
     padding: 20px;
-    box-sizing: border-box; /* Evita desbordamiento */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
 }
 
 .cuadro {
-    margin-top: 0px;
-    margin-bottom: 30px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,10 +25,12 @@ body {
     background: linear-gradient(to right, #17aa40, #1e7c2b);
     color: white;
     border-radius: 10px;
-    padding: 5px 20px 20px 20px;
-    box-sizing: border-box; /* Evita desbordamiento */
+    padding: 20px;
+    box-sizing: border-box;
+    width: 250px;
+    height: 350px;
+    transition: all 0.3s ease;
 }
-
 
 .cuadro:hover {
     border: 1px solid #026021;
@@ -30,30 +38,22 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-
-
-
-
 .icono img {
     width: 60px;
     height: 60px;
     margin: 0;
 }
 
-
-
-
-
 .parrafo {
     font-size: 12px;
     text-align: center;
 }
 
-.tituloParcela{
+.tituloParcela {
     font-size: 24px;
     margin: 0;
 }
- 
+
 .boton-ver-mas {
     text-decoration: none;
     padding: 8px 15px;
@@ -69,16 +69,11 @@ body {
 
 .boton-ver-mas:hover {
     background-color: #f0f0f0;
-    
     transform: scale(1.05);
-    
 }
 
-
-
-
 .boton-eliminar {
-    margin-left: 98%;
+    margin-left: auto;
     background: none;
     border: none;
     cursor: pointer;
@@ -94,7 +89,6 @@ body {
     transform: scale(1.1);
 }
 
-
 .modal-overlay-2 {
     position: fixed;
     top: 0;
@@ -105,21 +99,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: 1001;
 }
-
 
 @keyframes slideDown {
     from {
-      opacity: 0;
-      transform: translateY(-20px);
+        opacity: 0;
+        transform: translateY(-20px);
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
+}
 
 .modal-2 {
     background: white;
@@ -127,7 +119,6 @@ body {
     border-radius: 10px;
     text-align: center;
     animation: slideDown 0.5s ease-in-out;
-    
 }
 
 .modal-2 button {
@@ -142,7 +133,6 @@ body {
     background-color: red;
     color: white;
     border-radius: 5px;
-    
 }
 
 .cancelar {
@@ -158,28 +148,57 @@ body {
 .cancelar:hover {
     background-color: darkgray;
 }
-.parcela-1{
+
+.parcela-1 {
     font-weight: bold;
 }
-@media (max-width: 1920px) {
+
+/* Estilos para escritorio (más de 1920px de ancho) */
+@media (min-width: 1921px) {
     .cuadro {
-        width: 250px; 
-        height: 350px; 
+        width: 300px;
+        height: 400px;
     }
 }
 
-/* Estilos para escritorio (23.8 pulgadas, más de 1920px de ancho) */
-@media (min-width: 1921px) {
+/* Estilos para tablets (entre 769px y 1024px de ancho) */
+@media (min-width: 769px) and (max-width: 1024px) {
     .cuadro {
-        width: 600px; /* Tamaño más grande para escritorio */
-        height: 800px; /* Altura más grande para escritorio */
+        width: 80%;
+        height: auto;
+    }
+    .boton-eliminar {
+        margin-left: auto;
+        background: none;
+        border: none;
+        cursor: pointer;
     }
 }
 
 /* Estilos para móviles (menos de 768px de ancho) */
 @media (max-width: 768px) {
+    .main1 {
+        margin: 2%;
+        padding-top: 60px; /* Menos espacio para el header en móviles */
+    }
+
     .cuadro {
-        width: 90%; /* Ancho relativo para móviles */
-        height: auto; /* Altura dinámica para móviles */
+        width: 50%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .tituloParcela {
+        font-size: 20px;
+    }
+
+    .boton-ver-mas {
+        font-size: 12px;
+    }
+    .boton-eliminar {
+        margin-left: 70%;
+        background: none;
+        border: none;
+        cursor: pointer;
     }
 }

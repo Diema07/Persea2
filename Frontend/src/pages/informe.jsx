@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { descargarInformeCompletoPDF } from '../api/informe.api';
-import atras from "../img/atras.png";
+import logo8 from "../img/img8.png";
 
 
 export function InformeCompletoPage() {
@@ -51,9 +51,10 @@ export function InformeCompletoPage() {
   return (
     <div>
 
-       <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-                 <img src={atras} alt="atras" />
-            </button>
+      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+                    <img src={logo8} alt="Eliminar" />
+                    <p className='parrafo-volver'>volver</p>
+                  </button>
      
       
       {/* Incrustar el HTML del informe dentro de un contenedor */}

@@ -39,14 +39,22 @@
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: margin 1s ease-in-out; /* Transición suave para el margen */
+  flex: 1; /* Ocupa el espacio disponible */
+  max-width: 600px; /* Ancho máximo del formulario */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 }
+
+
 
 
 .preparacion-terreno-container h3 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
+  color: #4caf50;
   text-align: center;
   font-weight: 600;
 }
@@ -66,8 +74,8 @@
   background-color: #f8f9fa;
   padding: 12px;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
-  flex:1;
+  transition: background-color 0.3s ease; 
+   flex:1;
 }
 
 .form-group-inline {
@@ -176,30 +184,42 @@
   font-size: 14px;
   font-weight: 500;
 }
-.boton-volver {
-  align-items: center;
-  margin-top: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
+
+.parrafo-volver{
+  color: #E61610;
+  margin-top: 5px;
+  margin-bottom: 5px;
+ 
+ 
 }
+.boton-volver {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin: 50px 0px 0px 120px; 
+  padding: 10px 20px; 
+  background-color: #f8f9fa; 
+  border: 1px solid transparent; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+ 
+}
+
 
 .boton-volver img {
-  width: 40px;
-  height: 40px;
-  transition: transform 0.2s;
+  width: 30px; 
+  height: 30px; 
+  transition: transform 0.2s ease; 
 }
 
-.boton-volver:hover img {
-  transform: scale(1.1);
+
+.boton-volver:hover {
+  background-color: #e9ecef;
+  
 }
 
-/* Ajustes para el botón en pantallas pequeñas */
-@media (max-width: 768px) {
-  .form-button {
-    width: 100%; /* Ocupa todo el ancho en móviles */
-  }
-}
 
 
 
@@ -222,10 +242,10 @@ margin-top: 20px;
 padding: 15px;
 background-color: #f9f9f9;
 border-radius: 8px;
-border-left: 5px solid #4CAF50; /* Línea vertical verde */
+border-left: 5px solid #4CAF50; 
 outline: 1px solid #e0e0e0; 
-flex: 1; /* Ocupa el espacio disponible */
-max-width: 400px; /* Ancho máximo de las sugerencias */
+flex: 1; 
+max-width: 400px; 
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 animation: slideLeft 0.5s ease-in-out;
 
@@ -251,7 +271,7 @@ color: #34495e;
 color: #16a085;
 }
 
-/* Estilos para los emojis (opcional, si quieres que los emojis tengan un tamaño específico) */
+/* Estilos  emojis */
 .sugerencias h4::before,
 .sugerencias p strong::before {
 font-size: 16px;
@@ -279,31 +299,38 @@ padding: 20px;
 .sugerencias {
   max-width: 100%; /* Ocupa todo el ancho en móviles */
 }
+.boton-volver{
+  width: 10%;
+}
 }
 
 
 
-
-/* Estilos para el contenedor del formulario */
-.preparacion-terreno-container {
-  flex: 1; /* Ocupa el espacio disponible */
-  max-width: 600px; /* Ancho máximo del formulario */
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
 
 
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
+  .form-button {
+    width: 100%; 
+  }
   .contenedor-principal {
     flex-direction: column; /* Cambia a una columna en móviles */
     gap: 20px; /* Reduce el espacio entre elementos en móviles */
   }
 
   .sugerencias {
-    max-width: 100%; /* Ocupa todo el ancho en móviles */
+    max-width: 100%; 
+  }
+  .boton-volver {
+    margin: 20px 0px 0px 20px; /* Reduce el margen izquierdo en móviles */
+    padding: 8px 16px;
+    font-size: 14px; 
+    width: auto; /* Ajusta el ancho automáticamente */
+  }
+
+  .boton-volver img {
+    width: 24px; /* Reduce el tamaño del ícono en móviles */
+    height: 24px; 
   }
 }

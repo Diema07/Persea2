@@ -1,0 +1,114 @@
+
+.select-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px; 
+  margin: 0 auto;
+}
+
+
+.custom-select {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #333333; 
+  background-color: #ffffff; 
+  border: 2px solid #006400; 
+  border-radius: 8px; 
+  appearance: none; 
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+
+.custom-select:hover {
+
+  border-color: #009b00; 
+}
+
+
+
+
+.custom-select option {
+  padding: 10px;
+  background-color: #ffffff; 
+  color: #2c3e50; 
+}
+
+ 
+.custom-select option[value=""] {
+  color: #7f8c8d; 
+}
+
+
+.select-container::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Evita que la flecha interfiera con el clic */
+  color: #27ae60; 
+  font-size: 12px;
+}
+
+
+/* Estilo general contenedor */
+.informe-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+
+.informe-container h1 {
+  font-size: 24px;
+  color: #2c3e50; 
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilo de los mensajes de carga error */
+.informe-container p {
+  font-size: 16px;
+  color: #7f8c8d;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Estilo del botón de descargar PDF */
+.informe-container button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff; 
+  background-color: #0d830d; 
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Cambio de color al pasar el mouse */
+.informe-container button:hover {
+  background-color: #006400; 
+}
+
+/* Estilo del contenedor del informe */
+.informe-container .informe-html {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9; 
+  border: 1px solid #e0e0e0; 
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el contenido HTML del informe */
+.informe-container .informe-html p {
+  color: #2c3e50; 
+  line-height: 1.6;
+}

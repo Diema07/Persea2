@@ -1,3 +1,23 @@
+
+
+/* Fondo de la página */
+.page-background {
+  background-image: url('../img/fondo6.jpg'); 
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; 
+  padding: 20px; 
+}
+
+
+.page-content {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 .riego-list {
     display: flex;
     flex-wrap: wrap;
@@ -48,10 +68,10 @@
 }
 
 
-/* Separadores visuales entre elementos */
+
 .riego-item p:not(:last-child) {
   border-bottom: 1px solid #e0e0e0; /* Línea divisoria */
-  padding-bottom: 10px; /* Espacio debajo de la línea */
+  padding-bottom: 10px; 
 }
 
 
@@ -65,7 +85,7 @@ h3.sub-titulo-form {
   }
 
 
-  /* Estilos responsivos */
+ 
   @media (max-width: 768px) {
     .riego-item {
       flex: 0 0 calc(50% - 16px); /* 2 tarjetas por fila en pantallas pequeñas */

@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { getPlantacionesCosechaReciente } from '../api/informeGeneral.api';
 import { descargarInformeCompletoPDF } from '../api/informe.api';
 import PlantacionCompletasSelect from '../components/informeGeneralSelect';
-
+import { Header } from '../components/Header'
+import '../styles/infoGeneral.css'
 export function InformeGeneralPage() {
   const [plantaciones, setPlantaciones] = useState([]);
   const [selectedPlantacionId, setSelectedPlantacionId] = useState(null);
@@ -72,30 +73,31 @@ export function InformeGeneralPage() {
   
 
   return (
-    <div>
-      <h1>Informe cosechas terminadas</h1>
-      {loadingPlantaciones && <p>Cargando plantaciones...</p>}
-      {error && <p>{error}</p>}
-      {!loadingPlantaciones && (
-        <PlantacionCompletasSelect 
-          plantaciones={plantaciones}
-          onSelect={handleSelect}
-        />
-      )}
-      {selectedPlantacionId && (
-        <>
-          {loadingInforme ? (
-            <p>Cargando informe...</p>
-          ) : htmlInforme ? (
-            <div style={{ marginTop: '20px' }} dangerouslySetInnerHTML={{ __html: htmlInforme }} />
-          ) : (
-            <p>No hay datos de informe.</p>
-          )}
-          <div style={{ marginTop: '20px' }}>
+    <>
+      <Header />
+      <div className="informe-container">
+        <h1>Informe cosechas terminadas</h1>
+        {loadingPlantaciones && <p>Cargando plantaciones...</p>}
+        {error && <p>{error}</p>}
+        {!loadingPlantaciones && (
+          <PlantacionCompletasSelect 
+            plantaciones={plantaciones}
+            onSelect={handleSelect}
+          />
+        )}
+        {selectedPlantacionId && (
+          <>
+            {loadingInforme ? (
+              <p>Cargando informe...</p>
+            ) : htmlInforme ? (
+              <div className="informe-html" dangerouslySetInnerHTML={{ __html: htmlInforme }} />
+            ) : (
+              <p>No hay datos de informe.</p>
+            )}
             <button onClick={handleDescargarPDF}>Descargar PDF</button>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
