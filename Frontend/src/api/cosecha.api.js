@@ -10,6 +10,7 @@ const plantacionAPI = axios.create({
   withCredentials: true,
 });
 
+
 // Obtener CSRF token
 const getCSRFToken = async () => {
   const response = await axios.get('http://localhost:8000/api/csrf/', { withCredentials: true });
@@ -68,3 +69,4 @@ export const completarPlantacion = async (plantacionId) => {
     throw error;
   }
 };
+

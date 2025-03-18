@@ -164,93 +164,98 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
   });
 
     return (
-      <div className="preparacion-terreno-container">
-        <h3>Agregar Selección de Árboles</h3>
-        <form className="preparacion-form" onSubmit={onSubmit}>
-          {/* SELECT: Selección de variedades */}
-          <div className="form-group">
-            <label className="form-label" htmlFor="seleccionVariedades">
-              Seleccione la variedad de aguacate:
-            </label>
-            <select
-              id="seleccionVariedades"
-              className="form-input"
-              {...register('seleccionVariedades')}
-              required
-              disabled={isCheckboxDisabled.seleccion} // Deshabilitar si ya está registrado
+      <div className='contenedor-principal'>
 
-            >
-            <option value=""></option>
-              {variedades.map((variedad) => (
-                <option key={variedad.value} value={variedad.value}>
-                  {variedad.label}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/*fomrulario*/}
+        <div className="preparacion-terreno-container">
+          <h3>Agregar Selección de Árboles</h3>
+          <form className="preparacion-form" onSubmit={onSubmit}>
+            {/* SELECT: Selección de variedades */}
+            <div className="form-group">
+              <label className="form-label" htmlFor="seleccionVariedades">
+                Seleccione la variedad de aguacate:
+              </label>
+              <select
+                id="seleccionVariedades"
+                className="form-input"
+                {...register('seleccionVariedades')}
+                required
+                disabled={isCheckboxDisabled.seleccion} // Deshabilitar si ya está registrado
 
-          {/* CHECKBOX 1: Preparación de colinos */}
-          <div className="form-group">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              {...register('checkColinos')}
-              disabled={isCheckboxDisabled.colinos} // Deshabilitar si ya está registrado
-            />
-            <label className="form-label">Preparación de colinos</label>
-            {watchCheckColinos && (
-              <span className="form-fecha">
-                (Fecha: {watch('preparacionColinos')})
-              </span>
-            )}
-          </div>
+              >
+              <option value=""></option>
+                {variedades.map((variedad) => (
+                  <option key={variedad.value} value={variedad.value}>
+                    {variedad.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* CHECKBOX 2: Excavación de hoyos */}
-          <div className="form-group">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              {...register('checkHoyos')}
-              disabled={isCheckboxDisabled.hoyos} // Deshabilitar si ya está registrado
-            />
-            <label className="form-label">Excavación de hoyos</label>
-            {watchCheckHoyos && (
-              <span className="form-fecha">
-                (Fecha: {watch('excavacionHoyos')})
-              </span>
-            )}
-          </div>
+            {/* CHECKBOX 1: Preparación de colinos */}
+            <div className="form-group">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                {...register('checkColinos')}
+                disabled={isCheckboxDisabled.colinos} // Deshabilitar si ya está registrado
+              />
+              <label className="form-label">Preparación de colinos</label>
+              {watchCheckColinos && (
+                <span className="form-fecha">
+                  (Fecha: {watch('preparacionColinos')})
+                </span>
+              )}
+            </div>
 
-          {/* CHECKBOX 3: Plantación */}
-          <div className="form-group">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              {...register('checkPlantacion')}
-              disabled={isCheckboxDisabled.plantacion} // Deshabilitar si ya está registrado
-            />
-            <label className="form-label">Fecha de plantación</label>
-            {watchCheckPlantacion && (
-              <span className="form-fecha">
-                (Fecha: {watch('plantacion')})
-              </span>
-            )}
+            {/* CHECKBOX 2: Excavación de hoyos */}
+            <div className="form-group">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                {...register('checkHoyos')}
+                disabled={isCheckboxDisabled.hoyos} // Deshabilitar si ya está registrado
+              />
+              <label className="form-label">Excavación de hoyos</label>
+              {watchCheckHoyos && (
+                <span className="form-fecha">
+                  (Fecha: {watch('excavacionHoyos')})
+                </span>
+              )}
+            </div>
 
-          </div>{/* Mostrar sugerencias de producción según la variedad seleccionada */}
+            {/* CHECKBOX 3: Plantación */}
+            <div className="form-group">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                {...register('checkPlantacion')}
+                disabled={isCheckboxDisabled.plantacion} // Deshabilitar si ya está registrado
+              />
+              <label className="form-label">Fecha de plantación</label>
+              {watchCheckPlantacion && (
+                <span className="form-fecha">
+                  (Fecha: {watch('plantacion')})
+                </span>
+              )}
+
+            </div>{/* Mostrar sugerencias de producción según la variedad seleccionada */}
+          
+
+            <button className="form-button">Guardar</button>
+          </form>
+        </div>
           {watchVariedad && datosProduccion[watchVariedad] && (
-          <div className="sugerencias">
-            <p><strong>🌱 Primera cosecha:</strong> {datosProduccion[watchVariedad].primeraCosecha}</p>
-            <p><strong>🔹 Producción estimada:</strong></p>
-            <ul>
-              <li><strong>Joven:</strong> {datosProduccion[watchVariedad].joven}</li>
-              <li><strong>Adulto:</strong> {datosProduccion[watchVariedad].adulto}</li>
-              <li><strong>Viejo:</strong> {datosProduccion[watchVariedad].viejo}</li>
-            </ul>
-          </div>
-        )}
-
-          <button className="form-button">Guardar</button>
-        </form>
-      </div>
+            <div className="sugerencias">
+              <p><strong>🌱 Primera cosecha:</strong> {datosProduccion[watchVariedad].primeraCosecha}</p>
+              <p><strong>🔹 Producción estimada:</strong></p>
+              <ul>
+                <li><strong>Joven:</strong> {datosProduccion[watchVariedad].joven}</li>
+                <li><strong>Adulto:</strong> {datosProduccion[watchVariedad].adulto}</li>
+                <li><strong>Viejo:</strong> {datosProduccion[watchVariedad].viejo}</li>
+              </ul>
+            </div>
+          )}
+       </div>
   );
 }

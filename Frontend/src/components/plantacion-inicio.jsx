@@ -1,12 +1,13 @@
 import '../styles/plantacion-inicio.css';
 import '../styles/modalCrear.css'; 
 import React, { useEffect, useState } from 'react';
-import { getAllTasks, getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
+import { getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
 import { Taskcard } from './plantacion-crear'; 
 import { useForm } from 'react-hook-form';
 import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
 import advertencia from '../img/advertencia.png'
+import iconoPlantacion from '../img/icono-plantacion.png'
 
 
 // Importaciones de Swiper
@@ -47,6 +48,7 @@ export function PlantacionInicio() {
         setPlantacionSeleccionada(plantacion);  // Guardamos la plantación seleccionada
         setIsModalOpenEliminar(true);
     };
+    
     const closeModalEliminar = () => setIsModalOpenEliminar(false);
 
     // Lógica del formulario
@@ -80,9 +82,13 @@ export function PlantacionInicio() {
         
             <div className='main'>
                 <div className='orden'>
-                    <h2>Mis Plantaciones</h2>
                     
-                    <button onClick={openModalCrear} className="button">Crear Plantación</button>
+                    <h2 className='tituloPlantacion'>Mis Plantaciones</h2>
+                    <div className='union'>
+                        <img src={iconoPlantacion} alt="Planta" />
+                        <button onClick={openModalCrear} className="button">Crear Plantación</button>
+                        
+                    </div>
                 </div>
 
                 {/* Swiper envuelve las plantaciones */}
@@ -123,7 +129,7 @@ export function PlantacionInicio() {
                                 <input
                                     type="text"
                                     className='input-1'
-                                    placeholder="nombre"
+                                    placeholder="Nombre"
                                     {...register("nombreParcela", { required: true })}
                                 />
                                 {errors.nombreParcela && <span>Requerido</span>}
@@ -142,7 +148,7 @@ export function PlantacionInicio() {
                         <div className="modal-2">
                             <img src={advertencia} alt="Advertencia" className='img-advertencia' />
                             <h3>¿Estás seguro/a de eliminar esta plantación?</h3>
-                            <p>Tu plantación de "<label className="parcela-1">{plantacionSeleccionada.nombreParcela}</label>" será eliminada. ¿Estás seguro/a?</p>
+                            <p>Tu plantación "<label className="parcela-1">{plantacionSeleccionada.nombreParcela}</label>" será eliminada y se perderán todos los procesos realizados. ¿Estás seguro/a?</p>
                             <button className="confirmar" onClick={() => handleDeactivate(plantacionSeleccionada.id)}>Sí, eliminar</button>
                             <button className="cancelar" onClick={closeModalEliminar}>Cancelar</button>
                         </div>

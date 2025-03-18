@@ -84,4 +84,5 @@ class PlantacionFiltradaView(viewsets.ReadOnlyModelViewSet):
             return Plantacion.objects.filter(idUsuario=self.request.user, estado='ACTIVA').order_by('-id')
         return Plantacion.objects.none()
     
-    
+
+   

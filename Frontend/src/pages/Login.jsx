@@ -1,16 +1,11 @@
 import '../styles/login.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import aguacate from "../img/aguacate.png";
-import persea from "../img/persea1.png";
 import logo from "../img/logo.png";
 import avatar from '../img/avatar.jpg'
 
 export function Login() {
-  const navigate = useNavigate();
 
   const fetchCsrfToken = async () => {
     try {
@@ -28,7 +23,7 @@ export function Login() {
   }, []);
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8000/accounts/google/login/';
+    window.location.href = 'http://localhost:8000/api/usuarios/login-google/';
   };
 
   return (
@@ -37,7 +32,7 @@ export function Login() {
       <div className="glass-box">
         <h2 className='sub'>Bienvenido a  <span className="persea-text">Persea</span>!</h2>
         <p className="glass-text">
-        Optimiza la producción y gestión de tu cultivo de aguacates de manera sencilla y eficiente. Lleva el control de tus cosechas  y análisis en un solo lugar.
+        Optimiza la gestión de tu cultivo de aguacates de manera sencilla y eficiente. Lleva el control de tus cosechas y opten los mejores resultados.
         </p>
         <button onClick={handleGoogleLogin} className="glass-button">
           <img src={logo} alt="Google Logo" className='glass-logo'/>

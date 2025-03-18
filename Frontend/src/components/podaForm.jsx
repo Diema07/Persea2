@@ -66,61 +66,65 @@ export function PodaForm({ plantacionId, onCreated }) {
   });
 
   return (
-    <div className="preparacion-terreno-container">
-      <h3>Agregar Poda</h3>
-      <form className="preparacion-form" onSubmit={onSubmit}>
-        {/* Tipo de Poda */}
-        <div className="form-group">
-          <label className="form-label">Tipo de Poda:</label>
-          <select className="form-input" {...register('tipoPoda', { required: true })}>
-            <option value=""></option>
-            <option value="formacion">Formación</option>
-            <option value="mantenimiento">Mantenimiento</option>
-            <option value="sanitaria">Sanitaria</option>
-            <option value="rejuvenecimiento">Rejuvenecimiento</option>
+    <div className="contenedor-principal">
+        {/* Formulario */}
+      <div className="preparacion-terreno-container">
+        <h3>Agregar Poda</h3>
+        <form className="preparacion-form" onSubmit={onSubmit}>
+          {/* Tipo de Poda */}
+          <div className="form-group">
+            <label className="form-label">Tipo de Poda:</label>
+            <select className="form-input" {...register('tipoPoda', { required: true })}>
+              <option value=""></option>
+              <option value="formacion">Formación</option>
+              <option value="mantenimiento">Mantenimiento</option>
+              <option value="sanitaria">Sanitaria</option>
+              <option value="rejuvenecimiento">Rejuvenecimiento</option>
 
-          </select>
-          {errors.tipoPoda && <span className="form-error">Requerido</span>}
-        </div>
-
-
-        {/* Herramientas Usadas */}
-        <div className="form-group">
-          <label className="form-label">Herramientas Usadas:</label>
-          <select className="form-input" {...register('herramientasUsadas', { required: true })}>
-            <option value=""></option>
-            <option value="tijeras">Tijeras</option>
-            <option value="serrucho">Serrucho</option>
-            <option value="motosierra">Motosierra</option>
-          </select>
-          {errors.herramientasUsadas && <span className="form-error">Requerido</span>}
-        </div>
-
-        {/* Técnicas Usadas */}
-        <div className="form-group">
-          <label className="form-label">Técnicas Usadas:</label>
-          <select className="form-input" {...register('tecnicasUsadas', { required: true })}>
-            <option value=""></option>
-            <option value="ralo">Raleo</option>
-            <option value="deschuponado">Deschuponado</option>
-            <option value="rebaje">Rebaje</option>
-          </select>
-          {errors.tecnicasUsadas && <span className="form-error">Requerido</span>}
-        </div>
-
-         {/* Sugerencias de poda dinámicas */}
-         {watchTipoPoda && sugerenciasPoda[watchTipoPoda] && (
-          <div className="sugerencias">
-            <h4>🌳 {watchTipoPoda === "formacion" ? "Poda de Formación" : watchTipoPoda === "mantenimiento" ? "Poda de Mantenimiento" : watchTipoPoda === "sanitaria" ? "Poda Sanitaria" : "Poda de Rejuvenecimiento"}</h4>
-            <p><strong>🔄 Frecuencia:</strong> {sugerenciasPoda[watchTipoPoda].frecuencia}</p>
-            <p><strong>📅 Época Recomendada:</strong> {sugerenciasPoda[watchTipoPoda].epoca}</p>
-            <p><strong>🛠 Herramientas:</strong> {sugerenciasPoda[watchTipoPoda].herramientas}</p>
-            <p><strong>✂️ Técnicas Principales:</strong> {sugerenciasPoda[watchTipoPoda].tecnicas}</p>
+            </select>
+            {errors.tipoPoda && <span className="form-error">Requerido</span>}
           </div>
-        )}
 
-        <button className="form-button">Guardar</button>
-      </form>
+
+          {/* Herramientas Usadas */}
+          <div className="form-group">
+            <label className="form-label">Herramientas Usadas:</label>
+            <select className="form-input" {...register('herramientasUsadas', { required: true })}>
+              <option value=""></option>
+              <option value="tijeras">Tijeras</option>
+              <option value="serrucho">Serrucho</option>
+              <option value="motosierra">Motosierra</option>
+            </select>
+            {errors.herramientasUsadas && <span className="form-error">Requerido</span>}
+          </div>
+
+          {/* Técnicas Usadas */}
+          <div className="form-group">
+            <label className="form-label">Técnicas Usadas:</label>
+            <select className="form-input" {...register('tecnicasUsadas', { required: true })}>
+              <option value=""></option>
+              <option value="ralo">Raleo</option>
+              <option value="deschuponado">Deschuponado</option>
+              <option value="rebaje">Rebaje</option>
+            </select>
+            {errors.tecnicasUsadas && <span className="form-error">Requerido</span>}
+          </div>
+
+         
+
+          <button className="form-button">Guardar</button>
+        </form>
+      </div>
+       {/* Sugerencias de poda dinámicas */}
+       {watchTipoPoda && sugerenciasPoda[watchTipoPoda] && (
+            <div className="sugerencias">
+              <h4>🌳 {watchTipoPoda === "formacion" ? "Poda de Formación" : watchTipoPoda === "mantenimiento" ? "Poda de Mantenimiento" : watchTipoPoda === "sanitaria" ? "Poda Sanitaria" : "Poda de Rejuvenecimiento"}</h4>
+              <p><strong>🔄 Frecuencia:</strong> {sugerenciasPoda[watchTipoPoda].frecuencia}</p>
+              <p><strong>📅 Época Recomendada:</strong> {sugerenciasPoda[watchTipoPoda].epoca}</p>
+              <p><strong>🛠 Herramientas:</strong> {sugerenciasPoda[watchTipoPoda].herramientas}</p>
+              <p><strong>✂️ Técnicas Principales:</strong> {sugerenciasPoda[watchTipoPoda].tecnicas}</p>
+            </div>
+          )}
     </div>
   );
 }

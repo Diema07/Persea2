@@ -20,6 +20,8 @@ export const getAllTasks = () => taskAPI.get('/');
 export const getFilteredTasks = () =>
     axios.get('http://localhost:8000/plantaciones/api/v1/PlantacionFiltrada/', { withCredentials: true });
 
+
+
 // Crear una nueva plantación
 export const createTask = async (task) => {
     try {
@@ -65,3 +67,4 @@ export const getEstadoTareas = async (plantacionId) => {
         throw error;  // Relanza el error para que pueda ser manejado en el componente
     }
 }
+

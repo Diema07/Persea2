@@ -2,6 +2,7 @@ import pdfcrowd
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -10,6 +11,32 @@ from apps.plantaciones.models import Plantacion
 from apps.preparacion.models import PreparacionTerreno, SeleccionArboles
 from apps.mantenimiento.models import RiegoFertilizacion, MantenimientoMonitoreo, Poda
 from apps.produccion.models import Cosecha
+from apps.plantaciones.serializer import PlantacionSerializer
+from apps.produccion.serializer import CosechaSerializer
+from django.db.models import Max
+
+
+class PlantacionesCompletasCosechaRecienteView(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        # Filtrar las plantaciones con estado "COMPLETA" y que pertenezcan al usuario autenticado
+        plantaciones = Plantacion.objects.filter(estado="COMPLETA", idUsuario=request.user)
+        
+        resultado = []
+        for plantacion in plantaciones:
+            # Se serializa la plantación usando el PlantacionSerializer
+            plantacion_data = PlantacionSerializer(plantacion).data
+            
+            # Se obtiene la fecha de cosecha más reciente para la plantación actual
+            fecha_reciente = Cosecha.objects.filter(idPlantacion=plantacion) \
+                .aggregate(fechaCosecha_max=Max('fechaCosecha'))['fechaCosecha_max']
+            
+            # Se añade el campo de la fecha de cosecha a la serialización de la plantación
+            plantacion_data['fechaCosecha'] = fecha_reciente
+            resultado.append(plantacion_data)
+        
+        return Response(resultado)
 
 class InformeCompletoView(APIView):
     """
@@ -84,11 +111,16 @@ class InformeCompletoView(APIView):
         guadana_group = [m for m in processed_mantenimientos if "guadana" in m]
         mant_group = [m for m in processed_mantenimientos if "metodoAplicacionFumigacion" in m]
 
+        # Calcular la fecha más reciente de cosecha
+        fecha_reciente = Cosecha.objects.filter(idPlantacion=plantacion)\
+            .aggregate(fechaCosecha_max=Max('fechaCosecha'))['fechaCosecha_max'] or ''
+
         formato = request.query_params.get('formato', 'json').lower()
 
         if formato == 'pdf':
             context = {
                 "plantacion": plantacion,
+                "fecha_reciente": fecha_reciente,
                 "preparaciones": preparaciones,
                 "selecciones": selecciones,
                 "riego_group": riego_group,
@@ -111,6 +143,7 @@ class InformeCompletoView(APIView):
         elif formato == 'html':
             context = {
                 "plantacion": plantacion,
+                "fecha_reciente": fecha_reciente,
                 "preparaciones": preparaciones,
                 "selecciones": selecciones,
                 "riego_group": riego_group,

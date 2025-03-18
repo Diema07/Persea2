@@ -1,7 +1,7 @@
 import "../styles/gestionTareas.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { getPlantacionById,getEstadoTareas } from "../api/plantaciones.api"; 
+import { getPlantacionById, getEstadoTareas } from "../api/plantaciones.api"; 
 import logo1 from "../img/img1.png";
 import logo2 from "../img/img2.png";
 import logo3 from "../img/img3.png";
@@ -9,31 +9,43 @@ import logo4 from "../img/img4.png";
 import logo5 from "../img/img5.png";
 import logo6 from "../img/img6.png";
 import logo7 from "../img/img7.png";
-import atras from "../img/atras.png";
+import logo8 from "../img/img8.png";
 import advertencia from "../img/advertencia.png";
-
 
 export function GestionTareasPage() {
   const { plantacionId } = useParams();
   const navigate = useNavigate();
   const [nombreParcela, setNombreParcela] = useState("");
-  const [estado, setEstado] = useState({ preparacion: false, seleccion: false,});
+  const [estado, setEstado] = useState({ preparacion: false, seleccion: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    // Primero obtenemos la información de la plantación
     const fetchPlantacion = async () => {
       try {
         const response = await getPlantacionById(plantacionId);
-        setNombreParcela(response.data.nombreParcela); 
+        console.log("Respuesta de getPlantacionById:", response);
+        const data = response.data;
+        console.log("Datos de la plantación:", data);
+        setNombreParcela(data.nombreParcela);
+        
+        // Si la propiedad 'estado' indica "COMPLETA", redirige al inicio
+        if (data.estado && data.estado.toUpperCase() === "COMPLETA") {
+          console.log("La plantación está COMPLETA. Redirigiendo a /inicio-plantacion");
+          navigate(`/inicio-plantacion`);
+          return; // Evitamos que se ejecute la lógica siguiente en este efecto
+        }
       } catch (error) {
         console.error("Error obteniendo la plantación:", error);
         setNombreParcela("Error");
       }
     };
 
+    // Se mantiene la lógica original para obtener el estado de tareas
     const fetchEstadoTareas = async () => {
       try {
         const data = await getEstadoTareas(plantacionId);
+        console.log("Respuesta de getEstadoTareas:", data);
         setEstado(data);
       } catch (error) {
         console.error("Error obteniendo el estado de tareas:", error);
@@ -42,19 +54,10 @@ export function GestionTareasPage() {
 
     fetchPlantacion();
     fetchEstadoTareas();
-  }, [plantacionId]);
+  }, [plantacionId, navigate]);
 
-  const handleRedirectToInicioPlantacion = () => {
-    navigate(`/inicio-plantacion`);
-  };
-
-  // Solo si preparacion y seleccion están completadas => se desbloquean las demás
+  // Solo se desbloquean las demás tareas si 'preparacion' y 'seleccion' están completadas
   const tareasDesbloqueadas = estado.preparacion && estado.seleccion;
-
-  // const handleBlockedClick = (e) => {
-  //   e.preventDefault();
-  //   alert("Debes completar 'Preparación' y 'Selección' antes de acceder a las demás tareas.");
-  // };
 
   const handleBlockedClick = (e) => {
     e.preventDefault();
@@ -62,15 +65,10 @@ export function GestionTareasPage() {
   };
 
   return (
-    
     <>
       <div className="main-8">
-       <button className="boton-volver" onClick={handleRedirectToInicioPlantacion}>
-                  <img src={atras} alt="Eliminar" />
-             </button>
-
         <div className="contenedor3">
-          <h2 className="titulo">Gestión de Tareas - {nombreParcela}</h2>
+          <h2 className="titulo-gestion">Gestión de Tareas - {nombreParcela}</h2>
           <div className="grid-contenedor">
             <Link to={`/preparacion/${plantacionId}/`} className="grid-cuadro">
               <img src={logo1} alt="Preparación" className="icono" />
@@ -141,6 +139,12 @@ export function GestionTareasPage() {
                 <p>Informe</p>
               </div>
             )}
+
+            {/* Volver al inicio */}
+            <Link to={`/inicio-plantacion`} className="grid-cuadro-volver">
+              <img src={logo8} alt="volver al inicio" className="icono" />
+              <p>Volver al inicio</p>
+            </Link>
           </div>
         </div>
       </div>
@@ -163,7 +167,6 @@ export function GestionTareasPage() {
       )}
     </>
   );
-
 }
 
 export default GestionTareasPage;

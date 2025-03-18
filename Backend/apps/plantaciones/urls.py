@@ -7,6 +7,7 @@ router.register(r'Plantacion', views.PlantacionView, basename='Plantacion')
 router.register(r'PlantacionFiltrada', views.PlantacionFiltradaView, 'PlantacionFiltrada')
 
 
+
 urlpatterns =[
     path("api/v1/", include(router.urls))
 ]

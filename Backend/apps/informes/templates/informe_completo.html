@@ -2,19 +2,19 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Informe Completo</title>
+  <title>Informe</title>
   
   <style>
    
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 60px 100px 60px 60px;
       background-color: #f9f9f9;
       color: #333;
-      display: flex;
-      justify-content: center;
+      
     }
+    
 
     .container {
       max-width: 1000px;
@@ -23,6 +23,7 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      
     }
 
     h1, h2, h3 {
@@ -110,247 +111,242 @@
 
 </head>
 <body>
-  <h1>Informe Completo de la Plantación</h1>
+  <div class="container">
+    <h1>Informe Completo de la Plantación<br>{{ plantacion.nombreParcela }} {{ fecha_reciente }}</h1>
 
-  <!-- Información de la Plantación -->
-  <div class="section">
-    <h2>Información de la Plantación</h2>
-    <p><strong>ID Plantación:</strong> {{ plantacion.id }}</p>
-    <p><strong>Nombre Parcela:</strong> {{ plantacion.nombreParcela }}</p>
-  </div>
-
-  <!-- Preparaciones -->
-  <div class="section">
-    <h2>Preparaciones</h2>
-    {% if preparaciones %}
+    <!-- Preparaciones -->
+    <div class="section">
+      <h2>Preparaciones</h2>
+      {% if preparaciones %}
+        <table>
+          <thead>
+            <tr>
+              <th>Limpieza Terreno</th>
+              <th>Análisis Suelo</th>
+              <th>Corrección Suelo</th>
+              <th>Labranza</th>
+              <th>Delimitación Parcela</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in preparaciones %}
+            <tr>
+              <td>{{ p.limpiezaTerreno }}</td>
+              <td>{{ p.analisisSuelo }}</td>
+              <td>{{ p.correcionSuelo }}</td>
+              <td>{{ p.labranza }}</td>
+              <td>{{ p.delimitacionParcela }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No hay preparaciones registradas.</p>
+      {% endif %}
+    </div>
+  
+    <!-- Selecciones -->
+    <div class="section">
+      <h2>Selección de Árboles</h2>
+      {% if selecciones %}
+        <table>
+          <thead>
+            <tr>
+              <th>Variedades</th>
+              <th>Preparación Colinos</th>
+              <th>Excavación Hoyos</th>
+              <th>Plantación</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in selecciones %}
+            <tr>
+              <td>{{ s.seleccionVariedades }}</td>
+              <td>{{ s.preparacionColinos }}</td>
+              <td>{{ s.excavacionHoyos }}</td>
+              <td>{{ s.plantacion }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No hay selecciones registradas.</p>
+      {% endif %}
+    </div>
+  
+    <!-- Riego y Fertilización agrupados -->
+    <div class="section">
+      
+      <!-- Sección Riego -->
+      <h2>Riego</h2>
       <table>
         <thead>
           <tr>
-            <th>Limpieza Terreno</th>
-            <th>Análisis Suelo</th>
-            <th>Corrección Suelo</th>
-            <th>Labranza</th>
-            <th>Delimitación Parcela</th>
+            <th>Fecha Riego</th>
+            <th>Tipo de Riego</th>
           </tr>
         </thead>
         <tbody>
-          {% for p in preparaciones %}
-          <tr>
-            <td>{{ p.limpiezaTerreno }}</td>
-            <td>{{ p.analisisSuelo }}</td>
-            <td>{{ p.correcionSuelo }}</td>
-            <td>{{ p.labranza }}</td>
-            <td>{{ p.delimitacionParcela }}</td>
-          </tr>
+          {% for r in riego_group %}
+            <tr>
+              <td>{{ r.fechaRiego }}</td>
+              <td>{{ r.tipoRiego }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3">No hay registros de Riego completos.</td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
-    {% else %}
-      <p>No hay preparaciones registradas.</p>
-    {% endif %}
-  </div>
-
-  <!-- Selecciones -->
-  <div class="section">
-    <h2>Selección de Árboles</h2>
-    {% if selecciones %}
+  
+      <!-- Sección Fertilización -->
+      <h2>Fertilización</h2>
       <table>
         <thead>
           <tr>
-            <th>Variedades</th>
-            <th>Preparación Colinos</th>
-            <th>Excavación Hoyos</th>
-            <th>Plantación</th>
+            <th>Fecha Fertilización</th>
+            <th>Método de Aplicación</th>
+            <th>Tipo Fertilizante</th>
+            <th>Nombre Fertilizante</th>
+            <th>Cantidad</th>
+            <th>Medida</th>
           </tr>
         </thead>
         <tbody>
-          {% for s in selecciones %}
-          <tr>
-            <td>{{ s.seleccionVariedades }}</td>
-            <td>{{ s.preparacionColinos }}</td>
-            <td>{{ s.excavacionHoyos }}</td>
-            <td>{{ s.plantacion }}</td>
-          </tr>
+          {% for r in fertilizacion_group %}
+            <tr>
+              <td>{{ r.fechaFertilizante }}</td>
+              <td>{{ r.metodoAplicacionFertilizante }}</td>
+              <td>{{ r.tipoFertilizante }}</td>
+              <td>{{ r.nombreFertilizante }}</td>
+              <td>{{ r.cantidadFertilizante }}</td>
+              <td>{{ r.medidaFertilizante }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="7">No hay registros de Fertilización completos.</td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
-    {% else %}
-      <p>No hay selecciones registradas.</p>
-    {% endif %}
-  </div>
-
-  <!-- Riego y Fertilización agrupados -->
-  <div class="section">
-    <h2>Riego y Fertilización</h2>
-    <!-- Sección Riego -->
-    <h3>Riego</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Fecha Riego</th>
-          <th>Tipo de Riego</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for r in riego_group %}
+    </div>
+  
+    <!-- Mantenimiento y Monitoreo agrupados -->
+    <div class="section">
+      <!-- Sección Guadaña -->
+      <h2>Guadaña</h2>
+      <table>
+        <thead>
           <tr>
-            <td>{{ r.fechaRiego }}</td>
-            <td>{{ r.tipoRiego }}</td>
+            <th>Guadaña</th>
           </tr>
-        {% empty %}
-          <tr>
-            <td colspan="3">No hay registros de Riego completos.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <!-- Sección Fertilización -->
-    <h3>Fertilización</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Fecha Fertilización</th>
-          <th>Método de Aplicación</th>
-          <th>Tipo Fertilizante</th>
-          <th>Nombre Fertilizante</th>
-          <th>Cantidad</th>
-          <th>Medida</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for r in fertilizacion_group %}
-          <tr>
-            <td>{{ r.fechaFertilizante }}</td>
-            <td>{{ r.metodoAplicacionFertilizante }}</td>
-            <td>{{ r.tipoFertilizante }}</td>
-            <td>{{ r.nombreFertilizante }}</td>
-            <td>{{ r.cantidadFertilizante }}</td>
-            <td>{{ r.medidaFertilizante }}</td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="7">No hay registros de Fertilización completos.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Mantenimiento y Monitoreo agrupados -->
-  <div class="section">
-    <h2>Mantenimiento y Monitoreo</h2>
-    <!-- Sección Guadaña -->
-    <h3>Guadaña</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Guadaña</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for m in guadana_group %}
-          <tr>
-            <td>{{ m.guadana }}</td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="2">No hay registros de Guadaña completos.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-     <!-- Sección Mantenimiento y Monitoreo -->
-     <h3>Fumigación</h3>
-     <table>
-       <thead>
-         <tr>
-           <th>Fecha Aplicación</th>
-           <th>Método de Aplicación</th>
-           <th>Tipo Tratamiento</th>
-           <th>Nombre Tratamiento</th>
-           <th>Cantidad Tratamiento</th>
-           <th>Medida Tratamiento</th>
-         </tr>
-       </thead>
-       <tbody>
-         {% for m in mant_group %}
+        </thead>
+        <tbody>
+          {% for m in guadana_group %}
+            <tr>
+              <td>{{ m.guadana }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="2">No hay registros de Guadaña completos.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  
+       <!-- Sección Mantenimiento y Monitoreo -->
+       <h2>Fumigación</h2>
+       <table>
+         <thead>
            <tr>
-             <td>{{ m.fechaAplicacionTratamiento }}</td>
-             <td>{{ m.metodoAplicacionFumigacion }}</td>
-             <td>{{ m.tipoTratamiento }}</td>
-             <td>{{ m.nombreTratamiento }}</td>
-             <td>{{ m.cantidadTratamiento }}</td>
-             <td>{{ m.medidaTratamiento }}</td>
+             <th>Fecha Aplicación</th>
+             <th>Método de Aplicación</th>
+             <th>Tipo Tratamiento</th>
+             <th>Nombre Tratamiento</th>
+             <th>Cantidad Tratamiento</th>
+             <th>Medida Tratamiento</th>
            </tr>
-         {% empty %}
-           <tr>
-             <td colspan="7">No hay registros de Mantenimiento y Monitoreo completos.</td>
-           </tr>
-         {% endfor %}
-       </tbody>
-     </table>
-   </div>
-
-  <!-- Podas -->
-  <div class="section">
-    <h2>Podas</h2>
-    {% if podas %}
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha Poda</th>
-            <th>Tipo Poda</th>
-            <th>Herramientas Usadas</th>
-            <th>Técnicas Usadas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for pd in podas %}
-          <tr>
-            <td>{{ pd.fechaPoda }}</td>
-            <td>{{ pd.tipoPoda }}</td>
-            <td>{{ pd.herramientasUsadas }}</td>
-            <td>{{ pd.tecnicasUsadas }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No hay podas registradas.</p>
-    {% endif %}
+         </thead>
+         <tbody>
+           {% for m in mant_group %}
+             <tr>
+               <td>{{ m.fechaAplicacionTratamiento }}</td>
+               <td>{{ m.metodoAplicacionFumigacion }}</td>
+               <td>{{ m.tipoTratamiento }}</td>
+               <td>{{ m.nombreTratamiento }}</td>
+               <td>{{ m.cantidadTratamiento }}</td>
+               <td>{{ m.medidaTratamiento }}</td>
+             </tr>
+           {% empty %}
+             <tr>
+               <td colspan="7">No hay registros de Mantenimiento y Monitoreo completos.</td>
+             </tr>
+           {% endfor %}
+         </tbody>
+       </table>
+     </div>
+  
+    <!-- Podas -->
+    <div class="section">
+      <h2>Podas</h2>
+      {% if podas %}
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha Poda</th>
+              <th>Tipo Poda</th>
+              <th>Herramientas Usadas</th>
+              <th>Técnicas Usadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pd in podas %}
+            <tr>
+              <td>{{ pd.fechaPoda }}</td>
+              <td>{{ pd.tipoPoda }}</td>
+              <td>{{ pd.herramientasUsadas }}</td>
+              <td>{{ pd.tecnicasUsadas }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No hay podas registradas.</p>
+      {% endif %}
+    </div>
+  
+    <!-- Cosechas -->
+    <div class="section">
+      <h2>Cosechas</h2>
+      {% if cosechas %}
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha Cosecha</th>
+              <th>Calidad Alta </th>
+              <th>Calidad Media </th>
+              <th>Calidad Baja </th>
+              <th>Total Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in cosechas %}
+            <tr>
+              <td>{{ c.fechaCosecha }}</td>
+              <td>{{ c.cantidadAltaCalidad }}</td>
+              <td>{{ c.cantidadMedianaCalidad }}</td>
+              <td>{{ c.cantidadBajaCalidad }}</td>
+              <td>{{ c.cantidadTotal }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No hay cosechas registradas.</p>
+      {% endif %}
+    </div>
   </div>
-
-  <!-- Cosechas -->
-  <div class="section">
-    <h2>Cosechas</h2>
-    {% if cosechas %}
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha Cosecha</th>
-            <th>Calidad Alta </th>
-            <th>Calidad Media </th>
-            <th>Calidad Baja </th>
-            <th>Total Cantidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for c in cosechas %}
-          <tr>
-            <td>{{ c.fechaCosecha }}</td>
-            <td>{{ c.cantidadAltaCalidad }}</td>
-            <td>{{ c.cantidadMedianaCalidad }}</td>
-            <td>{{ c.cantidadBajaCalidad }}</td>
-            <td>{{ c.cantidadTotal }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No hay cosechas registradas.</p>
-    {% endif %}
-  </div>
+  
 </body>
 </html>

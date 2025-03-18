@@ -24,8 +24,16 @@ h2 .titulo{
     align-items: center;
     
 }
+.union img{
+    width: 50px;
+    height: 50px;
+    position:absolute;
+    margin-top: 8px;
+    margin-left: -40px;
 
-.orden h2 {
+}
+
+.orden h2{
     color: #1e7c2b;
     margin-bottom: 20px; 
     font-size: 60px;
@@ -37,13 +45,14 @@ h2 .titulo{
     margin-top: 15px;
     text-decoration: none;
     padding: 8px 15px;
-    background-color: #1e7c2b;
+    background-color: #259304;
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
+    border: none; 
 }
 
 
