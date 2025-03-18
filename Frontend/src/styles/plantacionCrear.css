@@ -8,6 +8,10 @@ body {
     padding: 20px;
     box-sizing: border-box; /* Evita desbordamiento */
 }
+.titulo{
+    color:#ffffff !important;
+    
+}
 
 .cuadro {
     margin-top: 0px;
@@ -17,7 +21,7 @@ body {
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(to right, #17aa40, #1e7c2b);
-    color: white;
+    color: white !important;
     border-radius: 10px;
     padding: 5px 20px 20px 20px;
     box-sizing: border-box; /* Evita desbordamiento */
@@ -157,8 +161,8 @@ body {
 /* Estilos para escritorio (23.8 pulgadas, más de 1920px de ancho) */
 @media (min-width: 1921px) {
     .cuadro {
-        width: 600px; /* Tamaño más grande para escritorio */
-        height: 800px; /* Altura más grande para escritorio */
+        width: 300px; /* Tamaño más grande para escritorio */
+        height: 500px; /* Altura más grande para escritorio */
     }
 }
 

@@ -35,7 +35,6 @@ export const getPodaByPlantacionId = async (plantacionId) => {
 
 // 3) Crear un nuevo registro de Poda (POST)
 export const postPoda = async (data) => {
-  console.log("Datos a enviar:", data);
   try {
     const csrfToken = await getCSRFToken();
     const response = await podaAPI.post(`/`, data, {

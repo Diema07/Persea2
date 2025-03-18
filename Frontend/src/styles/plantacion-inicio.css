@@ -12,6 +12,10 @@
     overflow: hidden; /* Evita el scroll */
 }
 
+h2 .titulo{
+    color:#ffffff;
+}
+
 .orden {
     margin-top: 10%;
     margin-bottom: 5%; 
