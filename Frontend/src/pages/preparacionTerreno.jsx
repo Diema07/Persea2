@@ -6,6 +6,7 @@ import { getPlantacionById } from '../api/plantaciones.api';
 import { PreparacionTerrenoForm } from '../components/preparacionTerrenoForm';
 import atras from "../img/atras.png";
 import '../styles/historial.css';
+import logo8 from "../img/img8.png";
 
 export function PreparacionTerrenoPage() {
   const { plantacionId } = useParams();
@@ -32,7 +33,6 @@ export function PreparacionTerrenoPage() {
   const loadPlantacion = async () => {
     try {
       const response = await getPlantacionById(idPlantacion);
-      console.log('Respuesta de getPlantacionById:', response);
       // Si la respuesta contiene la propiedad "data", la usamos; si no, usamos la respuesta directamente.
       const plantacion = response && response.data ? response.data : response;
       if (plantacion && plantacion.nombreParcela) {
@@ -59,20 +59,26 @@ export function PreparacionTerrenoPage() {
   };
 
   return (
-    <div>
-      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-        <img src={atras} alt="Volver" />
-      </button>
-
-      <h2 className='subtitulo-principal'>
-        Preparación de Terreno - {nombreParcela}
-      </h2>
-
-      <PreparacionTerrenoForm
-        plantacionId={idPlantacion}
-        preparacionId={preparacionId}
-        onCreated={loadPreparaciones}
-      />
+    <div className="page-background">
+      <div className="page-content">
+        {/* Botón de volver */}
+        <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+          <img src={logo8} alt="Eliminar" />
+          <p className='parrafo-volver'>volver</p>
+        </button>
+  
+        {/* Título principal */}
+        <h2 className='subtitulo-principal'>
+          Preparación de Terreno - {nombreParcela}
+        </h2>
+  
+        {/* Componente del formulario de preparación de terreno */}
+        <PreparacionTerrenoForm
+          plantacionId={idPlantacion}
+          preparacionId={preparacionId}
+          onCreated={loadPreparaciones}
+        />
+      </div>
     </div>
   );
 }

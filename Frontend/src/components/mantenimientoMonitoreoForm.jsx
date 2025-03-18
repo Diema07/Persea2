@@ -247,10 +247,10 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
       {/* Sugerencias para Fumigación */}
       {watchCheckAplicacion && (
         <div className="sugerencias">
-          <h4>🦠 Programa de Fumigación Sugerido</h4>
+          <h4><strong>🦠 Programa de Fumigación Sugerido</strong></h4>
           <h5>Preventivo:</h5>
           <ul>
-            <li><strong>Inicio de primavera:</strong> Cada 2-3 meses (Fungicida preventivo).</li>
+            <li><strong>Inicio de Invierno:</strong> Cada 2-3 meses (Fungicida preventivo).</li>
             <li><strong>Inicio de verano:</strong> Cada 2-3 meses (Insecticida preventivo).</li>
           </ul>
           <h5>Correctivo:</h5>
@@ -263,16 +263,16 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
     </div>
 
      {IsModalOpenAdvertencia &&  (
-                            <div className="modal-overlay-2">
-                                <div className="modal-2">
-                                    <img src={advertencia} alt="Advertencia" className='img-advertencia' />
-                                    <p>Debe seleccionar una opción: <strong> Guadaña o Fumigación.</strong></p>
-        
-                                    <button className="confirmar" onClick={() => setIsModalOpenAdvertencia(false)}>Entiendo</button>
-                                    
-                                </div>
-                            </div>
-                        )}
-        </>
+      <div className="modal-overlay-2">
+          <div className="modal-2">
+              <img src={advertencia} alt="Advertencia" className='img-advertencia' />
+              <p>Debe seleccionar una opción: <strong> Guadaña o Fumigación.</strong></p>
+
+              <button className="confirmar" onClick={() => setIsModalOpenAdvertencia(false)}>Entiendo</button>
+              
+          </div>
+      </div>
+      )}
+    </>
   );
 }

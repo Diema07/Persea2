@@ -1,14 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate, } from 'react-router-dom';
 import { Login } from './pages/Login';
 import { PlantacionInicio } from './components/plantacion-inicio';
-import { Taskform } from './pages/plantacion';
 import { InicioPlantacion } from "./pages/inicio-plantacion";
 import { PreparacionTerrenoPage } from './pages/preparacionTerreno';
 import { SeleccionArbolesPage } from './pages/seleccionArboles';
 import { RiegoFertilizacionPage} from './pages/riegoFertilizacion';
-import { MantenimientoMonitoreoPage } from '../src/pages/mantenimientoMonitoreo';
-import { PodaPage } from '../src/pages/poda';
-import { GestionTareasPage } from '../src/pages/gestionTareas'
+import { MantenimientoMonitoreoPage } from './pages/mantenimientoMonitoreo';
+import { PodaPage } from './pages/poda';
+import { GestionTareasPage } from './pages/gestionTareas'
 import { CosechaPage } from './pages/cosecha';
 import { InformeCompletoPage } from './pages/informe';
 import { InformeGeneralPage } from './pages/informeGeneral';
@@ -22,7 +21,6 @@ function App() {
         <Route path='/' element={<Navigate to="/Login" />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/inicio-plantacion' element={<PlantacionInicio />} />
-        <Route path="/plantacion" element={<Taskform />} />
         <Route path="/plantacion/inicio" element={<InicioPlantacion />} />
         <Route path="/gestionTareas/:plantacionId" element={<GestionTareasPage />} />
         <Route path="/preparacion/:plantacionId" element={<PreparacionTerrenoPage />} />

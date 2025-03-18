@@ -24,9 +24,7 @@ export function GestionTareasPage() {
     const fetchPlantacion = async () => {
       try {
         const response = await getPlantacionById(plantacionId);
-        console.log("Respuesta de getPlantacionById:", response);
         const data = response.data;
-        console.log("Datos de la plantación:", data);
         setNombreParcela(data.nombreParcela);
         
         // Si la propiedad 'estado' indica "COMPLETA", redirige al inicio
@@ -45,7 +43,6 @@ export function GestionTareasPage() {
     const fetchEstadoTareas = async () => {
       try {
         const data = await getEstadoTareas(plantacionId);
-        console.log("Respuesta de getEstadoTareas:", data);
         setEstado(data);
       } catch (error) {
         console.error("Error obteniendo el estado de tareas:", error);

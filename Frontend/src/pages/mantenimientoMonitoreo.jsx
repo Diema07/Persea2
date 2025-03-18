@@ -7,6 +7,7 @@ import { MantenimientoMonitoreoForm } from '../components/mantenimientoMonitoreo
 import atras from "../img/atras.png";
 import '../styles/historial.css';
 import '../styles/formulario.css';
+import logo8 from "../img/img8.png";
 
 export function MantenimientoMonitoreoPage() {
   const { plantacionId } = useParams();
@@ -26,7 +27,6 @@ export function MantenimientoMonitoreoPage() {
     setLoading(true);
     try {
       const data = await getMantenimientoByPlantacionId(idPlantacion);
-      console.log("Datos recibidos en el frontend:", data);
       setMantenimientos(data || []);
       setError(null);
     } catch (error) {
@@ -67,15 +67,20 @@ export function MantenimientoMonitoreoPage() {
   };
 
   return (
-    <div className="riego-fertilizacion-container">
+  <div className="page-background">
+    <div className="page-content">
+      {/* Botón de volver */}
       <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-        <img src={atras} alt="Eliminar" />
+        <img src={logo8} alt="Eliminar" />
+        <p className='parrafo-volver'>volver</p>
       </button>
 
+      {/* Título principal */}
       <h2 className='subtitulo-principal'>
         Mantenimiento/Monitoreo - Plantación {nombreParcela || idPlantacion}
       </h2>
 
+      {/* Mensaje de error */}
       {error && <p className="error-message">{error}</p>}
 
       {/* Formulario para crear o editar mantenimientos */}
@@ -84,7 +89,7 @@ export function MantenimientoMonitoreoPage() {
         onCreated={loadMantenimientos}
       />
 
-      {/* Historial de Mantenimientos */}
+      {/* Historial de Mantenimientos/Monitoreos */}
       <h3 className='sub-titulo-form'>Historial de Mantenimiento/Monitoreo:</h3>
       {loading ? (
         <p>Cargando...</p>
@@ -114,5 +119,6 @@ export function MantenimientoMonitoreoPage() {
         </ul>
       )}
     </div>
-  );
+  </div>
+);
 }

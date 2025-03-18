@@ -5,6 +5,9 @@ import { useEffect } from 'react';
 import logo from "../img/logo.png";
 import avatar from '../img/avatar.jpg'
 
+
+
+
 export function Login() {
 
   const fetchCsrfToken = async () => {
@@ -12,7 +15,6 @@ export function Login() {
       const response = await axios.get('http://localhost:8000/api/usuarios/get-csrf-token/', {
         withCredentials: true,
       });
-      console.log('Token CSRF obtenido:', response.data.csrfToken);
     } catch (error) {
       console.error('Error al obtener el token CSRF:', error);
     }

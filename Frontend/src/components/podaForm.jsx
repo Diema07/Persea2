@@ -17,7 +17,7 @@ export function PodaForm({ plantacionId, onCreated }) {
     formacion: {
       frecuencia: "1-2 veces/año",
       epoca: "Primavera y Otoño",
-      herramientas: "Tijeras, serrucho, escalera",
+      herramientas: "Tijeras, serrucho",
       tecnicas: "Deschuponado, raleo, despunte"
     },
     mantenimiento: {
@@ -29,19 +29,17 @@ export function PodaForm({ plantacionId, onCreated }) {
     sanitaria: {
       frecuencia: "Segun necesidad",
       epoca: "Cualquier época",
-      herramientas: "Serrucho, tijeras, sellador",
+      herramientas: "Serrucho, tijeras",
       tecnicas: "Rebaje, raleo"
     
     },
     rejuvenecimiento: {
       frecuencia: "Cada 5-10 años",
       epoca: "Después de la cosecha",
-      herramientas: "Serrucho, motosierra, sellador",
+      herramientas: "Serrucho, motosierra",
       tecnicas: "Rebaje, raleo, deschuponado"
     }
   };
-
-  console.log("Tipo de poda seleccionada:", watchTipoPoda);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -51,8 +49,6 @@ export function PodaForm({ plantacionId, onCreated }) {
         herramientasUsadas: data.herramientasUsadas,
         tecnicasUsadas: data.tecnicasUsadas
       };
-
-      console.log("Datos a enviar:", datosParaEnviar);
 
       await postPoda(datosParaEnviar);
       if (onCreated) {
@@ -67,7 +63,7 @@ export function PodaForm({ plantacionId, onCreated }) {
 
   return (
     <div className="contenedor-principal">
-        {/* Formulario */}
+      {/* Formulario */}
       <div className="preparacion-terreno-container">
         <h3>Agregar Poda</h3>
         <form className="preparacion-form" onSubmit={onSubmit}>
@@ -80,12 +76,10 @@ export function PodaForm({ plantacionId, onCreated }) {
               <option value="mantenimiento">Mantenimiento</option>
               <option value="sanitaria">Sanitaria</option>
               <option value="rejuvenecimiento">Rejuvenecimiento</option>
-
             </select>
             {errors.tipoPoda && <span className="form-error">Requerido</span>}
           </div>
-
-
+  
           {/* Herramientas Usadas */}
           <div className="form-group">
             <label className="form-label">Herramientas Usadas:</label>
@@ -97,7 +91,7 @@ export function PodaForm({ plantacionId, onCreated }) {
             </select>
             {errors.herramientasUsadas && <span className="form-error">Requerido</span>}
           </div>
-
+  
           {/* Técnicas Usadas */}
           <div className="form-group">
             <label className="form-label">Técnicas Usadas:</label>
@@ -109,22 +103,22 @@ export function PodaForm({ plantacionId, onCreated }) {
             </select>
             {errors.tecnicasUsadas && <span className="form-error">Requerido</span>}
           </div>
-
-         
-
+  
+          {/* Botón de guardar */}
           <button className="form-button">Guardar</button>
         </form>
       </div>
-       {/* Sugerencias de poda dinámicas */}
-       {watchTipoPoda && sugerenciasPoda[watchTipoPoda] && (
-            <div className="sugerencias">
-              <h4>🌳 {watchTipoPoda === "formacion" ? "Poda de Formación" : watchTipoPoda === "mantenimiento" ? "Poda de Mantenimiento" : watchTipoPoda === "sanitaria" ? "Poda Sanitaria" : "Poda de Rejuvenecimiento"}</h4>
-              <p><strong>🔄 Frecuencia:</strong> {sugerenciasPoda[watchTipoPoda].frecuencia}</p>
-              <p><strong>📅 Época Recomendada:</strong> {sugerenciasPoda[watchTipoPoda].epoca}</p>
-              <p><strong>🛠 Herramientas:</strong> {sugerenciasPoda[watchTipoPoda].herramientas}</p>
-              <p><strong>✂️ Técnicas Principales:</strong> {sugerenciasPoda[watchTipoPoda].tecnicas}</p>
-            </div>
-          )}
+  
+      {/* Sugerencias de poda dinámicas */}
+      {watchTipoPoda && sugerenciasPoda[watchTipoPoda] && (
+        <div className="sugerencias">
+          <h4>🌳 {watchTipoPoda === "formacion" ? "Poda de Formación" : watchTipoPoda === "mantenimiento" ? "Poda de Mantenimiento" : watchTipoPoda === "sanitaria" ? "Poda Sanitaria" : "Poda de Rejuvenecimiento"}</h4>
+          <p><strong>🔄 Frecuencia:</strong> {sugerenciasPoda[watchTipoPoda].frecuencia}</p>
+          <p><strong>📅 Época Recomendada:</strong> {sugerenciasPoda[watchTipoPoda].epoca}</p>
+          <p><strong>🛠 Herramientas:</strong> {sugerenciasPoda[watchTipoPoda].herramientas}</p>
+          <p><strong>✂️ Técnicas Principales:</strong> {sugerenciasPoda[watchTipoPoda].tecnicas}</p>
+        </div>
+      )}
     </div>
   );
 }

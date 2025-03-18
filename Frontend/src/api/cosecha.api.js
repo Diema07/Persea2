@@ -36,7 +36,6 @@ export const getCosechaByPlantacionId = async (plantacionId) => {
 };
 
 export const postCosecha = async (data) => {
-  console.log("Datos a enviar:", data);
   try {
     const csrfToken = await getCSRFToken();
     const response = await cosechaAPI.post(`/`, data, {

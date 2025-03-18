@@ -20,7 +20,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 export function PlantacionInicio() {
     const [plantaciones, setPlantaciones] = useState([]);
     
-    // Estados para los dos modales
+    // Estados para los modales
     const [isModalOpenCrear, setIsModalOpenCrear] = useState(false); 
     const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false); 
     const [plantacionSeleccionada, setPlantacionSeleccionada] = useState(null);
@@ -105,7 +105,7 @@ export function PlantacionInicio() {
                         320: { slidesPerView: 1 }, 
                         480: { slidesPerView: 1 },  
                         768: { slidesPerView: 2 },  
-                        1024: { slidesPerView: 2 },  
+                        1024: { slidesPerView: 3 },  
                         1280: { slidesPerView: 3 }  
                     }}
                 >
@@ -124,7 +124,7 @@ export function PlantacionInicio() {
                 {isModalOpenCrear && (
                     <div className="modal-1">
                         <div className="modal-content">
-                            <h2>Nombre de tu parcela</h2>
+                            <h2 className='titulo-modal'>Nombre de tu parcela</h2>
                             <form onSubmit={onSubmit}>
                                 <input
                                     type="text"

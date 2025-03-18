@@ -1,65 +1,42 @@
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000; 
-    background-color: #1e7c2b; 
-    padding: 1rem 2rem; 
-  }
-  
- 
-
-
-
-.atrasLogin{
-  width: 40px;
-  height: 40px;
-  background-color: #ecf0f1;
-  border-radius: 100%;
+.header {
+  background-color: green; 
+  padding: 10px 20px; 
 }
 
-nav ul {
+.nav-list {
   list-style: none; 
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content:flex-start; 
-  gap: 3rem; 
+  display: flex; 
+  align-items: center; 
 }
 
-nav ul li {
-  position: relative;
+.nav-list li {
+  margin: 0 10px; 
 }
 
-/* Estilos de los enlaces */
-nav ul li a {
-  text-decoration: none;
-  color: #ecf0f1; 
-  font-size: 1.1rem;
-  font-weight: 500; 
-  transition: color 0.3s ease; 
-}
-
-¿
-nav ul li a:hover {
-  color: #114718;
+.nav-list li a {
+  color: white; 
+  text-decoration: none; 
+  font-weight: bold; 
+  display: flex; 
+  align-items: center;
 }
 
 
-nav ul li a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #114718; 
-  transition: width 0.3s ease; 
+.nav-list .left-group {
+  display: flex; 
+  margin-right: auto; /* Empuja izquierda */
 }
 
-nav ul li a:hover::after {
-  width: 100%; 
+
+.logout-icon {
+  width: 20px; 
+  height: 20px;
+  margin-left: 8px; 
+}
+
+
+.cerrar-sesion {
+  margin-right: auto; /* Empuja  derecha */
 }

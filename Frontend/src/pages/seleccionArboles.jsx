@@ -4,8 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getSeleccionByPlantacionId } from '../api/seleccionArboles.api';
 import { getPlantacionById } from '../api/plantaciones.api'; // Importa la función para obtener la plantación
 import { SeleccionArbolesForm } from '../components/seleccionArbolesForm';
-import atras from "../img/atras.png";
+
 import '../styles/formulario.css';
+import logo8 from "../img/img8.png";
 
 export function SeleccionArbolesPage() {
   const { plantacionId } = useParams(); // /seleccion-arboles/:plantacionId
@@ -60,41 +61,46 @@ export function SeleccionArbolesPage() {
   };
 
   return (
-    <div>
-      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-        <img src={atras} alt="Eliminar" />
-      </button>
-
-      <h2 className='subtitulo-principal'>
-        Selección de Árboles - Plantación {nombreParcela || idPlantacion}
-      </h2>
-
-      {/* Formulario con checkboxes y fechas automáticas */}
-      <SeleccionArbolesForm
-        plantacionId={idPlantacion} // Pasar el ID convertido a número
-        seleccionId={seleccionId}
-        onCreated={loadSelecciones}
-      />
-
-      {/*
-      <h3>Historial de Selecciones:</h3>
-      {selecciones.length === 0 ? (
-        <p>No hay selecciones registradas.</p>
-      ) : (
-        <ul>
-          {selecciones.map((sel) => (
-            <li key={sel.id}>
-              <strong>ID:</strong> {sel.id} <br />
-              <strong>Variedad:</strong> {sel.seleccionVariedades || 'No definida'} <br />
-              <strong>Preparación Colinos:</strong> {sel.preparacionColinos || 'No definida'} <br />
-              <strong>Excavación Hoyos:</strong> {sel.excavacionHoyos || 'No definida'} <br />
-              <strong>Plantación:</strong> {sel.plantacion || 'No definida'} <br />
-              <hr />
-            </li>
-          ))}
-        </ul>
-      )}
-      */}
+    <div className="page-background">
+      <div className="page-content">
+        {/* Botón de volver */}
+        <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+          <img src={logo8} alt="Eliminar" />
+          <p className='parrafo-volver'>volver</p>
+        </button>
+  
+        {/* Título principal */}
+        <h2 className='subtitulo-principal'>
+          Selección de Árboles - Plantación {nombreParcela || idPlantacion}
+        </h2>
+  
+        {/* Formulario con checkboxes y fechas automáticas */}
+        <SeleccionArbolesForm
+          plantacionId={idPlantacion} // Pasar el ID convertido a número
+          seleccionId={seleccionId}
+          onCreated={loadSelecciones}
+        />
+  
+        {/*
+        <h3>Historial de Selecciones:</h3>
+        {selecciones.length === 0 ? (
+          <p>No hay selecciones registradas.</p>
+        ) : (
+          <ul>
+            {selecciones.map((sel) => (
+              <li key={sel.id}>
+                <strong>ID:</strong> {sel.id} <br />
+                <strong>Variedad:</strong> {sel.seleccionVariedades || 'No definida'} <br />
+                <strong>Preparación Colinos:</strong> {sel.preparacionColinos || 'No definida'} <br />
+                <strong>Excavación Hoyos:</strong> {sel.excavacionHoyos || 'No definida'} <br />
+                <strong>Plantación:</strong> {sel.plantacion || 'No definida'} <br />
+                <hr />
+              </li>
+            ))}
+          </ul>
+        )}
+        */}
+      </div>
     </div>
   );
 }

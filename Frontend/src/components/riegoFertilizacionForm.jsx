@@ -34,42 +34,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
     }
   }, [watchCheckRiego, watchCheckFertilizante]);
 
-  // Cargar datos existentes al montar el componente
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const plantacionIdNumber = Number(plantacionId);
-  //       if (isNaN(plantacionIdNumber)) {
-  //         throw new Error("plantacionId debe ser un número");
-  //       }
-
-  //       const data = await getRiegoByPlantacionId(plantacionIdNumber);
-
-  //       if (data && data.length > 0) {
-  //         const riegoFertilizacion = data[0];
-
-  //         setValue('checkRiego', !!riegoFertilizacion.fechaRiego);
-  //         setValue('checkFertilizante', !!riegoFertilizacion.fechaFertilizante);
-
-  //         setIsCheckboxDisabled({
-  //           riego: !!riegoFertilizacion.fechaRiego,
-  //           fertilizante: !!riegoFertilizacion.fechaFertilizante,
-  //         });
-
-  //         setValue('tipoRiego', riegoFertilizacion.tipoRiego || '');
-  //         setValue('metodoAplicacionFertilizante', riegoFertilizacion.metodoAplicacionFertilizante || '');
-  //         setValue('tipoFertilizante', riegoFertilizacion.tipoFertilizante || '');
-  //         setValue('nombreFertilizante', riegoFertilizacion.nombreFertilizante || '');
-  //         setValue('cantidadFertilizante', riegoFertilizacion.cantidadFertilizante || '');
-  //         setValue('medidaFertilizante', riegoFertilizacion.medidaFertilizante || '');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error al cargar el riego/fertilización:', error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [plantacionId, setValue]);
-
+  
   // Asignar fecha de hoy si el checkbox está marcado
   useEffect(() => {
     if (watchCheckRiego) {
@@ -81,7 +46,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
 
   useEffect(() => {
     if (watchCheckFertilizante) {
-      setValue('fechaFertilizante', new Date().toISOString().split('T')[0]);
+      setValue('fechaFertilizante', new Date().toISOString().split('T')[0])
     } else {
       setValue('fechaFertilizante', null);
     }
@@ -257,7 +222,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
                     className="form-input"
                   />
                   {errors.cantidadFertilizante && <span className="form-error">Requerido</span>}
-                </div>
+                
 
                 <div className="form-group">
                   <label className="form-label"></label>
@@ -266,11 +231,12 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
                     className="form-input"
                   >
                     <option value="kg">kg</option>
-                    <option value="g">g</option>
-                    <option value="l">l</option>
+                    <option value="gr">gr</option>
+                    <option value="litros">litros</option>
                     <option value="ml">ml</option>
                   </select>
                   {errors.medidaFertilizante && <span className="form-error">Requerido</span>}
+                </div>
                 </div>
               </div> 
             </>
@@ -281,11 +247,11 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
             {/* Sugerencias para Riego */}
             {watchCheckRiego && (
             <div className="sugerencias">
-              <h4>🌊 Programa de Riego Sugerido</h4>
+              <h4><strong>🌊 Programa de Riego Sugerido</strong></h4>
               <p><strong>Árboles jóvenes (1-3 años):</strong></p>
               <ul>
-                <li><strong>Primavera-Verano:</strong> Cada 7-10 días (Aumenta en climas cálidos).</li>
-                <li><strong>Otoño-Invierno:</strong> Cada 10-15 días (Reduce en climas fríos o lluviosos).</li>
+                <li><strong>Verano:</strong> Cada 7-10 días (Aumenta en climas cálidos).</li>
+                <li><strong>Invierno:</strong> Cada 10-15 días (Reduce en climas fríos o lluviosos).</li>
               </ul>
               <p><strong>Árboles en producción (4+ años):</strong></p>
               <ul>
@@ -300,7 +266,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
           {/* Sugerencias para Fertilización */}
           {watchCheckFertilizante && (
             <div className="sugerencias">
-              <h4>🌿 Recomendaciones de Fertilización</h4>
+              <h4><strong>🌿 Recomendaciones de Fertilización</strong></h4>
               <p><strong>Árboles jóvenes (1-3 años):</strong></p>
               <ul>
                 <li><strong>Frecuencia:</strong> Cada 2-3 meses.</li>

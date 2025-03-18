@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getRiegoByPlantacionId } from '../api/riegoFertilizacion.api';
 import { getPlantacionById } from '../api/plantaciones.api';
 import { RiegoFertilizacionForm } from '../components/riegoFertilizacionForm';
-import atras from "../img/atras.png";
 import '../styles/historial.css';
+import logo8 from "../img/img8.png";
 
 export function RiegoFertilizacionPage() {
   const { plantacionId } = useParams();
@@ -72,55 +72,67 @@ export function RiegoFertilizacionPage() {
   };
 
   return (
-    <div className="riego-fertilizacion-container">
-      <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
-        <img src={atras} alt="Volver" />
-      </button>
-      <h2 className='subtitulo-principal'>
-        Riego y Fertilización - Plantación {nombreParcela || idPlantacion}
-      </h2>
-      {error && <p className="error-message">{error}</p>}
-      <RiegoFertilizacionForm
-        plantacionId={idPlantacion}
-        riegoId={idRiegoEdit}
-        onCreated={handleUpdated}
-      />
-      <h3 className='sub-titulo-form'>Historial de Riego/Fertilización:</h3>
-      {loading ? (
-        <p>Cargando...</p>
-      ) : riegoList.length === 0 ? (
-        <p>No hay registros de Riego/Fertilización.</p>
-      ) : (
-        <ul className="riego-list">
-          {riegoList.map((r, index) => (
-            <li key={`${r.id}-${index}`} className="riego-item">
-              {r.fechaRiego && (
-                <p><strong>Fecha Riego:</strong> {r.fechaRiego}</p>
-              )}
-              {r.fechaFertilizante && (
-                <p><strong>Fecha Fertilización:</strong> {r.fechaFertilizante}</p>
-              )}
-              {r.tipoRiego && (
-                <p><strong>Tipo de Riego:</strong> {r.tipoRiego}</p>
-              )}
-              {r.metodoAplicacionFertilizante && (
-                <p><strong>Método de Aplicación:</strong> {r.metodoAplicacionFertilizante}</p>
-              )}
-              {r.tipoFertilizante && (
-                <p><strong>Tipo de Fertilizante:</strong> {r.tipoFertilizante}</p>
-              )}
-              {r.nombreFertilizante && (
-                <p><strong>Nombre del Fertilizante:</strong> {r.nombreFertilizante}</p>
-              )}
-              {(r.cantidadFertilizante || r.medidaFertilizante) && (
-                <p>
-                  <strong>Cantidad de Fertilizante:</strong> {r.cantidadFertilizante} {r.medidaFertilizante}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="page-background">
+      <div className="page-content">
+        {/* Botón de volver */}
+        <button className="boton-volver" onClick={handleRedirectToGestionTareas}>
+          <img src={logo8} alt="Eliminar" />
+          <p className='parrafo-volver'>volver</p>
+        </button>
+  
+        {/* Título principal */}
+        <h2 className='subtitulo-principal'>
+          Riego y Fertilización - Plantación {nombreParcela || idPlantacion}
+        </h2>
+  
+        {/* Mensaje de error */}
+        {error && <p className="error-message">{error}</p>}
+  
+        {/* Formulario para crear o editar riego/fertilización */}
+        <RiegoFertilizacionForm
+          plantacionId={idPlantacion}
+          riegoId={idRiegoEdit}
+          onCreated={handleUpdated}
+        />
+  
+        {/* Historial de Riego/Fertilización */}
+        <h3 className='sub-titulo-form'>Historial de Riego/Fertilización:</h3>
+        {loading ? (
+          <p>Cargando...</p>
+        ) : riegoList.length === 0 ? (
+          <p>No hay registros de Riego/Fertilización.</p>
+        ) : (
+          <ul className="riego-list">
+            {riegoList.map((r, index) => (
+              <li key={`${r.id}-${index}`} className="riego-item">
+                {r.fechaRiego && (
+                  <p><strong>Fecha Riego:</strong> {r.fechaRiego}</p>
+                )}
+                {r.fechaFertilizante && (
+                  <p><strong>Fecha Fertilización:</strong> {r.fechaFertilizante}</p>
+                )}
+                {r.tipoRiego && (
+                  <p><strong>Tipo de Riego:</strong> {r.tipoRiego}</p>
+                )}
+                {r.metodoAplicacionFertilizante && (
+                  <p><strong>Método de Aplicación:</strong> {r.metodoAplicacionFertilizante}</p>
+                )}
+                {r.tipoFertilizante && (
+                  <p><strong>Tipo de Fertilizante:</strong> {r.tipoFertilizante}</p>
+                )}
+                {r.nombreFertilizante && (
+                  <p><strong>Nombre del Fertilizante:</strong> {r.nombreFertilizante}</p>
+                )}
+                {(r.cantidadFertilizante || r.medidaFertilizante) && (
+                  <p>
+                    <strong>Cantidad de Fertilizante:</strong> {r.cantidadFertilizante} {r.medidaFertilizante}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
