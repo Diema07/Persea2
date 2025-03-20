@@ -6,7 +6,7 @@ const preparacionAPI = axios.create({
     withCredentials: true,  // Permite el uso de cookies
 });
 
-// 2. Función para obtener el CSRF token (igual que en plantaciones.api.js)
+// 2. Función para obtener el CSRF token 
 const getCSRFToken = async () => {
     const response = await axios.get('http://localhost:8000/api/csrf/', { withCredentials: true });
     return response.data.csrfToken;

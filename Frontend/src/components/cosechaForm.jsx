@@ -21,9 +21,6 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {
   const [hasCosechas, setHasCosechas] = useState(false);  // Nuevo estado para verificar si hay cosechas
   const navigate = useNavigate();
 
-  useEffect(() => {
-    reset();
-  }, [reset]);
 
   useEffect(() => {
     const total =

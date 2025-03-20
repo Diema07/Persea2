@@ -53,8 +53,6 @@ export function PodaPage() {
     }
   }, [idPlantacion]);
 
-  // Obtener el ID de la primera poda (si existe)
-  const podaId = podas.length > 0 ? podas[0].id : null;
 
   // Botón para ir a Gestión de Tareas
   const handleRedirectToGestionTareas = () => {
@@ -78,7 +76,6 @@ export function PodaPage() {
       {/* Componente del formulario de poda */}
       <PodaForm
         plantacionId={idPlantacion}
-        podaId={podaId}
         onCreated={loadPodas}
       />
 
@@ -88,32 +85,12 @@ export function PodaPage() {
         <p>No hay registros de poda.</p>
       ) : (
         <ul className="riego-list">
-          {podas.map((p) => (
-            <li key={p.id} className="riego-item">
+          {podas.map((p, index) => (
+            <li key={`${p.id}-${index}`}className="riego-item">
               <p><strong>Fecha de Poda:</strong> {p.fechaPoda || '---'}</p>
-              <p>
-                <strong>Tipo de Poda:</strong> {p.tipoPoda === 'formacion'
-                  ? 'Formación'
-                  : p.tipoPoda === 'mantenimiento'
-                  ? 'Mantenimiento'
-                  : p.tipoPoda === 'rejuvenecimiento'
-                  ? 'Rejuvenecimiento'
-                  : 'Sanitaria'}
-              </p>
-              <p>
-                <strong>Herramientas Usadas:</strong> {p.herramientasUsadas === 'tijeras'
-                  ? 'Tijeras'
-                  : p.herramientasUsadas === 'serrucho'
-                  ? 'Serrucho'
-                  : 'Motosierra'}
-              </p>
-              <p>
-                <strong>Técnicas Usadas:</strong> {p.tecnicasUsadas === 'ralo'
-                  ? 'Raleo'
-                  : p.tecnicasUsadas === 'deschuponado'
-                  ? 'Deschuponado'
-                  : 'Rebaje'}
-              </p>
+              <p><strong>Tipo de Poda:</strong> {p.tipoPoda}</p>
+              <p><strong>Herramientas Usadas:</strong> {p.herramientasUsadas}</p>
+              <p><strong>Técnicas Usadas:</strong> {p.tecnicasUsadas}</p>
             </li>
           ))}
         </ul>

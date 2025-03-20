@@ -157,7 +157,6 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
 
       navigate(`/gestionTareas/${plantacionId}`);
 
-      window.location.reload(); // Recargar la página después de la actualización
     } catch (error) {
       console.error('Error al actualizar la selección de árboles:', error);
     }
@@ -247,6 +246,7 @@ export function SeleccionArbolesForm({ plantacionId, seleccionId }) {
         </div>
           {watchVariedad && datosProduccion[watchVariedad] && (
             <div className="sugerencias">
+              <h4><strong>🌱 Sugerencias de Producción:</strong></h4>
               <p><strong>🌱 Primera cosecha:</strong> {datosProduccion[watchVariedad].primeraCosecha}</p>
               <p><strong>🔹 Producción estimada:</strong></p>
               <ul>

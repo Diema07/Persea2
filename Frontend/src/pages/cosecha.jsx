@@ -102,7 +102,7 @@ export function CosechaPage() {
           <ul className="riego-list">
             {cosechas.map((c) => (
               <li key={c.id} className="riego-item">
-                <p><strong>Fecha de Cosecha:</strong> {c.fechaCosecha || '---'}</p>
+                <p><strong>Fecha de Cosecha:</strong> {c.fechaCosecha}</p>
                 <p><strong>Calidad Alta:</strong> {c.cantidadAltaCalidad || 0} kg</p>
                 <p><strong>Calidad Media:</strong> {c.cantidadMedianaCalidad || 0} kg</p>
                 <p><strong>Calidad Baja:</strong> {c.cantidadBajaCalidad || 0} kg</p>

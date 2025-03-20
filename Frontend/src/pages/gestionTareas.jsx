@@ -29,7 +29,6 @@ export function GestionTareasPage() {
         
         // Si la propiedad 'estado' indica "COMPLETA", redirige al inicio
         if (data.estado && data.estado.toUpperCase() === "COMPLETA") {
-          console.log("La plantación está COMPLETA. Redirigiendo a /inicio-plantacion");
           navigate(`/inicio-plantacion`);
           return; // Evitamos que se ejecute la lógica siguiente en este efecto
         }

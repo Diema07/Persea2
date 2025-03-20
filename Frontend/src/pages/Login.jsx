@@ -5,9 +5,6 @@ import { useEffect } from 'react';
 import logo from "../img/logo.png";
 import avatar from '../img/avatar.jpg'
 
-
-
-
 export function Login() {
 
   const fetchCsrfToken = async () => {
@@ -19,10 +16,6 @@ export function Login() {
       console.error('Error al obtener el token CSRF:', error);
     }
   };
-
-  useEffect(() => {
-    fetchCsrfToken();
-  }, []);
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:8000/api/usuarios/login-google/';

@@ -14,7 +14,10 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   } = useForm();
 
   // Estado para controlar qué checkbox está seleccionado
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [isCheckboxDisabled, setIsCheckboxDisabled] = useState({
+    guadana: false,
+    fechaAplicacionTratamiento: false,
+    });
 
   // Observar checkboxes
   const watchCheckGuadana = watch('checkGuadana');
@@ -24,13 +27,11 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
   // Efecto para manejar la selección de un solo checkbox
   useEffect(() => {
     if (watchCheckGuadana) {
-      setSelectedOption('guadana');
-      setValue('checkAplicacion', false); // Desmarcar el otro checkbox
+      setIsCheckboxDisabled((prev) => ({ ...prev, fechaAplicacionTratamiento: true })); 
     } else if (watchCheckAplicacion) {
-      setSelectedOption('fumigacion');
-      setValue('checkGuadana', false); // Desmarcar el otro checkbox
+      setIsCheckboxDisabled((prev) => ({ ...prev, guadana: true })); 
     } else {
-      setSelectedOption(null);
+      setIsCheckboxDisabled({ guadana: false, fechaAplicacionTratamiento: false });
     }
   }, [watchCheckGuadana, watchCheckAplicacion, setValue]);
 
@@ -61,29 +62,28 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
     }
 
     try {
-      const datosParaEnviar = {
-        idPlantacion: Number(plantacionId),
-      };
+      const datosParaEnviar = {};
 
       if (data.checkGuadana) {
         datosParaEnviar.guadana = data.guadana;
-        // Limpiar campos de fumigación
-        datosParaEnviar.fechaAplicacionTratamiento = null;
-        datosParaEnviar.metodoAplicacionFumigacion = null;
-        datosParaEnviar.tipoTratamiento = null;
-        datosParaEnviar.nombreTratamiento = null;
-        datosParaEnviar.cantidadTratamiento = null;
-        datosParaEnviar.medidaTratamiento = null;
-      } else if (data.checkAplicacion) {
+
+      } else {
+        datosParaEnviar.guadana = null;
+
+      }
+
+      if (data.checkAplicacion) {
         datosParaEnviar.fechaAplicacionTratamiento = data.fechaAplicacionTratamiento;
         datosParaEnviar.metodoAplicacionFumigacion = data.metodoAplicacionFumigacion;
         datosParaEnviar.tipoTratamiento = data.tipoTratamiento;
         datosParaEnviar.nombreTratamiento = data.nombreTratamiento;
         datosParaEnviar.cantidadTratamiento = data.cantidadTratamiento;
         datosParaEnviar.medidaTratamiento = data.medidaTratamiento;
-        // Limpiar campo de guadaña
-        datosParaEnviar.guadana = null;
+     } else {
+        datosParaEnviar.fechaAplicacionTratamiento = null;
       }
+
+      datosParaEnviar.idPlantacion = Number(plantacionId);
 
       await postMantenimientoMonitoreo(datosParaEnviar);
 
@@ -105,7 +105,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
       });
 
       // Restablecer el estado de selección
-      setSelectedOption(null);
+      setIsCheckboxDisabled({ guadana: false, fechaAplicacionTratamiento: false });
     } catch (error) {
       console.error('Error al guardar el mantenimiento/monitoreo:', error);
     }
@@ -125,7 +125,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
               type="checkbox"
               className="form-checkbox"
               {...register('checkGuadana')}
-              disabled={selectedOption === 'fumigacion'}
+              disabled={isCheckboxDisabled.guadana}
             />
             <label className="form-label">Guadaña</label>
             {watchCheckGuadana && (
@@ -141,7 +141,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
               type="checkbox"
               className="form-checkbox"
               {...register('checkAplicacion')}
-              disabled={selectedOption === 'guadana'}
+              disabled={isCheckboxDisabled.fechaAplicacionTratamiento}
             />
             <label className="form-label">Fumigación</label>
             {watchCheckAplicacion && (
@@ -199,16 +199,21 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
 
               {/* Agrupación de Cantidad y Medida en un solo contenedor */}
               <div className="form-group form-group-inline">
+                <div className="form-group">
                 <label className="form-label">Cantidad y Medida de Tratamiento:</label>
-                <div className="combined-input">
                   <input
                     type="number"
+                    step="any"
                     {...register('cantidadTratamiento', { required: true })}
                     className="form-input"
                   />
+                  {errors.cantidadTratamiento && <span className="form-error">Requerido</span>}
+                  
+                  <div className="form-group">
+                  <label className="form-label"></label>
                   <select
                     {...register('medidaTratamiento', { required: true })}
-                    className="form-input measure-select"
+                    className="form-input "
                   >
                     <option value="kg">kg</option>
                     <option value="gr">gr</option>
@@ -216,9 +221,8 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
                     <option value="litros">litros</option>
                   </select>
                 </div>
-                {(errors.cantidadTratamiento || errors.medidaTratamiento) && (
-                  <span className="form-error">Requerido</span>
-                )}
+                {(errors.medidaTratamiento) && <span className="form-error">Requerido</span>}
+              </div>
               </div>
             </>
           )}

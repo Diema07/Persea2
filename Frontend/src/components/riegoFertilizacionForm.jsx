@@ -292,19 +292,16 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
     </div>
    
      {IsModalOpenAdvertencia &&  (
-                        <div className="modal-overlay-2">
-                            <div className="modal-2">
-                                <img src={advertencia} alt="Advertencia" className='img-advertencia' />
-                                <p>Debe seleccionar una opción: <strong> Riego o Fertilización.</strong></p>
-    
-                                <button className="confirmar" onClick={() => setIsModalOpenAdvertencia(false)}>Entiendo</button>
-                                
-                            </div>
-                        </div>
-                    )}
-    </>
+          <div className="modal-overlay-2">
+              <div className="modal-2">
+                  <img src={advertencia} alt="Advertencia" className='img-advertencia' />
+                  <p>Debe seleccionar una opción: <strong> Riego o Fertilización.</strong></p>
 
-       
+                  <button className="confirmar" onClick={() => setIsModalOpenAdvertencia(false)}>Entiendo</button>
+                  
+              </div>
+          </div>
+      )}
+    </>
 );
-  
 }

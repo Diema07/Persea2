@@ -34,6 +34,25 @@ export const descargarInformeCompletoPDF = (plantacionId) => {
   window.open(`http://localhost:8000/informes/informe-completo/${plantacionId}/?formato=pdf`);
 };
 
+
+export const InformeHtml = async (plantacionId) => {
+  
+  try {
+    const csrfToken = await getCSRFToken();
+    const response = await informeAPI.get(
+      `http://localhost:8000/informes/informe-completo/${plantacionId}/?formato=html`,
+      {
+        headers: { 
+          'Content-Type': 'text/html' },
+          'X-CSRFToken': csrfToken,
+      });
+  return response.data;
+} catch (error) {
+  console.error('Error al obtener el informe HTML:', error);
+
+  }
+};
+
 // 5. (Opcional) Crear un registro de Informe en la BD (si usas el modelo Informe)
 export const postInforme = async (data) => {
   try {
@@ -50,5 +69,4 @@ export const postInforme = async (data) => {
     throw error;
   }
 };
-
 

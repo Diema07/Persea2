@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPreparacionByPlantacionId } from '../api/preparacionTerreno.api';
 import { getPlantacionById } from '../api/plantaciones.api';
 import { PreparacionTerrenoForm } from '../components/preparacionTerrenoForm';
-import atras from "../img/atras.png";
 import '../styles/historial.css';
 import logo8 from "../img/img8.png";
 
@@ -52,7 +51,7 @@ export function PreparacionTerrenoPage() {
     }
   }, [idPlantacion]);
 
-  const preparacionId = preparaciones.length > 0 ? preparaciones[0].id : null;
+  const idpreparacion = preparaciones.length > 0 ? preparaciones[0].id : null;
 
   const handleRedirectToGestionTareas = () => {
     navigate(`/gestionTareas/${idPlantacion}`);
@@ -75,7 +74,7 @@ export function PreparacionTerrenoPage() {
         {/* Componente del formulario de preparación de terreno */}
         <PreparacionTerrenoForm
           plantacionId={idPlantacion}
-          preparacionId={preparacionId}
+          preparacionId={idpreparacion}
           onCreated={loadPreparaciones}
         />
       </div>

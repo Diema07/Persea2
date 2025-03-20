@@ -81,25 +81,6 @@ export function SeleccionArbolesPage() {
           onCreated={loadSelecciones}
         />
   
-        {/*
-        <h3>Historial de Selecciones:</h3>
-        {selecciones.length === 0 ? (
-          <p>No hay selecciones registradas.</p>
-        ) : (
-          <ul>
-            {selecciones.map((sel) => (
-              <li key={sel.id}>
-                <strong>ID:</strong> {sel.id} <br />
-                <strong>Variedad:</strong> {sel.seleccionVariedades || 'No definida'} <br />
-                <strong>Preparación Colinos:</strong> {sel.preparacionColinos || 'No definida'} <br />
-                <strong>Excavación Hoyos:</strong> {sel.excavacionHoyos || 'No definida'} <br />
-                <strong>Plantación:</strong> {sel.plantacion || 'No definida'} <br />
-                <hr />
-              </li>
-            ))}
-          </ul>
-        )}
-        */}
       </div>
     </div>
   );

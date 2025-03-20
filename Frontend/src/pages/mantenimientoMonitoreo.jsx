@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getMantenimientoByPlantacionId } from '../api/mantenimientoMonitoreo.api';
 import { getPlantacionById } from '../api/plantaciones.api';
 import { MantenimientoMonitoreoForm } from '../components/mantenimientoMonitoreoForm';
-import atras from "../img/atras.png";
 import '../styles/historial.css';
 import '../styles/formulario.css';
 import logo8 from "../img/img8.png";
@@ -101,13 +100,13 @@ export function MantenimientoMonitoreoPage() {
             <li key={`${m.id}-${index}`} className="riego-item">
               {/* Mostrar solo si es guadaña */}
               {m.guadana && !m.fechaAplicacionTratamiento && (
-                <p><strong>Guadaña:</strong> {m.guadana}</p>
+                <p><strong>Fecha Guadaña:</strong> {m.guadana}</p>
               )}
 
               {/* Mostrar solo si es fumigación */}
               {m.fechaAplicacionTratamiento && !m.guadana && (
                 <>
-                  <p><strong>Fumigación:</strong> {m.fechaAplicacionTratamiento}</p>
+                  <p><strong>Fecha Fumigación:</strong> {m.fechaAplicacionTratamiento}</p>
                   <p><strong>Método de Aplicación:</strong> {m.metodoAplicacionFumigacion}</p>
                   <p><strong>Tipo de Tratamiento:</strong> {m.tipoTratamiento}</p>
                   <p><strong>Nombre de Tratamiento:</strong> {m.nombreTratamiento}</p>
