@@ -59,7 +59,7 @@ AUTHENTICATION_BACKENDS = (
 # Configuración de proveedores de autenticación social
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': ['email'],
+        'SCOPE': ['profile','email'],
         'AUTH_PARAMS': {
             'access_type': 'online',
             'prompt': 'select_account'

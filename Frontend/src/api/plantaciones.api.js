@@ -8,11 +8,34 @@ const taskAPI = axios.create({
     withCredentials: true,  // Permite el uso de cookies
 });
 
+//Manejo de imagen de perfil
+const imagenProfile = axios.create({
+    baseURL: 'http://localhost:8000/api/usuarios/imagenPerfil', // Asegúrate de que coincida con la URL base de tus endpoints de usuarios
+    withCredentials: true,  // Permite el envío de cookies en las peticiones
+});
+
+
 // Función para obtener el CSRF token
 const getCSRFToken = async () => {
     const response = await axios.get('http://localhost:8000/api/csrf/', { withCredentials: true });
     return response.data.csrfToken;
 };
+
+export const getProfileImage = async () => {
+    try {
+        const csrfToken = await getCSRFToken();
+        const response = await imagenProfile.get('', {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+        });
+        return response.data; // Se espera un objeto { profile_picture: 'url_de_la_imagen' }
+    } catch (error) {
+        console.error('Error al obtener la imagen de perfil:', error.response?.data || error);
+        throw error;
+    }
+}
 
 export const getAllTasks = () => taskAPI.get('/');
 

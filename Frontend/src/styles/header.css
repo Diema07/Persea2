@@ -40,3 +40,11 @@
 .cerrar-sesion {
   margin-right: auto; /* Empuja  derecha */
 }
+
+
+.profile-img {
+  width: 60px;      /* Ajusta el tamaño según necesites */
+  height: 60px;
+  object-fit: cover; /* Para mantener la proporción */
+  border-radius: 50%; /* Hace la imagen circular */
+}
