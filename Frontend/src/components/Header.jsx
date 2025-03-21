@@ -5,12 +5,14 @@ import { getProfileImage } from '../api/plantaciones.api'; // Asegúrate de que 
 
 export const Header = () => {
   const [profileImage, setProfileImage] = useState(null);
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
     async function fetchProfileImage() {
       try {
         const data = await getProfileImage();
         setProfileImage(data.profile_picture);
+        setUsername(data.username);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
       }
@@ -32,6 +34,9 @@ export const Header = () => {
           </div>
           {profileImage && (
             <li className="profile-image">
+              {username && (
+                <span className="username">{username}</span>
+              )}
               <img src={profileImage} alt="Foto de perfil" className="profile-img" />
             </li>
           )}

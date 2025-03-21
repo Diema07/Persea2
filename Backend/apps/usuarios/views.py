@@ -29,12 +29,11 @@ class ProfileImageView(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
-        """
-        Retorna la URL de la foto de perfil almacenada en el extra_data de SocialAccount.
-        """
         try:
             social_account = SocialAccount.objects.get(user=request.user, provider='google')
             profile_picture = social_account.extra_data.get('picture')
         except SocialAccount.DoesNotExist:
             profile_picture = None
-        return Response({'profile_picture': profile_picture})
+        # Agregamos el nombre de usuario (o cualquier otro dato de request.user)
+        username = request.user.username
+        return Response({'profile_picture': profile_picture, 'username': username})

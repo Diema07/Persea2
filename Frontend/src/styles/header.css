@@ -41,10 +41,17 @@
   margin-right: auto; /* Empuja  derecha */
 }
 
-
+/*Datos Perfil */
 .profile-img {
   width: 60px;      /* Ajusta el tamaño según necesites */
   height: 60px;
   object-fit: cover; /* Para mantener la proporción */
   border-radius: 50%; /* Hace la imagen circular */
+}
+
+
+.username {
+  margin-left: 8px;
+  color: white;
+  font-weight: bold;
 }
