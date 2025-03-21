@@ -125,7 +125,7 @@ export function GestionTareasPage() {
             )}
 
             {tareasDesbloqueadas ? (
-              <Link to={`/informe-completo/${plantacionId}/`} className="grid-cuadro">
+              <Link to={`/informe/${plantacionId}/`} className="grid-cuadro">
                 <img src={logo7} alt="Informe" className="icono" />
                 <p>Informe</p>
               </Link>

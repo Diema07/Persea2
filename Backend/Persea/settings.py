@@ -208,30 +208,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
-# Configuración de Celery para usar Redis
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND', default='redis://localhost:6379/0')
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-from celery.schedules import crontab
-CELERY_BEAT_SCHEDULE = {
-    'enviar-notificaciones-diarias': {
-        'task': 'notificaciones.tasks.enviar_notificaciones_task',
-        'schedule': crontab(hour=8, minute=0),
-    },
-}
-
-# Configuración de Celery Beat: programa la tarea para que se ejecute cada día a las 8:00 AM.
-from celery.schedules import crontab
-
-CELERY_BEAT_SCHEDULE = {
-    'enviar-notificaciones-diarias': {
-        'task': 'notificaciones.tasks.enviar_notificaciones_task',
-        'schedule': crontab(hour=8, minute=0),  # se ejecuta a las 8:00 AM cada día
-    },
-}
 
 # Configuración para producción
 if not DEBUG:

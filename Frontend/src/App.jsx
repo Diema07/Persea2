@@ -29,7 +29,7 @@ function App() {
         <Route path="/mantenimiento-monitoreo/:plantacionId" element={<MantenimientoMonitoreoPage />} />
         <Route path="/poda/:plantacionId" element={<PodaPage />} />
         <Route path="/cosecha/:plantacionId" element={<CosechaPage />} />
-        <Route path="/informe-completo/:plantacionId" element={<InformeCompletoPage />} />
+        <Route path="/informe/:plantacionId" element={<InformeCompletoPage />} />
         <Route path="/informeGeneral" element={<InformeGeneralPage />} />
 
 
