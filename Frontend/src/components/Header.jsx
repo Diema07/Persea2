@@ -12,7 +12,12 @@ export const Header = () => {
       try {
         const data = await getProfileImage();
         setProfileImage(data.profile_picture);
-        setUsername(data.username);
+        const formattedUsername = data.username
+        .replace('_', ' ') // Reemplaza los guiones bajos por espacios
+        .split(' ') // Divide las palabras
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
+        .join(' '); // Une las palabras nuevamente
+        setUsername(formattedUsername);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
       }
