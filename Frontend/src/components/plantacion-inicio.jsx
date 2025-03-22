@@ -18,6 +18,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 
 export function PlantacionInicio() {
+
     const [plantaciones, setPlantaciones] = useState([]);
     
     // Estados para los modales
@@ -25,13 +26,14 @@ export function PlantacionInicio() {
     const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false); 
     const [plantacionSeleccionada, setPlantacionSeleccionada] = useState(null);
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
         const fetchPlantaciones = async () => {
             try {
                 const response = await getFilteredTasks();
                 setPlantaciones(response.data);
+                
             } catch (error) {
                 console.error('Error al obtener las plantaciones:', error);
             }
@@ -50,6 +52,7 @@ export function PlantacionInicio() {
     };
     
     const closeModalEliminar = () => setIsModalOpenEliminar(false);
+    
 
     // Lógica del formulario
     const onSubmit = handleSubmit(async (data) => {
@@ -62,6 +65,7 @@ export function PlantacionInicio() {
         }
     });
 
+
     // Función para actualizar el estado de la plantación a false (desactivar)
     const handleDeactivate = async (id) => {
         try {
@@ -72,7 +76,7 @@ export function PlantacionInicio() {
         } catch (error) {
             console.error('Error al desactivar la plantación:', error);
         }
-        closeModalEliminar(); // Cerrar el modal después de desactivar
+        closeModalEliminar(); 
     };
 
     return (
@@ -111,6 +115,7 @@ export function PlantacionInicio() {
                 >
                     {plantaciones.map((plantacion) => (
                         <SwiperSlide key={plantacion.id}>
+                            
                             <Taskcard 
                                 task={plantacion} 
                                 onDelete={() => openModalEliminar(plantacion)}
@@ -133,6 +138,7 @@ export function PlantacionInicio() {
                                     {...register("nombreParcela", { required: true })}
                                 />
                                 {errors.nombreParcela && <span>Requerido</span>}
+
                                 <div className="button-container">
                                     <button type="submit" className='submit-1'>Plantar</button>
                                     <button type="button" className=" button-1" onClick={closeModalCrear}>Cancelar</button>

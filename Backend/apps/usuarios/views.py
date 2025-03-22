@@ -4,6 +4,7 @@ from django.middleware.csrf import get_token
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.views import OAuth2LoginView
 
+
 def get_csrf_token(request):
     """
     Vista para obtener el token CSRF.
