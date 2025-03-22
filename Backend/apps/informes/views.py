@@ -14,7 +14,13 @@ from apps.produccion.models import Cosecha
 from apps.plantaciones.serializer import PlantacionSerializer
 from apps.produccion.serializer import CosechaSerializer
 from django.db.models import Max
+from pathlib import Path
+import environ
+import os
+BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 class PlantacionesCompletasCosechaRecienteView(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
@@ -33,27 +39,19 @@ class PlantacionesCompletasCosechaRecienteView(viewsets.ViewSet):
                 .aggregate(fechaCosecha_max=Max('fechaCosecha'))['fechaCosecha_max']
             
             # Se añade el campo de la fecha de cosecha a la serialización de la plantación
-            plantacion_data['fechaCosecha'] = fecha_reciente
+            plantacion_data['fechaCosecha'] = fecha_reciente if fecha_reciente else "No hay fecha de cosecha"
             resultado.append(plantacion_data)
         
         return Response(resultado)
 
 class InformeCompletoView(APIView):
-    """
-    Vista única:
-    - GET /informes/api/v1/informe-completo/<plantacion_id>/?formato=json  -> JSON
-    - GET /informes/api/v1/informe-completo/<plantacion_id>/?formato=pdf   -> PDF
-    - GET /informes/api/v1/informe-completo/<plantacion_id>/?formato=html  -> HTML (para incrustar en la página)
-    """
     permission_classes = [IsAuthenticated]
 
     def process_riego(self, r):
         rep = {"id": r.id}
-        # Grupo Riego
         if r.tipoRiego not in [None, ""] and r.fechaRiego not in [None, ""]:
             rep["tipoRiego"] = r.tipoRiego
             rep["fechaRiego"] = str(r.fechaRiego)
-        # Grupo Fertilización
         if (r.metodoAplicacionFertilizante not in [None, ""] and
             r.tipoFertilizante not in [None, ""] and
             r.nombreFertilizante not in [None, ""] and
@@ -70,10 +68,8 @@ class InformeCompletoView(APIView):
 
     def process_mantenimiento(self, m):
         rep = {"id": m.id}
-        # Grupo Guadana
         if m.guadana not in [None, ""]:
             rep["guadana"] = str(m.guadana)
-        # Grupo Mantenimiento y Monitoreo
         if (m.metodoAplicacionFumigacion not in [None, ""] and
             m.tipoTratamiento not in [None, ""] and
             m.fechaAplicacionTratamiento not in [None, ""] and
@@ -105,13 +101,11 @@ class InformeCompletoView(APIView):
         processed_riegos = [self.process_riego(r) for r in riegos]
         processed_mantenimientos = [self.process_mantenimiento(m) for m in mantenimientos]
 
-        # Separar en grupos
         riego_group = [r for r in processed_riegos if "tipoRiego" in r and "fechaRiego" in r]
         fertilizacion_group = [r for r in processed_riegos if "metodoAplicacionFertilizante" in r]
         guadana_group = [m for m in processed_mantenimientos if "guadana" in m]
         mant_group = [m for m in processed_mantenimientos if "metodoAplicacionFumigacion" in m]
 
-        # Calcular la fecha más reciente de cosecha
         fecha_reciente = Cosecha.objects.filter(idPlantacion=plantacion)\
             .aggregate(fechaCosecha_max=Max('fechaCosecha'))['fechaCosecha_max'] or ''
 
@@ -130,14 +124,17 @@ class InformeCompletoView(APIView):
                 "podas": podas,
                 "cosechas": cosechas,
             }
-            html_string = render_to_string('informe_completo.html', context)
+            html_string = render_to_string('informe.html', context)
             try:
-                client = pdfcrowd.HtmlToPdfClient("Persea", "b287580fca9c1ab48cfd4398d2bf20a5")
+                username = env('NombreCliente')
+                api_key = env('api_key')
+                
+                client = pdfcrowd.HtmlToPdfClient(username, api_key)
                 pdf_content = client.convertString(html_string)
             except pdfcrowd.Error as error:
                 return HttpResponse("Error al generar el PDF: " + str(error), status=500)
             response = HttpResponse(pdf_content, content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="informe_plantacion_{plantacion_id}.pdf"'
+            response['Content-Disposition'] = f'attachment; filename="Informe_{plantacion.nombreParcela}.pdf"'
             return response
 
         elif formato == 'html':
@@ -153,7 +150,7 @@ class InformeCompletoView(APIView):
                 "podas": podas,
                 "cosechas": cosechas,
             }
-            html_string = render_to_string('informe_completo.html', context)
+            html_string = render_to_string('informe.html', context)
             return HttpResponse(html_string, content_type='text/html')
 
         else:

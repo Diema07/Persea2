@@ -52,6 +52,12 @@ export function PreparacionTerrenoForm({ plantacionId, preparacionId }) {
         if (data && data.length > 0) {
           const preparacion = data[0];
 
+          setValue('checkLimpieza', !!preparacion.limpiezaTerreno);
+          setValue('checkAnalisis', !!preparacion.analisisSuelo);
+          setValue('checkCorrecion', !!preparacion.correcionSuelo);
+          setValue('checkLabranza', preparacion.labranza);
+          setValue('delimitacionParcela', preparacion.delimitacionParcela);
+
          
           // Deshabilitar checkboxes si el campo ya está registrado
           setIsCheckboxDisabled({

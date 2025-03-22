@@ -96,7 +96,7 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {
 
     try {
       await completarPlantacion(plantacionId);
-      navigate(`/informe-completo/${plantacionId}`);
+      navigate(`/informe/${plantacionId}`);
     } catch (error) {
       console.error('Error al completar la plantación:', error);
       alert('Ocurrió un error al completar la plantación.');
