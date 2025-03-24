@@ -1,0 +1,6 @@
+Hola {{ username }},
+
+Este es un recordatorio para que revises la plataforma y actualices tus procesos.
+Mantener tus datos actualizados te ayudará a gestionar tu información de manera efectiva.
+
+Este es un correo automático. Por favor, no respondas a este mensaje.

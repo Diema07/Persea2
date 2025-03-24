@@ -1,0 +1,7 @@
+Hola {{ username }},
+
+Gracias por registrarte en nuestra plataforma. Estamos muy contentos de tenerte con nosotros.
+
+Explora todas las funcionalidades y comienza a gestionar tus procesos de manera eficiente.
+
+Este es un correo automático. Por favor, no respondas a este mensaje.

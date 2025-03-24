@@ -10,7 +10,7 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuración de seguridad
-SECRET_KEY = os.environ.get('SECRET_KEY')  # Clave secreta para la seguridad de la aplicación
+SECRET_KEY = env('SECRET_KEY')  # Clave secreta para la seguridad de la aplicación
 DEBUG = env.bool('DEBUG', default=False)  # Modo de depuración (True/False)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')  # Hosts permitidos en desarrollo
 
@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  # Autenticación con Google
     'corsheaders',
     'rest_framework.authtoken',
-    'rest_framework'
+    'rest_framework',
+    #notificaciones
+    'django_apscheduler'
     
 ]
 
@@ -209,24 +211,39 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
+# Define la ruta para la carpeta de logs
+LOGS_DIR = os.path.join(BASE_DIR, '.','apps','notificaciones', 'logs')
+
+# Crea la carpeta si no existe
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'file': {
-            'level': 'ERROR',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'apps', 'notificaciones', 'error.log'),  
+            'filename': os.path.join(LOGS_DIR, 'apscheduler.log'),
+            'formatter': 'verbose',
         },
     },
     'loggers': {
-        'django': {
+        'apscheduler': {
             'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
+
 
 
 
