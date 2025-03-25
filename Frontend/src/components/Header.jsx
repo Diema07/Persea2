@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/header.css';
-import salir1 from '../img/salir-1.png'; // Icono de cerrar sesión
-import { getProfileImage } from '../api/plantaciones.api'; // Asegúrate de que la ruta sea la correcta
+import salir1 from '../img/salir-1.png';
+import { getProfileImage } from '../api/plantaciones.api';
 
-export const Header = () => {
+export const Header = ({ onLogoutClick }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [username, setUsername] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false); // Estado para abrir/cerrar el menú
 
   useEffect(() => {
     async function fetchProfileImage() {
@@ -13,10 +14,10 @@ export const Header = () => {
         const data = await getProfileImage();
         setProfileImage(data.profile_picture);
         const formattedUsername = data.username
-        .replace('_', ' ') // Reemplaza los guiones bajos por espacios
-        .split(' ') // Divide las palabras
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
-        .join(' '); // Une las palabras nuevamente
+          .replace('_', ' ')
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
         setUsername(formattedUsername);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
@@ -27,8 +28,13 @@ export const Header = () => {
 
   return (
     <header className="header">
+    
+      <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
+
       <nav>
-        <ul className="nav-list">
+        <ul className={`nav-list ${menuOpen ? 'active' : ''}`}>
           <div className="left-group">
             <li>
               <a href="/inicio-plantacion">Plantaciones</a>
@@ -46,7 +52,10 @@ export const Header = () => {
             </li>
           )}
           <li className="cerrar-sesion">
-            <a href="http://localhost:8000/accounts/logout/">
+            <a href="#" onClick={(e) => {
+              e.preventDefault();
+              onLogoutClick();
+            }}>
               Cerrar sesión
               <img src={salir1} alt="Cerrar sesión" className="logout-icon" />
             </a>

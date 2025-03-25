@@ -54,7 +54,7 @@
 }
 
 
-/* Estilo general contenedor */
+
 .informe-container {
   padding: 20px;
   max-width: 800px;
@@ -70,7 +70,7 @@
   text-align: center;
 }
 
-/* Estilo de los mensajes de carga error */
+
 .informe-container p {
   font-size: 16px;
   color: #7f8c8d;
@@ -78,7 +78,7 @@
   margin: 20px 0;
 }
 
-/* Estilo del botón de descargar PDF */
+
 .informe-container button {
   display: block;
   margin: 20px auto;
@@ -92,12 +92,11 @@
   transition: background-color 0.3s ease;
 }
 
-/* Cambio de color al pasar el mouse */
+
 .informe-container button:hover {
   background-color: #006400; 
 }
 
-/* Estilo del contenedor del informe */
 .informe-container .informe-html {
   margin-top: 20px;
   padding: 20px;
@@ -107,7 +106,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para el contenido HTML del informe */
+
 .informe-container .informe-html p {
   color: #2c3e50; 
   line-height: 1.6;

@@ -1,57 +1,139 @@
 .header {
-  background-color: green; 
-  padding: 10px 20px; 
+  background-color: green;
+  padding: 10px 20px;
+  position: relative;
 }
 
 .nav-list {
-  list-style: none; 
+  list-style: none;
   margin: 0;
   padding: 0;
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.nav-list li {
-  margin: 0 10px; 
-}
-
-.nav-list li a {
-  color: white; 
-  text-decoration: none; 
-  font-weight: bold; 
-  display: flex; 
+/* Grupo izquierdo (logo, menú, etc.) */
+.nav-list .left-group {
+  display: flex;
+  margin-right: auto;
   align-items: center;
 }
 
-
-.nav-list .left-group {
-  display: flex; 
-  margin-right: auto; /* Empuja izquierda */
+/* Elementos del menú */
+.nav-list li {
+  margin: 0 10px;
 }
 
-
-.logout-icon {
-  width: 20px; 
-  height: 20px;
-  margin-left: 8px; 
+/* Enlaces del menú */
+.nav-list li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
 }
 
-
+/* Cerrar sesión - lo empuja a la derecha */
 .cerrar-sesion {
-  margin-right: auto; /* Empuja  derecha */
+  margin-left: auto;
 }
 
-/*Datos Perfil */
+/* Icono de logout */
+.logout-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+}
+
+/* Datos de perfil (imagen + nombre) */
+.profile-data {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
 .profile-img {
-  width: 60px;      /* Ajusta el tamaño según necesites */
-  height: 60px;
-  object-fit: cover; /* Para mantener la proporción */
-  border-radius: 50%; /* Hace la imagen circular */
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 7px;
+  border: 3px solid white;
 }
-
 
 .username {
   margin-left: 8px;
   color: white;
   font-weight: bold;
+}
+
+/* Hamburguesa para móvil */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px;
+  }
+  
+  .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    display: none; 
+  }
+  
+  .nav-list.active {
+    display: flex; 
+  }
+  
+  .nav-list .left-group {
+    flex-direction: column;
+    width: 100%;
+    margin-right: 0;
+  }
+  
+  .nav-list li {
+    width: 100%;
+    margin: 5px 0;
+    padding: 5px 0;
+  }
+  
+  .cerrar-sesion {
+    margin-left: 0;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 10px;
+    width: 100%;
+  }
+  
+  .profile-data {
+    margin-left: 0;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    width: 100%;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  
+  .nav-list li {
+    margin: 0 5px;
+  }
+  
+
 }

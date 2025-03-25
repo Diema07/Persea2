@@ -7,6 +7,7 @@ body {
 }
 
 .main1 {
+   
     margin: 5%;
     padding: 20px;
     box-sizing: border-box;
@@ -31,13 +32,13 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;
-    width: 250px;
-    height: 350px;
+    width: 400px;
+    height: 400px;
     transition: all 0.3s ease;
 }
 
 .cuadro:hover {
-    border: 1px solid #026021;
+    /*border: 1px solid #026021;*/
     background: linear-gradient(to right, #24bd4f, #299838);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -49,12 +50,13 @@ body {
 }
 
 .parrafo {
-    font-size: 12px;
+    font-size: 17px;
     text-align: center;
 }
 
 .tituloParcela {
     font-size: 24px;
+    font-weight: bold;
     margin: 0;
 }
 
@@ -179,6 +181,11 @@ body {
         border: none;
         cursor: pointer;
     }
+    .parrafo {
+        font-size: 14px;
+        text-align: center;
+    }
+    
 }
 
 /* Estilos para móviles (menos de 768px de ancho) */
@@ -196,6 +203,8 @@ body {
 
     .tituloParcela {
         font-size: 20px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .boton-ver-mas {
@@ -207,4 +216,14 @@ body {
         border: none;
         cursor: pointer;
     }
+    .parrafo {
+        font-size: 14px;
+        text-align: center;
+    }
+    .icono img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 8px ;
+    }
+    
 }

@@ -6,9 +6,9 @@ import { Taskcard } from './plantacion-crear';
 import { useForm } from 'react-hook-form';
 import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
-import advertencia from '../img/advertencia.png'
-import iconoPlantacion from '../img/icono-plantacion.png'
-
+import advertencia from '../img/advertencia.png';
+import iconoPlantacion from '../img/icono-plantacion.png';
+import salir1 from '../img/salir-1.png';
 
 // Importaciones de Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,14 +18,12 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 
 export function PlantacionInicio() {
-
     const [plantaciones, setPlantaciones] = useState([]);
-    
-    // Estados para los modales
     const [isModalOpenCrear, setIsModalOpenCrear] = useState(false); 
-    const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false); 
+    const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false);
+    const [isModalOpenLogout, setIsModalOpenLogout] = useState(false); // Nuevo estado para modal de logout
     const [plantacionSeleccionada, setPlantacionSeleccionada] = useState(null);
-
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
@@ -33,30 +31,24 @@ export function PlantacionInicio() {
             try {
                 const response = await getFilteredTasks();
                 setPlantaciones(response.data);
-                
             } catch (error) {
                 console.error('Error al obtener las plantaciones:', error);
             }
         };
-
         fetchPlantaciones();
     }, []);
     
-    // Funciones para abrir/cerrar modales
     const openModalCrear = () => setIsModalOpenCrear(true);
     const closeModalCrear = () => setIsModalOpenCrear(false);
 
     const openModalEliminar = (plantacion) => {
-        setPlantacionSeleccionada(plantacion);  // Guardamos la plantación seleccionada
+        setPlantacionSeleccionada(plantacion);
         setIsModalOpenEliminar(true);
     };
     
     const closeModalEliminar = () => setIsModalOpenEliminar(false);
     
-
-    // Lógica del formulario
     const onSubmit = handleSubmit(async (data) => {
-        console.log('Datos enviados:', data);
         try {
             await createTask(data);
             window.location.href = '/inicio-plantacion';
@@ -65,12 +57,9 @@ export function PlantacionInicio() {
         }
     });
 
-
-    // Función para actualizar el estado de la plantación a false (desactivar)
     const handleDeactivate = async (id) => {
         try {
-            await updateTaskState(id, "INACTIVA");  // Cambiar el estado de la plantación a false
-            // Refrescar la lista para reflejar los cambios
+            await updateTaskState(id, "INACTIVA");
             const response = await getFilteredTasks();
             setPlantaciones(response.data);
         } catch (error) {
@@ -79,23 +68,22 @@ export function PlantacionInicio() {
         closeModalEliminar(); 
     };
 
+    const handleConfirmLogout = () => {
+        window.location.href = "http://localhost:8000/accounts/logout/";
+    };
+
     return (
-        <>
-        <Header/>
-           
-        
+        <div className="app-container">
+            <Header onLogoutClick={() => setIsModalOpenLogout(true)} />
             <div className='main'>
                 <div className='orden'>
-                    
                     <h2 className='tituloPlantacion'>Mis Plantaciones</h2>
                     <div className='union'>
                         <img src={iconoPlantacion} alt="Planta" />
                         <button onClick={openModalCrear} className="button">Crear Plantación</button>
-                        
                     </div>
                 </div>
 
-                {/* Swiper envuelve las plantaciones */}
                 <Swiper
                     modules={[Navigation, Pagination]}
                     loop={false}
@@ -110,22 +98,20 @@ export function PlantacionInicio() {
                         480: { slidesPerView: 1 },  
                         768: { slidesPerView: 2 },  
                         1024: { slidesPerView: 3 },  
-                        1280: { slidesPerView: 3 }  
+                        1280: { slidesPerView: 4 }  
                     }}
                 >
                     {plantaciones.map((plantacion) => (
                         <SwiperSlide key={plantacion.id}>
-                            
                             <Taskcard 
                                 task={plantacion} 
                                 onDelete={() => openModalEliminar(plantacion)}
-                                onDeactivate={() => handleDeactivate(plantacion.id)}  // Pasar la función de desactivar
+                                onDeactivate={() => handleDeactivate(plantacion.id)}
                             />
                         </SwiperSlide>
                     ))}
                 </Swiper>
 
-                {/* Modal para crear plantación */}
                 {isModalOpenCrear && (
                     <div className="modal-1">
                         <div className="modal-content">
@@ -148,7 +134,6 @@ export function PlantacionInicio() {
                     </div>
                 )}
 
-                {/* Modal para eliminar plantación */}
                 {isModalOpenEliminar && plantacionSeleccionada && (
                     <div className="modal-overlay-2">
                         <div className="modal-2">
@@ -160,8 +145,19 @@ export function PlantacionInicio() {
                         </div>
                     </div>
                 )}
+
+                {isModalOpenLogout && (
+                    <div className="modal-overlay-2">
+                        <div className="modal-2">
+                            <img src={advertencia} alt="Advertencia" className='img-advertencia' />
+                            <h3>¿Estás seguro/a de cerrar sesión?</h3>
+                            <p>Serás redirigido/a a la página de inicio de sesión.</p>
+                            <button className="confirmar" onClick={handleConfirmLogout}>Sí, cerrar sesión</button>
+                            <button className="cancelar" onClick={() => setIsModalOpenLogout(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                )}
             </div>
-         </>
-        
+        </div>
     );
 }
