@@ -2,6 +2,7 @@ npm install react-router-dom
 npm install react-hook-form
 npm install --save-dev @babel/plugin-proposal-private-property-in-object
 npm install swiper
+npm install dompurify
 
 npm install --save-dev
 npm start

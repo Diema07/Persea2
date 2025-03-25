@@ -16,6 +16,9 @@ export function Login() {
       console.error('Error al obtener el token CSRF:', error);
     }
   };
+  useEffect(() => {
+    fetchCsrfToken();
+  }, []);
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:8000/api/usuarios/login-google/';

@@ -1,10 +1,9 @@
 import '../styles/plantacion-inicio.css';
 import '../styles/modalCrear.css'; 
 import React, { useEffect, useState } from 'react';
-import { getFilteredTasks, updateTaskState } from '../api/plantaciones.api';
+import { getFilteredTasks, updateTaskState,createTask } from '../api/plantaciones.api';
 import { Taskcard } from './plantacion-crear'; 
 import { useForm } from 'react-hook-form';
-import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
 import advertencia from '../img/advertencia.png'
 import iconoPlantacion from '../img/icono-plantacion.png'
@@ -25,7 +24,7 @@ export function PlantacionInicio() {
     const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false); 
     const [plantacionSeleccionada, setPlantacionSeleccionada] = useState(null);
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }} = useForm();
 
     useEffect(() => {
         const fetchPlantaciones = async () => {
@@ -114,7 +113,7 @@ export function PlantacionInicio() {
                             <Taskcard 
                                 task={plantacion} 
                                 onDelete={() => openModalEliminar(plantacion)}
-                                onDeactivate={() => handleDeactivate(plantacion.id)}  // Pasar la función de desactivar
+                                //onDeactivate={() => handleDeactivate(plantacion.id)}  // Pasar la función de desactivar
                             />
                         </SwiperSlide>
                     ))}

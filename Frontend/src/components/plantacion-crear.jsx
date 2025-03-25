@@ -23,11 +23,15 @@ const parrafos = [
 ];
 export function Taskcard({ task, onDelete }) {
     // selecciona la imagen basada en el id de la tarea
-    const imagenSeleccionada = plantas[(task.id - 1) % plantas.length];
+    
+    let indice = task.id - 1; 
+    indice = indice % plantas.length; 
+    const imagenSeleccionada = plantas[indice]; 
 
     // selecciona el párrafo basado en el id de la tarea
-    const parrafoSeleccionado = parrafos[(task.id - 1) % parrafos.length];
-
+    let indiceParrafo = task.id - 1; 
+    indiceParrafo = indiceParrafo % parrafos.length; 
+    const parrafoSeleccionado = parrafos[indiceParrafo];
     return (
         <div className="main1">
             <div className="cuadro">
