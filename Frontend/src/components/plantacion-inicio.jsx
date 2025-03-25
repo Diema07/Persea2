@@ -8,7 +8,8 @@ import { createTask } from '../api/plantaciones.api';
 import Header from "./Header";
 import advertencia from '../img/advertencia.png';
 import iconoPlantacion from '../img/icono-plantacion.png';
-import salir1 from '../img/salir-1.png';
+import Footer from "./footer"
+
 
 // Importaciones de Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -158,6 +159,7 @@ export function PlantacionInicio() {
                     </div>
                 )}
             </div>
+            <Footer/>
         </div>
     );
 }
