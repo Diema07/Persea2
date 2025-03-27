@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from allauth.socialaccount.models import SocialAccount
 
+
 def get_csrf_token(request):
     """
     Vista para obtener el token CSRF.

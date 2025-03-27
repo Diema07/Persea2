@@ -194,6 +194,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',  # Autenticación por sesión
+        'rest_framework.authentication.TokenAuthentication',   # Autenticación por token
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',  # Solo usuarios autenticados pueden acceder
@@ -255,3 +256,8 @@ if not DEBUG:
         "default": env.db("DATABASE_URL"),
     }
     DATABASES["default"]["ATOMIC_REQUESTS"] = True  # Habilitar transacciones atómicas
+
+   # Configuración de seguridad en producción
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
