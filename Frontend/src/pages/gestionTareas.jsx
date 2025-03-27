@@ -2,6 +2,7 @@ import "../styles/gestionTareas.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getPlantacionById, getEstadoTareas } from "../api/plantaciones.api"; 
+import Footer from "../components/footer"
 import logo1 from "../img/img1.png";
 import logo2 from "../img/img2.png";
 import logo3 from "../img/img3.png";
@@ -143,7 +144,9 @@ export function GestionTareasPage() {
             </Link>
           </div>
         </div>
+        
       </div>
+      <Footer/>
 
       {/* Modal de advertencia */}
       {isModalOpen && (
