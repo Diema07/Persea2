@@ -25,17 +25,28 @@ export function Login() {
   };
 
   return (
-    <div className="glass-container">
-      <img src={avatar} alt="Avatar" className="glass-avatar" />
-      <div className="glass-box">
-        <h2 className='sub'>Bienvenido a  <span className="persea-text">Persea</span>!</h2>
-        <p className="glass-text">
-        Optimiza la gestión de tu cultivo de aguacates de manera sencilla y eficiente. Lleva el control de tus cosechas y opten los mejores resultados.
-        </p>
-        <button onClick={handleGoogleLogin} className="glass-button">
-          <img src={logo} alt="Google Logo" className='glass-logo'/>
-          Iniciar sesión
-        </button>
+    <div className="login-container">
+      
+      <div className="login-content">
+        <div className="login-card">
+          <div className="login-header">
+            <img src={avatar} alt="Avatar" className="login-avatar" />
+            <h2 className="login-title">Bienvenido a <span>Persea</span></h2>
+            <p className="login-subtitle">Gestión Persé </p>
+          </div>
+          
+          <div className="login-body">
+            <p className="login-description">
+            Optimiza la gestión de tu cultivo de aguacates de manera sencilla y eficiente. 
+            Lleva el control de tus cosechas y opten los mejores resultados.
+            </p>
+            
+            <button onClick={handleGoogleLogin} className="login-button">
+              <img src={logo} alt="Logo" className="button-icon"/>
+              <span>Iniciar sesión con Google</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
