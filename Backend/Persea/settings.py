@@ -10,7 +10,7 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuración de seguridad
-SECRET_KEY = os.environ.get('SECRET_KEY')  # Clave secreta para la seguridad de la aplicación
+SECRET_KEY = env('SECRET_KEY')  # Clave secreta para la seguridad de la aplicación
 DEBUG = env.bool('DEBUG', default=False)  # Modo de depuración (True/False)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')  # Hosts permitidos en desarrollo
 
@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  # Autenticación con Google
     'corsheaders',
     'rest_framework.authtoken',
-    'rest_framework'
+    'rest_framework',
+    #notificaciones
+    'django_apscheduler'
     
 ]
 
@@ -59,7 +61,7 @@ AUTHENTICATION_BACKENDS = (
 # Configuración de proveedores de autenticación social
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': ['email'],
+        'SCOPE': ['profile','email'],
         'AUTH_PARAMS': {
             'access_type': 'online',
             'prompt': 'select_account'
@@ -192,6 +194,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',  # Autenticación por sesión
+        'rest_framework.authentication.TokenAuthentication',   # Autenticación por token
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',  # Solo usuarios autenticados pueden acceder
@@ -208,30 +211,41 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
-# Configuración de Celery para usar Redis
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND', default='redis://localhost:6379/0')
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+# Define la ruta para la carpeta de logs
+LOGS_DIR = os.path.join(BASE_DIR, '.','apps','notificaciones', 'logs')
 
-from celery.schedules import crontab
-CELERY_BEAT_SCHEDULE = {
-    'enviar-notificaciones-diarias': {
-        'task': 'notificaciones.tasks.enviar_notificaciones_task',
-        'schedule': crontab(hour=8, minute=0),
+# Crea la carpeta si no existe
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGS_DIR, 'apscheduler.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'apscheduler': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     },
 }
 
-# Configuración de Celery Beat: programa la tarea para que se ejecute cada día a las 8:00 AM.
-from celery.schedules import crontab
 
-CELERY_BEAT_SCHEDULE = {
-    'enviar-notificaciones-diarias': {
-        'task': 'notificaciones.tasks.enviar_notificaciones_task',
-        'schedule': crontab(hour=8, minute=0),  # se ejecuta a las 8:00 AM cada día
-    },
-}
+
 
 # Configuración para producción
 if not DEBUG:
@@ -242,3 +256,8 @@ if not DEBUG:
         "default": env.db("DATABASE_URL"),
     }
     DATABASES["default"]["ATOMIC_REQUESTS"] = True  # Habilitar transacciones atómicas
+
+   # Configuración de seguridad en producción
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True

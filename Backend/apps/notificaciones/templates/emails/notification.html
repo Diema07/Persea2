@@ -1,0 +1,110 @@
+
+
+    <!--<p>Este es un recordatorio para que revises la plataforma y actualices tus procesos.</p>
+    #<p>Mantener tus datos actualizados te ayudará a gestionar tu información de manera efectiva.</p>-->
+   
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Recordatorio: Actualiza tus procesos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      background-color: #ffffff;
+      margin: 20px auto;
+      padding: 0;
+      max-width: 600px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    .header {
+      background: linear-gradient(135deg, #4CAF50, rgb(52, 143, 98));
+      padding: 30px 20px;
+      text-align: center;
+    }
+    h1 {
+      color: white;
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .content {
+      padding: 30px 40px;
+    }
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .highlight {
+      background-color: #f0fff4;
+      padding: 15px;
+      border-left: 4px solid #4CAF50;
+      margin: 25px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white !important;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: 500;
+      margin: 15px 0;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #38a169;
+    }
+    .footer {
+      font-size: 12px;
+      color: #888;
+      margin-top: 20px;
+      padding-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Recordatorio importante</h1>
+    </div>
+    
+    <div class="content">
+      <p>Hola, <strong>{{ username }}</strong>,</p>
+      
+      <p>Este es un recordatorio para que revises la plataforma y actualices tus procesos.</p>
+      
+      <div class="highlight">
+        <p>Mantener tus datos actualizados te ayudará a:</p>
+        <ul>
+          <li>Gestionar tus procesos de manera efectiva</li>
+          <li>Tomar mejores decisiones</li>
+          <li>Optimizar tus resultados</li>
+        </ul>
+      </div>
+      
+      <p style="text-align: center;">
+        <a href="{{ app_link }}" class="button">Actualizar mis procesos</a>
+      </p>
+      
+      <p>Si tienes alguna duda, estamos aquí para ayudarte.</p>
+    </div>
+    
+    <div class="footer">
+      <p>Este es un correo automático. Por favor, no respondas a este mensaje.</p>
+    </div>
+  </div>
+</body>
+</html>

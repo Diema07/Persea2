@@ -71,7 +71,9 @@ export const postRiegoFertilizacion = async (data) => {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrfToken,
       },
+        
     });
+    console.log(response.csrfToken);
 
     // Retorna la respuesta del servidor
     return response.data;
