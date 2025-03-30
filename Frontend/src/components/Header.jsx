@@ -6,19 +6,21 @@ import { getProfileImage } from '../api/plantaciones.api';
 export const Header = ({ onLogoutClick }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [username, setUsername] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // Estado para abrir/cerrar el menú
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     async function fetchProfileImage() {
       try {
         const data = await getProfileImage();
-        setProfileImage(data.profile_picture);
-        const formattedUsername = data.username
-          .replace('_', ' ')
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-        setUsername(formattedUsername);
+        if (data?.profile_picture) {
+          setProfileImage(data.profile_picture);
+          const formattedUsername = data.username
+            .replace('_', ' ')
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+          setUsername(formattedUsername);
+        }
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
       }
@@ -28,40 +30,39 @@ export const Header = ({ onLogoutClick }) => {
 
   return (
     <header className="header">
-    
-      <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-        ☰
+      {/* Hamburguesa + Menú navegación */}
+      <div className="nav-section">
+        <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </div>
+        
+        <nav>
+          <ul className={`nav-list ${menuOpen ? 'active' : ''}`}>
+            <li><a href="/inicio-plantacion">Plantaciones</a></li>
+            <li><a href="/informeGeneral">Informe</a></li>
+          </ul>
+        </nav>
       </div>
 
-      <nav>
-        <ul className={`nav-list ${menuOpen ? 'active' : ''}`}>
-          <div className="left-group">
-            <li>
-              <a href="/inicio-plantacion">Plantaciones</a>
-            </li>
-            <li>
-              <a href="/informeGeneral">Informe</a>
-            </li>
+      {/* Perfil + Cerrar sesión (siempre visibles) */}
+      <div className="profile-section">
+        {profileImage && (
+          <div className="profile-container">
+            <span className="username">{username}</span>
+            <img src={profileImage} alt="Perfil" className="profile-img" />
           </div>
-          {profileImage && (
-            <li className="profile-image">
-              {username && (
-                <span className="username">{username}</span>
-              )}
-              <img src={profileImage} alt="Foto de perfil" className="profile-img" />
-            </li>
-          )}
-          <li className="cerrar-sesion">
-            <a href="#" onClick={(e) => {
-              e.preventDefault();
-              onLogoutClick();
-            }}>
-              Cerrar sesión
-              <img src={salir1} alt="Cerrar sesión" className="logout-icon" />
-            </a>
-          </li>
-        </ul>
-      </nav>
+        )}
+        
+        <div className="logout-container">
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            onLogoutClick();
+          }}>
+            <span className="logout-text">Cerrar sesión</span>
+            <img src={salir1} alt="Cerrar sesión" className="logout-icon" />
+          </a>
+        </div>
+      </div>
     </header>
   );
 };

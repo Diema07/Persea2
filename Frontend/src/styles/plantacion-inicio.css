@@ -41,6 +41,7 @@ html {
   
   .orden h2 {
     color: #1e7c2b;
+    
     margin-bottom: 1.25rem;
     font-size: clamp(1.5rem, 3.125vw, 3.75rem);
     font-weight: bold;
