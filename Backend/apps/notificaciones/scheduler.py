@@ -53,18 +53,18 @@ def start_scheduler():
     # )
     
     # -------------------------------
-
     # Opción 2: Notificaciones a las 8:00 AM cada día
-    scheduler.add_job(
-        send_periodic_notifications,
-        trigger='cron',
-        hour=8,
-        minute=0,
-        id="send_daily_8am",
-        replace_existing=True,
-        max_instances=1,
-        misfire_grace_time=300  # Tiempo de gracia de 5 minutos
-    )
+    # Descomenta la siguiente sección para usar esta opción:
+    # scheduler.add_job(
+    #     send_periodic_notifications,
+    #     trigger='cron',
+    #     hour=8,
+    #     minute=0,
+    #     id="send_daily_8am",
+    #     replace_existing=True,
+    #     max_instances=1,
+    #     misfire_grace_time=300  # Tiempo de gracia de 5 minutos
+    # )
     # -------------------------------
 
     register_events(scheduler)
