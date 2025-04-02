@@ -58,8 +58,8 @@ def start_scheduler():
     scheduler.add_job(
         send_periodic_notifications,
         trigger='cron',
-        hour=8,
-        minute=0,
+        hour=14,
+        minute=25,
         id="send_daily_8am",
         replace_existing=True,
         max_instances=1,

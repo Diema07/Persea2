@@ -76,7 +76,7 @@ export function MantenimientoMonitoreoPage() {
 
       {/* Título principal */}
       <h2 className='subtitulo-principal'>
-        Mantenimiento/Monitoreo - Plantación {nombreParcela || idPlantacion}
+        Mantenimiento - Plantación {nombreParcela || idPlantacion}
       </h2>
 
       {/* Mensaje de error */}
@@ -89,11 +89,11 @@ export function MantenimientoMonitoreoPage() {
       />
 
       {/* Historial de Mantenimientos/Monitoreos */}
-      <h3 className='sub-titulo-form'>Historial de Mantenimiento/Monitoreo:</h3>
+      <h3 className='sub-titulo-form'>Historial de Mantenimiento:</h3>
       {loading ? (
         <p>Cargando...</p>
       ) : mantenimientos.length === 0 ? (
-        <p>No hay registros de Mantenimiento/Monitoreo.</p>
+        <p>No hay registros de Mantenimiento.</p>
       ) : (
         <ul className="riego-list">
           {mantenimientos.map((m, index) => (

@@ -117,7 +117,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
 
       {/* Formulario */}
       <div className="preparacion-terreno-container">
-        <h3>Agregar Mantenimiento/Monitoreo</h3>
+        <h3>Agregar Mantenimiento</h3>
         <form className="preparacion-form" onSubmit={onSubmit}>
           {/* GUADAÑA */}
           <div className="form-group">
