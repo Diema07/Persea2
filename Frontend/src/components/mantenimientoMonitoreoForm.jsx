@@ -79,9 +79,13 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
         datosParaEnviar.nombreTratamiento = data.nombreTratamiento;
         datosParaEnviar.cantidadTratamiento = data.cantidadTratamiento;
         datosParaEnviar.medidaTratamiento = data.medidaTratamiento;
+        datosParaEnviar.observacion = data.observacion;
      } else {
         datosParaEnviar.fechaAplicacionTratamiento = null;
       }
+
+      console.log('Datos a enviar:', datosParaEnviar);
+
 
       datosParaEnviar.idPlantacion = Number(plantacionId);
 
@@ -102,12 +106,13 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
         nombreTratamiento: '',
         cantidadTratamiento: '',
         medidaTratamiento: '',
+        observacion: '',
       });
 
       // Restablecer el estado de selección
       setIsCheckboxDisabled({ guadana: false, fechaAplicacionTratamiento: false });
     } catch (error) {
-      console.error('Error al guardar el mantenimiento/monitoreo:', error);
+      console.error('Error al guardar el mantenimiento/monitoreo:', error.response?.data || error.message);
     }
   });
 
@@ -197,6 +202,8 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
                 )}
               </div>
 
+              
+
               {/* Agrupación de Cantidad y Medida en un solo contenedor */}
               <div className="form-group form-group-inline">
                 <div className="form-group">
@@ -224,8 +231,22 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
                 {(errors.medidaTratamiento) && <span className="form-error">Requerido</span>}
               </div>
               </div>
+            
+
+            <div className="form-group">
+            <label className="form-label">Observación:</label>
+            <input
+              type="text"
+              {...register('observacion', { required: true })}
+              className="form-input"
+            />
+            {errors.observacion && (
+              <span className="form-error">Requerido</span>
+            )}
+            </div>
             </>
           )}
+
 
           <button type="submit" className="form-button">Guardar</button>
         </form>
@@ -237,13 +258,13 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
           <h4>🌾 Programa de Guadañada Sugerido</h4>
           <p><strong>Árboles jóvenes (1-3 años):</strong></p>
           <ul>
-            <li><strong>Primavera-Verano:</strong> Cada 4-6 semanas (Las malezas crecen más rápido).</li>
-            <li><strong>Otoño-Invierno:</strong> Cada 6-8 semanas (Reducir en climas fríos).</li>
+            <li><strong>Verano:</strong> Cada 4-6 semanas (Las malezas crecen más rápido).</li>
+            <li><strong>Invierno:</strong> Cada 6-8 semanas (Reducir en climas fríos).</li>
           </ul>
           <p><strong>Árboles en producción (4+ años):</strong></p>
           <ul>
-            <li><strong>Primavera-Verano:</strong> Cada 6-8 semanas (Mantener área libre de malezas).</li>
-            <li><strong>Otoño-Invierno:</strong> Cada 8-10 semanas (Reducir si las malezas crecen más lento).</li>
+            <li><strong>Verano:</strong> Cada 6-8 semanas (Mantener área libre de malezas).</li>
+            <li><strong>Invierno:</strong> Cada 8-10 semanas (Reducir si las malezas crecen más lento).</li>
           </ul>
         </div>
       )}

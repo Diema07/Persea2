@@ -75,13 +75,17 @@ class InformeCompletoView(APIView):
             m.fechaAplicacionTratamiento not in [None, ""] and
             m.nombreTratamiento not in [None, ""] and
             m.cantidadTratamiento not in [None, ""] and
-            m.medidaTratamiento not in [None, ""]):
+            m.medidaTratamiento not in [None, ""] and
+            m.observacion not in [None, ""]) :
+
             rep["metodoAplicacionFumigacion"] = m.metodoAplicacionFumigacion
             rep["tipoTratamiento"] = m.tipoTratamiento
             rep["fechaAplicacionTratamiento"] = str(m.fechaAplicacionTratamiento)
             rep["nombreTratamiento"] = m.nombreTratamiento
             rep["cantidadTratamiento"] = str(m.cantidadTratamiento)
             rep["medidaTratamiento"] = m.medidaTratamiento
+            rep["observacion"] = m.observacion
+
         return rep
 
     def get(self, request, plantacion_id):

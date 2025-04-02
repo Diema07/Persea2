@@ -54,13 +54,14 @@ class MantenimientoMonitoreoSerializer(serializers.ModelSerializer):
             'nombreTratamiento',
             'cantidadTratamiento',
             'medidaTratamiento',
+            'observacion'
         )
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         
         grupo_guadana = ['guadana']
-        grupo_resto = ['metodoAplicacionFumigacion', 'tipoTratamiento', 'fechaAplicacionTratamiento','nombreTratamiento','cantidadTratamiento','medidaTratamiento']
+        grupo_resto = ['metodoAplicacionFumigacion', 'tipoTratamiento', 'fechaAplicacionTratamiento','nombreTratamiento','cantidadTratamiento','medidaTratamiento','observacion']
         
         def grupo_incompleto(grupo):
             return any(representation.get(campo) in [None, ""] for campo in grupo)

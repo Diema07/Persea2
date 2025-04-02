@@ -56,6 +56,7 @@ class MantenimientoMonitoreo(models.Model):
     fechaAplicacionTratamiento = models.DateField(null=True, blank=True)
     nombreTratamiento = models.CharField(max_length=30, null=True, blank=True)
     cantidadTratamiento = models.FloatField(null=True, blank=True)
+    observacion = models.CharField(max_length=200, null=True, blank=True)
     MEDIDA_TRATAMIENTO_OPCIONES = [
         ('kg', 'Kilogramos'),
         ('gr', 'Gramos'),

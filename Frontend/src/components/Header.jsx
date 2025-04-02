@@ -13,13 +13,23 @@ export const Header = ({ onLogoutClick }) => {
       try {
         const data = await getProfileImage();
         if (data?.profile_picture) {
-          setProfileImage(data.profile_picture);
+          // Formatear el username
           const formattedUsername = data.username
             .replace('_', ' ')
             .split(' ')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
           setUsername(formattedUsername);
+
+          // Pre-cargar la imagen antes de actualizar el estado
+          const img = new Image();
+          img.src = data.profile_picture;
+          img.onload = () => {
+            setProfileImage(data.profile_picture);
+          };
+          img.onerror = () => {
+            console.error('Error al cargar la imagen pre-cargada.');
+          };
         }
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);

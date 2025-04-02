@@ -111,6 +111,7 @@ export function MantenimientoMonitoreoPage() {
                   <p><strong>Tipo de Tratamiento:</strong> {m.tipoTratamiento}</p>
                   <p><strong>Nombre de Tratamiento:</strong> {m.nombreTratamiento}</p>
                   <p><strong>Cantidad:</strong> {m.cantidadTratamiento} {m.medidaTratamiento}</p>
+                  <p><strong>Observación:</strong> {m.observacion}</p>
                 </>
               )}
             </li>
