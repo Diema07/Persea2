@@ -143,24 +143,24 @@ TEMPLATES = [
 WSGI_APPLICATION = "Persea.wsgi.application"
 
 
-# DATABASES = {
-#      "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#          "NAME": BASE_DIR / "db.sqlite3",
-#      }
-# }
-
-    #Configuración de la base de datos
 DATABASES = {
      "default": {
-         "ENGINE": "django.db.backends.mysql",
-         "NAME": "Persea",
-         "USER": "root",
-         "PASSWORD": "0000",
-         "HOST": "localhost",
-         "PORT": "3306",
+        "ENGINE": "django.db.backends.sqlite3",
+         "NAME": BASE_DIR / "db.sqlite3",
      }
 }
+
+    #Configuración de la base de datos
+# DATABASES = {
+#      "default": {
+#          "ENGINE": "django.db.backends.mysql",
+#          "NAME": "Persea",
+#          "USER": "root",
+#          "PASSWORD": "0000",
+#          "HOST": "localhost",
+#          "PORT": "3306",
+#      }
+# }
 
 # Validación de contraseñas
 AUTH_PASSWORD_VALIDATORS = [

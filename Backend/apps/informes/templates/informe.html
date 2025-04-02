@@ -5,138 +5,147 @@
   <title>Informe</title>
   
   <style>
-   
   body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 60px 10px;
-  background-color: #ffffff;
-  color: #333;
-}
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 60px 10px;
+    background-color: #ffffff;
+    color: #333;
+  }
 
-.container {
-  max-width: 1000px;
-  width: 100%;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
-}
-
-h1, h2, h3 {
-  color: #006400;
-  margin-bottom: 16px;
-}
-
-h1 {
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-h2 {
-  font-size: 24px;
-  border-bottom: 2px solid #006400;
-  padding-bottom: 8px;
-  margin-bottom: 20px;
-}
-
-h3 {
-  font-size: 20px;
-  margin-top: 16px;
-  margin-bottom: 12px;
-}
-
-.section {
-  margin-bottom: 30px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
-  font-size: 14px;
-}
-
-table th {
-  background-color: #006400;
-  color: #fff;
-  font-weight: bold;
-}
-
-p {
-  margin: 0;
-  font-size: 14px;
-  color: #555;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
   .container {
-    padding: 15px;
+    max-width: 1000px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    color: #006400;
+    margin-bottom: 16px;
   }
 
   h1 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  h2 {
     font-size: 24px;
+    border-bottom: 2px solid #006400;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
   }
 
-  h2 {
+  h3 {
     font-size: 20px;
+    margin-top: 16px;
+    margin-bottom: 12px;
   }
 
-  h3 {
-    font-size: 18px;
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  table th, table td {
-    padding: 10px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 10px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  h2 {
-    font-size: 18px;
-  }
-
-  h3 {
-    font-size: 16px;
+  .section {
+    margin-bottom: 30px;
   }
 
   table {
-    font-size: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   table th, table td {
-    padding: 8px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    background-color: #fff;
   }
-}
 
+  table th {
+    background-color: #006400;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  /* Estilo especial para la fila de observación */
+  .observacion td {
+    border: none;
+    border-bottom: 2px solid #006400; /* Línea inferior más marcada */
+    padding: 12px;
+    font-style: italic;
+    color: #555;
+    background-color: #ffffff;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    table th, table td {
+      padding: 10px;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    h3 {
+      font-size: 16px;
+    }
+
+    table {
+      font-size: 10px;
+    }
+
+    table th, table td {
+      padding: 8px;
+    }
+  }
   </style>
 
 </head>
@@ -206,7 +215,6 @@ p {
   
     <!-- Riego y Fertilización agrupados -->
     <div class="section">
-      
       <!-- Sección Riego -->
       <h2>Riego</h2>
       <table>
@@ -224,7 +232,7 @@ p {
             </tr>
           {% empty %}
             <tr>
-              <td colspan="3">No hay registros de Riego completos.</td>
+              <td colspan="2">No hay registros de Riego completos.</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -255,7 +263,7 @@ p {
             </tr>
           {% empty %}
             <tr>
-              <td colspan="7">No hay registros de Fertilización completos.</td>
+              <td colspan="6">No hay registros de Fertilización completos.</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -279,15 +287,15 @@ p {
             </tr>
           {% empty %}
             <tr>
-              <td colspan="2">No hay registros de Guadaña completos.</td>
+              <td>No hay registros de Guadaña completos.</td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
   
-       <!-- Sección Mantenimiento y Monitoreo -->
-       <h2>Fumigación</h2>
-       <table>
+      <!-- Sección Fumigación -->
+      <h2>Fumigación</h2>
+      <table>
          <thead>
            <tr>
              <th>Fecha Aplicación</th>
@@ -296,7 +304,6 @@ p {
              <th>Nombre Tratamiento</th>
              <th>Cantidad Tratamiento</th>
              <th>Medida Tratamiento</th>
-             <th>Observación</th>
            </tr>
          </thead>
          <tbody>
@@ -308,16 +315,20 @@ p {
                <td>{{ m.nombreTratamiento }}</td>
                <td>{{ m.cantidadTratamiento }}</td>
                <td>{{ m.medidaTratamiento }}</td>
-               <td>{{ m.observacion }}</td>
              </tr>
+             {% if m.observacion %}
+             <tr class="observacion">
+               <td colspan="6"><strong>Observación:</strong> {{ m.observacion }}</td>
+             </tr>
+             {% endif %}
            {% empty %}
              <tr>
-               <td colspan="7">No hay registros de Mantenimiento y Monitoreo completos.</td>
+               <td colspan="6">No hay registros de Mantenimiento y Monitoreo completos.</td>
              </tr>
            {% endfor %}
          </tbody>
        </table>
-     </div>
+    </div>
   
     <!-- Podas -->
     <div class="section">
@@ -356,9 +367,9 @@ p {
           <thead>
             <tr>
               <th>Fecha Cosecha</th>
-              <th>Calidad Alta </th>
-              <th>Calidad Media </th>
-              <th>Calidad Baja </th>
+              <th>Calidad Alta</th>
+              <th>Calidad Media</th>
+              <th>Calidad Baja</th>
               <th>Total Cantidad</th>
             </tr>
           </thead>

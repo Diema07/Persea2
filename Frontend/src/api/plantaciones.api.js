@@ -10,7 +10,7 @@ const taskAPI = axios.create({
 
 //Manejo de imagen de perfil
 const imagenProfile = axios.create({
-    baseURL: 'http://localhost:8000/api/usuarios/imagenPerfil', // Asegúrate de que coincida con la URL base de tus endpoints de usuarios
+    baseURL: 'http://localhost:8000/api/usuarios/imagenPerfil/', // Asegúrate de que coincida con la URL base de tus endpoints de usuarios
     withCredentials: true,  // Permite el envío de cookies en las peticiones
 });
 
