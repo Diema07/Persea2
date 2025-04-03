@@ -41,11 +41,11 @@ def start_scheduler():
         logger.error("Error eliminando jobs persistidos: %s", e)
 
     # -------------------------------
-    # Opción 1: Notificaciones cada 2 minutos
+    #Opción 1: Notificaciones cada 2 minutos
     # scheduler.add_job(
     #     send_periodic_notifications,
     #     trigger='interval',
-    #     minutes=2,
+    #     minutes=10,
     #     id="send_every_2_minutes",
     #     replace_existing=True,
     #     max_instances=1,  # Evita ejecuciones paralelas

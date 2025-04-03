@@ -317,7 +317,7 @@
                <td>{{ m.medidaTratamiento }}</td>
              </tr>
              {% if m.observacion %}
-             <tr class="observacion">
+             <tr>
                <td colspan="6"><strong>Observación:</strong> {{ m.observacion }}</td>
              </tr>
              {% endif %}
@@ -333,62 +333,66 @@
     <!-- Podas -->
     <div class="section">
       <h2>Podas</h2>
-      {% if podas %}
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha Poda</th>
-              <th>Tipo Poda</th>
-              <th>Herramientas Usadas</th>
-              <th>Técnicas Usadas</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for pd in podas %}
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha Poda</th>
+            <th>Tipo Poda</th>
+            <th>Herramientas Usadas</th>
+            <th>Técnicas Usadas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pd in podas %}
             <tr>
               <td>{{ pd.fechaPoda }}</td>
               <td>{{ pd.tipoPoda }}</td>
               <td>{{ pd.herramientasUsadas }}</td>
               <td>{{ pd.tecnicasUsadas }}</td>
             </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        <p>No hay podas registradas.</p>
-      {% endif %}
+          {% empty %}
+            <tr>
+              <td colspan="4">No hay registros de podas completos.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   
     <!-- Cosechas -->
     <div class="section">
       <h2>Cosechas</h2>
-      {% if cosechas %}
-        <table>
+      <table>
           <thead>
-            <tr>
-              <th>Fecha Cosecha</th>
-              <th>Calidad Alta</th>
-              <th>Calidad Media</th>
-              <th>Calidad Baja</th>
-              <th>Total Cantidad</th>
-            </tr>
+              <tr>
+                  <th>Fecha Cosecha</th>
+                  <th>Calidad Alta</th>
+                  <th>Calidad Media</th>
+                  <th>Calidad Baja</th>
+                  <th>Total Cantidad</th>
+              </tr>
           </thead>
           <tbody>
-            {% for c in cosechas %}
-            <tr>
-              <td>{{ c.fechaCosecha }}</td>
-              <td>{{ c.cantidadAltaCalidad }}</td>
-              <td>{{ c.cantidadMedianaCalidad }}</td>
-              <td>{{ c.cantidadBajaCalidad }}</td>
-              <td>{{ c.cantidadTotal }}</td>
-            </tr>
-            {% endfor %}
+              {% if cosechas %}
+                  {% for c in cosechas %}
+                  <tr>
+                      <td>{{ c.fechaCosecha }}</td>
+                      <td>{{ c.cantidadAltaCalidad }}</td>
+                      <td>{{ c.cantidadMedianaCalidad }}</td>
+                      <td>{{ c.cantidadBajaCalidad }}</td>
+                      <td>{{ c.cantidadTotal }}</td>
+                  </tr>
+                  {% endfor %}
+              {% else %}
+                  <tr>
+                      <td colspan="5">No hay registros de cosechas completos.</td>
+                  </tr>
+              {% endif %}
           </tbody>
-        </table>
-      {% else %}
-        <p>No hay cosechas registradas.</p>
-      {% endif %}
-    </div>
+      </table>
+  </div>
+  
+
   </div>
   
 </body>

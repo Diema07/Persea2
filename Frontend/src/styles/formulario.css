@@ -361,3 +361,13 @@ padding: 20px;
     height: 24px; 
   }
 }
+
+.textarea {
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-left: 10px;
+  width: 500px;
+  transition: border-color 0.3s ease;
+}

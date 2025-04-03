@@ -235,10 +235,10 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
 
             <div className="form-group">
             <label className="form-label">Observación:</label>
-            <input
+            <textarea
               type="text"
               {...register('observacion', { required: true })}
-              className="form-input"
+              className="textarea"
             />
             {errors.observacion && (
               <span className="form-error">Requerido</span>
