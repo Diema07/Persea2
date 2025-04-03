@@ -136,10 +136,9 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {
             <button className="form-button">Guardar</button>
           </form>
 
-          <button onClick={handleModalOpen} className="form-button-terminar" >
-            Terminar Cosecha
-          </button>
+         
         </div>
+        
 
         {/* Modal de advertencia */}
         {isModalOpen && (
@@ -163,16 +162,21 @@ export function CosechaForm({ plantacionId, variedad, onCreated }) {
             </div>
           </div>
         )}
-
-        {/* Sugerencias dinámicas según la variedad */}
-        {sugerencia && (
-          <div className="sugerencias">
-            <h4><strong>🌱 Cosecha  {variedad.charAt(0).toUpperCase() + variedad.slice(1)}</strong></h4>
-            <p><strong>🔹 Rendimiento esperado:</strong> {sugerencia.rendimientoEsperado}</p>
-            <p><strong>📦 Almacenamiento:</strong> {sugerencia.almacenamiento}</p>
-            <p><strong>📈 Comercialización:</strong> {sugerencia.comercializacion}</p>
-          </div>
-        )}
+        <div className="columna-derecha">
+   
+          {/* Sugerencias dinámicas según la variedad */}
+          {sugerencia && (
+            <div className="sugerencias">
+              <h4><strong>🌱 Cosecha  {variedad.charAt(0).toUpperCase() + variedad.slice(1)}</strong></h4>
+              <p><strong>🔹 Rendimiento esperado:</strong> {sugerencia.rendimientoEsperado}</p>
+              <p><strong>📦 Almacenamiento:</strong> {sugerencia.almacenamiento}</p>
+              <p><strong>📈 Comercialización:</strong> {sugerencia.comercializacion}</p>
+            </div>
+          )}
+          <button onClick={handleModalOpen} className="form-button-terminar" >
+              Terminar Cosecha
+            </button>
+            </div>
       </div>
     </>
   );

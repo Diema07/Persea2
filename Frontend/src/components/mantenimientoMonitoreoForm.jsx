@@ -220,7 +220,7 @@ export function MantenimientoMonitoreoForm({ plantacionId, onCreated }) {
                   <label className="form-label"></label>
                   <select
                     {...register('medidaTratamiento', { required: true })}
-                    className="form-input "
+                    className="form-input-ancho"
                   >
                     <option value="kg">kg</option>
                     <option value="gr">gr</option>

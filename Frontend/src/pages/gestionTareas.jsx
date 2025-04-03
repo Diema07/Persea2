@@ -146,7 +146,7 @@ export function GestionTareasPage() {
         </div>
         
       </div>
-      <Footer/>
+      
 
       {/* Modal de advertencia */}
       {isModalOpen && (

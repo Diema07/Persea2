@@ -228,7 +228,7 @@ export function RiegoFertilizacionForm({ plantacionId, onCreated }) {
                   <label className="form-label"></label>
                   <select
                     {...register('medidaFertilizante', { required: true })}
-                    className="form-input"
+                    className="form-input-ancho"
                   >
                     <option value="kg">kg</option>
                     <option value="gr">gr</option>
